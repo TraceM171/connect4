@@ -1,5 +1,6 @@
 package ipcconnect4;
 
+import ipcconnect4.auth.AuthenticateController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,11 +13,14 @@ import javafx.stage.Stage;
  *
  * @author trace
  */
-public class Connect4 extends Application {
+public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/ipcconnect4/view/authenticate.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipcconnect4/view/authenticate.fxml"));
+        AuthenticateController controller = new AuthenticateController(2);
+        loader.setController(controller);
+        Parent root = loader.load();
 
         Scene scene = new Scene(root);
 

@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ipcconnect4.auth;
 
+import DBAccess.Connect4DAOException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,22 +10,52 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import model.Connect4;
 
-public class AuthenticateController implements Initializable {
+public class AuthenticateController {
+
+    private final int playerNumber;
 
     @FXML
-    private Pane subscene;
+    private HBox subscene;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public AuthenticateController(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+
+    @FXML
+    public void initialize() {
+        switch (playerNumber) {
+            case 1:
+                setLoginMode((logedPlayer) -> {
+                    HomeController.player1 = logedPlayer;
+                });
+                break;
+            case 2:
+                setLoginMode((logedPlayer) -> {
+                    HomeController.player2 = logedPlayer;
+                });
+                break;
+        }
+    }
+
+    private void setLoginMode(LoginController.LoginListener listener) {
         try {
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("/ipcconnect4/view/login.fxml"));
-            
-            subscene.getChildren().add(loginRoot);
-        } catch (IOException ex) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipcconnect4/view/login.fxml"));
+            LoginController controller = new LoginController(listener);
+            loader.setController(controller);
+            Parent root = loader.load();
+
+            Connect4.getSingletonConnect4().createDemoData(3, 3, 3);
+
+            subscene.getChildren().add(root);
+            HBox.setHgrow(root, Priority.ALWAYS);
+
+        } catch (IOException | Connect4DAOException ex) {
             Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-    
+    }
+
 }
