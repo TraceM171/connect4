@@ -8,15 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import model.Connect4;
 
-/**
- *
- * @author trace
- */
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        
+        Connect4.getSingletonConnect4().createDemoData(3, 3, 3);
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipcconnect4/view/authenticate.fxml"));
         AuthenticateController controller = new AuthenticateController(2);
         loader.setController(controller);
@@ -28,9 +28,6 @@ public class Main extends Application {
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

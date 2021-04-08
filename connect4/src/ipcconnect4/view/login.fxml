@@ -12,87 +12,100 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="600.0" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar sesión">
-               <font>
-                  <Font name="System Italic" size="24.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Text>
-         </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </VBox>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-         <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308">
-               <children>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../../avatars/default.png" />
-                     </image>
-                  </ImageView>
-                  <TextField fx:id="userText" maxWidth="1.7976931348623157E308" promptText="Usuario..." HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </TextField>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308">
-               <children>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../../avatars/default.png" />
-                     </image>
-                  </ImageView>
-                  <PasswordField fx:id="passText" maxWidth="1.7976931348623157E308" promptText="Contraseña..." HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </PasswordField>
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <VBox.margin>
-            <Insets top="15.0" />
-         </VBox.margin>
-      </VBox>
-      <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de usuario o contraseña incorrectos" visible="false" />
-      <AnchorPane>
-         <children>
-            <Button fx:id="okButton" layoutX="206.0" layoutY="21.0" mnemonicParsing="false" onAction="#okAction" text="Continuar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Button mnemonicParsing="false" onAction="#forgotAction" text="He olvidado mi contraseña" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-         <VBox.margin>
-            <Insets bottom="25.0" top="10.0" />
-         </VBox.margin>
-      </AnchorPane>
-      <Button mnemonicParsing="false" onAction="#registerAction" text="Aún no tengo cuenta">
-         <VBox.margin>
-            <Insets top="5.0" />
-         </VBox.margin>
-      </Button>
-   </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+<VBox fx:id="root" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar sesión">
+                    <font>
+                        <Font name="System Italic" size="24.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Text>
+            </children>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </VBox>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <children>
+                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308">
+                    <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../../avatars/default.png" />
+                            </image>
+                        </ImageView>
+                        <TextField fx:id="userText" maxWidth="1.7976931348623157E308" promptText="Usuario..." HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </TextField>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308">
+                    <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
+                            <image>
+                                <Image url="@../../avatars/default.png" />
+                            </image>
+                        </ImageView>
+                        <PasswordField fx:id="passTextMask" maxWidth="1.7976931348623157E308" promptText="Contraseña..." HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="10.0" right="5.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </PasswordField>
+                        <TextField fx:id="passTextUnmask" maxWidth="1.7976931348623157E308" promptText="Contraseña..." HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="10.0" right="5.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </TextField>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" focusTraversable="true" onKeyTyped="#changePassMask" onMouseClicked="#changePassMask" pickOnBounds="true">
+                            <image>
+                                <Image url="@../../avatars/default.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            <VBox.margin>
+                <Insets top="15.0" />
+            </VBox.margin>
+        </VBox>
+        <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de usuario o contraseña incorrectos" visible="false" />
+        <AnchorPane>
+            <children>
+                <Button fx:id="okButton" layoutX="206.0" layoutY="21.0" mnemonicParsing="false" onAction="#okAction" text="Continuar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <Button mnemonicParsing="false" onAction="#forgotAction" text="He olvidado mi contraseña" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </children>
+            <VBox.margin>
+                <Insets bottom="25.0" top="10.0" />
+            </VBox.margin>
+        </AnchorPane>
+        <Button mnemonicParsing="false" onAction="#registerAction" text="Aún no tengo cuenta">
+            <VBox.margin>
+                <Insets top="5.0" />
+            </VBox.margin>
+        </Button>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
 </VBox>

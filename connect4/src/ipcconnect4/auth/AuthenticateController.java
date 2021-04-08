@@ -1,22 +1,22 @@
 package ipcconnect4.auth;
 
-import DBAccess.Connect4DAOException;
+import ipcconnect4.HomeController;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import model.Connect4;
+import model.Player;
 
 public class AuthenticateController {
 
     private final int playerNumber;
+    private Node lastContent;
 
     @FXML
     private HBox subscene;
@@ -27,18 +27,26 @@ public class AuthenticateController {
 
     @FXML
     public void initialize() {
-        switch (playerNumber) {
-            case 1:
-                setLoginMode((logedPlayer) -> {
-                    HomeController.player1 = logedPlayer;
+        setLoginMode(new LoginController.LoginListener() {
+            @Override
+            public void onLogin(Player logedPlayer) {
+                switch (playerNumber) {
+                    case 1:
+                        HomeController.player1 = logedPlayer;
+                        break;
+                    case 2:
+                        HomeController.player2 = logedPlayer;
+                        break;
+                }
+            }
+
+            @Override
+            public void onForgotAction() {
+                setForgotMode(() -> {
+                    contentGoBack();
                 });
-                break;
-            case 2:
-                setLoginMode((logedPlayer) -> {
-                    HomeController.player2 = logedPlayer;
-                });
-                break;
-        }
+            }
+        });
     }
 
     private void setLoginMode(LoginController.LoginListener listener) {
@@ -48,13 +56,38 @@ public class AuthenticateController {
             loader.setController(controller);
             Parent root = loader.load();
 
-            Connect4.getSingletonConnect4().createDemoData(3, 3, 3);
-
-            subscene.getChildren().add(root);
-            HBox.setHgrow(root, Priority.ALWAYS);
-
-        } catch (IOException | Connect4DAOException ex) {
+            setContent(root);
+        } catch (IOException ex) {
             Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void setForgotMode(ForgotController.ForgotListener listener) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipcconnect4/view/forgot.fxml"));
+            ForgotController controller = new ForgotController(listener);
+            loader.setController(controller);
+            Parent root = loader.load();
+
+            setContent(root);
+        } catch (IOException ex) {
+            Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void setContent(Node content) {
+        ObservableList<Node> children = subscene.getChildren();
+        if (children.size() > 0)
+            lastContent = children.get(0);
+        subscene.getChildren().clear();
+        subscene.getChildren().add(content);
+        HBox.setHgrow(content, Priority.ALWAYS);
+        subscene.requestFocus();
+    }
+    
+    private void contentGoBack() {
+        if (lastContent != null) {
+            setContent(lastContent);
         }
     }
 
