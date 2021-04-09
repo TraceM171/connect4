@@ -1,6 +1,7 @@
 package ipcconnect4.auth;
 
 import DBAccess.Connect4DAOException;
+import ipcconnect4.Main;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -11,14 +12,12 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Connect4;
 import model.Player;
@@ -27,11 +26,17 @@ public class ForgotController {
 
     private static final int CODE_LENGTH = 6;
 
-    private ForgotListener listener;
+    private static int generateCode() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < CODE_LENGTH; i++) {
+            sb.append(new Random().nextInt(10));
+        }
+        return Integer.valueOf(sb.toString());
+    }
+
+    private final ForgotListener listener;
     private int code;
 
-    @FXML
-    private Node root;
     @FXML
     private TextField userText;
     @FXML
@@ -65,7 +70,7 @@ public class ForgotController {
         errorText1.managedProperty().bind(errorText1.visibleProperty());
         errorText2.managedProperty().bind(errorText2.visibleProperty());
 
-        codeText.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+        codeText.textProperty().addListener((observable,oldValue,newValue) -> {
             if (!newValue.matches("\\d*")) {
                 codeText.setText(newValue.replaceAll("[^\\d]", ""));
             }
@@ -111,12 +116,12 @@ public class ForgotController {
 
     private void showCode() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Código");
-        alert.setHeaderText("Este es tu código de recuperación de contraseña");
+        alert.setTitle(Main.rb.getString("code"));
+        alert.setHeaderText(Main.rb.getString("code_dialog_explanation"));
         alert.setContentText(String.valueOf(code));
 
-        ButtonType buttonTypeOne = new ButtonType("Copiar");
-        ButtonType buttonTypeOk = new ButtonType("Aceptar", ButtonData.OK_DONE);
+        ButtonType buttonTypeOne = new ButtonType(Main.rb.getString("copy"));
+        ButtonType buttonTypeOk = new ButtonType(Main.rb.getString("accept"), ButtonData.OK_DONE);
 
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeOk);
 
@@ -136,12 +141,12 @@ public class ForgotController {
 
     private void showPassword(String password) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Tu contraseña");
-        alert.setHeaderText("Este es tu contraseña, no la olvides!");
+        alert.setTitle(Main.rb.getString("your_pass"));
+        alert.setHeaderText(Main.rb.getString("your_pass_explanation"));
         alert.setContentText(password);
 
-        ButtonType buttonTypeOne = new ButtonType("Copiar");
-        ButtonType buttonTypeOk = new ButtonType("Aceptar", ButtonData.OK_DONE);
+        ButtonType buttonTypeOne = new ButtonType(Main.rb.getString("copy"));
+        ButtonType buttonTypeOk = new ButtonType(Main.rb.getString("accept"), ButtonData.OK_DONE);
 
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeOk);
 
@@ -157,14 +162,6 @@ public class ForgotController {
         );
 
         alert.showAndWait();
-    }
-
-    private static int generateCode() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < CODE_LENGTH; i++) {
-            sb.append(new Random().nextInt(10));
-        }
-        return Integer.valueOf(sb.toString());
     }
 
     public interface ForgotListener {

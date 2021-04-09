@@ -12,11 +12,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="root" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="600.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="600.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recuperar contraseña">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%forgot_title">
                <font>
                   <Font name="System Italic" size="24.0" />
                </font>
@@ -29,7 +29,7 @@
             <Insets />
          </VBox.margin>
       </VBox>
-      <Label text="Para recuperar su contraseña le enviaremos un correo con un código temporal que deberá introducir a continuación" wrapText="true">
+      <Label text="%forgot_explanation" wrapText="true">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
@@ -43,7 +43,7 @@
                         <Image url="@../../avatars/default.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="userText" maxWidth="1.7976931348623157E308" promptText="Usuario..." HBox.hgrow="ALWAYS">
+                  <TextField fx:id="userText" maxWidth="1.7976931348623157E308" promptText="%user_input" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -63,7 +63,7 @@
                         <Image url="@../../avatars/default.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="emailText" maxWidth="1.7976931348623157E308" promptText="Correo..." HBox.hgrow="ALWAYS">
+                  <TextField fx:id="emailText" maxWidth="1.7976931348623157E308" promptText="%email_input" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -81,13 +81,13 @@
             <Insets top="15.0" />
          </VBox.margin>
       </VBox>
-      <Text fx:id="errorText1" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de usuario o correo incorrectos" visible="false">
+      <Text fx:id="errorText1" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="%forgot_error" visible="false">
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin></Text>
       <AnchorPane>
          <children>
-            <Button fx:id="okButton" layoutX="206.0" layoutY="21.0" mnemonicParsing="false" onAction="#okAction" text="Enviar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Button fx:id="okButton" layoutX="206.0" layoutY="21.0" mnemonicParsing="false" onAction="#okAction" text="%send" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
          <VBox.margin>
             <Insets />
@@ -100,7 +100,7 @@
                   <Image url="@../../avatars/default.png" />
                </image>
             </ImageView>
-            <TextField fx:id="codeText" maxWidth="1.7976931348623157E308" promptText="Código...">
+            <TextField fx:id="codeText" maxWidth="1.7976931348623157E308" promptText="%code_input">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -116,14 +116,14 @@
             <Insets top="20.0" />
          </VBox.margin>
       </HBox>
-      <Text fx:id="errorText2" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Código no válido" visible="false">
+      <Text fx:id="errorText2" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="%forgot_error_code" visible="false">
          <VBox.margin>
             <Insets bottom="10.0" />
          </VBox.margin></Text>
       <AnchorPane>
          <children>
-            <Button fx:id="okButton1" layoutX="206.0" layoutY="21.0" mnemonicParsing="false" onAction="#verifyAction" text="Verificar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Button layoutX="12.0" layoutY="-2.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancelar" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Button fx:id="okButton1" layoutX="206.0" layoutY="21.0" mnemonicParsing="false" onAction="#verifyAction" text="%verify" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Button layoutX="12.0" layoutY="-2.0" mnemonicParsing="false" onAction="#cancelAction" text="%cancel" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
          <VBox.margin>
             <Insets />

@@ -1,0 +1,69 @@
+package ipcconnect4;
+
+import ipcconnect4.util.BiHashMap;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+
+public class SettingsController implements Initializable {
+
+    @FXML
+    private Spinner<String> langSpinner;
+    @FXML
+    private Label saveText;
+
+    private BiHashMap<Locale, String> langs;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        initLangs();
+        initSpinner();
+
+        saveText.visibleProperty().bind(Bindings.notEqual(
+                Bindings.<Locale>createObjectBinding(() -> {
+                    return langs.getFirstKey(langSpinner.getValue());
+                }, langSpinner.valueProperty()
+                ),
+                Locale.getDefault()
+        ));
+    }
+
+    @FXML
+    private void saveAction(ActionEvent event) {
+        Main.changeLanguage(
+                langs.getFirstKey(langSpinner.getValue())
+        );
+    }
+
+    @FXML
+    private void cancelAction(ActionEvent event) {
+        Platform.exit();
+    }
+
+    private void initLangs() {
+        langs = new BiHashMap<>();
+        langs.put(new Locale("ca", "ES"), "Català");
+        langs.put(new Locale("es", "ES"), "Español");
+        langs.put(new Locale("en", "US"), "English");
+    }
+
+    private void initSpinner() {
+        SpinnerValueFactory<String> valueFactory
+                = new SpinnerValueFactory.ListSpinnerValueFactory<>(
+                        FXCollections.observableArrayList(langs.values())
+                );
+        valueFactory.setValue(langs.get(Locale.getDefault()));
+        langSpinner.setValueFactory(valueFactory);
+    }
+
+}

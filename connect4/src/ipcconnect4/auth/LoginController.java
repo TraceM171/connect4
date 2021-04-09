@@ -11,14 +11,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.Connect4;
 import model.Player;
 
 public class LoginController {
 
-    private LoginListener listener;
+    private final LoginListener listener;
     private boolean firstfocus = true;
 
     @FXML

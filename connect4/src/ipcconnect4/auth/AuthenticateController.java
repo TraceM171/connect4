@@ -1,6 +1,6 @@
 package ipcconnect4.auth;
 
-import ipcconnect4.HomeController;
+import ipcconnect4.Main;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import model.Player;
@@ -32,10 +34,10 @@ public class AuthenticateController {
             public void onLogin(Player logedPlayer) {
                 switch (playerNumber) {
                     case 1:
-                        HomeController.player1 = logedPlayer;
+                        Main.player1 = logedPlayer;
                         break;
                     case 2:
-                        HomeController.player2 = logedPlayer;
+                        Main.player2 = logedPlayer;
                         break;
                 }
             }
@@ -48,10 +50,18 @@ public class AuthenticateController {
             }
         });
     }
+    
+    @FXML
+    public void settingsAction(MouseEvent event) {
+        Main.showSettings();
+    }
 
     private void setLoginMode(LoginController.LoginListener listener) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipcconnect4/view/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ipcconnect4/view/login.fxml"),
+                    Main.rb
+            );
             LoginController controller = new LoginController(listener);
             loader.setController(controller);
             Parent root = loader.load();
@@ -64,7 +74,10 @@ public class AuthenticateController {
 
     private void setForgotMode(ForgotController.ForgotListener listener) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipcconnect4/view/forgot.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ipcconnect4/view/forgot.fxml"),
+                    Main.rb
+            );
             ForgotController controller = new ForgotController(listener);
             loader.setController(controller);
             Parent root = loader.load();
@@ -77,14 +90,15 @@ public class AuthenticateController {
 
     private void setContent(Node content) {
         ObservableList<Node> children = subscene.getChildren();
-        if (children.size() > 0)
+        if (children.size() > 0) {
             lastContent = children.get(0);
+        }
         subscene.getChildren().clear();
         subscene.getChildren().add(content);
         HBox.setHgrow(content, Priority.ALWAYS);
         subscene.requestFocus();
     }
-    
+
     private void contentGoBack() {
         if (lastContent != null) {
             setContent(lastContent);
