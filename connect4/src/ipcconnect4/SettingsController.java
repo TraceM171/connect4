@@ -4,7 +4,6 @@ import ipcconnect4.util.BiHashMap;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -48,10 +47,15 @@ public class SettingsController implements Initializable {
         Main.changeLanguage(
                 langs.getFirstKey(langSpinner.getValue())
         );
+        close();
     }
 
     @FXML
     private void cancelAction(ActionEvent event) {
+        close();
+    }
+    
+    private void close() {
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
     }

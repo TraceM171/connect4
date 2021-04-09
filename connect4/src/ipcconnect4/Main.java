@@ -23,31 +23,29 @@ public class Main extends Application {
 
     public static Player player1, player2;
     public static ResourceBundle rb;
-    private static Stage stage;
+    public static Stage stage;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     public static void changeLanguage(Locale locale) {
-        stage.setScene(startWithLanguage(locale));
+        startWithLanguage(locale);
     }
 
-    private static Scene startWithLanguage(Locale locale) {
+    private static void startWithLanguage(Locale locale) {
         try {
             Locale.setDefault(locale);
             rb = ResourceBundle.getBundle("ipcconnect4.bundles.Strings", Locale.getDefault());
-            FXMLLoader loader = new FXMLLoader(
-                    Main.class.getResource("/ipcconnect4/view/authenticate.fxml"),
-                    rb
-            );
-            AuthenticateController controller = new AuthenticateController(1);
-            loader.setController(controller);
-            return new Scene(loader.load());
-        } catch (IOException ex) {
+//          goToAuthenticate(1);
+            // TEST CODE BEGINS
+            player1 = Connect4.getSingletonConnect4().getPlayer("nickName1");
+            goToHome();
+            // TEST CODE ENDS
+            stage.setTitle(rb.getString("app_name"));
+        } catch (Connect4DAOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
     }
 
     public static void showNYI() {
@@ -59,7 +57,7 @@ public class Main extends Application {
         alert.showAndWait();
     }
 
-    public static void showSettings() {
+    public static void showSettings(Stage owner) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("/ipcconnect4/view/settings.fxml"),
@@ -68,10 +66,42 @@ public class Main extends Application {
             Stage settingsStage = new Stage();
             settingsStage.setScene(new Scene(loader.load()));
             settingsStage.initModality(Modality.WINDOW_MODAL);
+            settingsStage.initOwner(owner);
             settingsStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void goToHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    Main.class.getResource("/ipcconnect4/view/home.fxml"),
+                    rb
+            );
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void goToAuthenticate(int player) {
+        stage.setScene(getAuthenticateScene(player));
+    }
+
+    public static Scene getAuthenticateScene(int player) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    Main.class.getResource("/ipcconnect4/view/authenticate.fxml"),
+                    rb
+            );
+            AuthenticateController controller = new AuthenticateController(player);
+            loader.setController(controller);
+            return new Scene(loader.load());
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
@@ -80,7 +110,7 @@ public class Main extends Application {
             Connect4.getSingletonConnect4().createDemoData(3, 3, 3);
 
             Main.stage = stage;
-            stage.setScene(startWithLanguage(DEF_LANG));
+            startWithLanguage(DEF_LANG);
             stage.show();
         } catch (Connect4DAOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

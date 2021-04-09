@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 import model.Player;
 
 public class AuthenticateController {
@@ -34,9 +35,11 @@ public class AuthenticateController {
                 switch (playerNumber) {
                     case 1:
                         Main.player1 = logedPlayer;
+                        Main.goToHome();
                         break;
                     case 2:
                         Main.player2 = logedPlayer;
+                        close();
                         break;
                 }
             }
@@ -51,8 +54,13 @@ public class AuthenticateController {
     }
     
     @FXML
+    private void ranksAction(MouseEvent event) {
+        Main.showNYI();
+    }
+    
+    @FXML
     public void settingsAction(MouseEvent event) {
-        Main.showSettings();
+        Main.showSettings( (Stage) subscene.getScene().getWindow());
     }
 
     private void setLoginMode(LoginController.LoginListener listener) {
@@ -102,6 +110,11 @@ public class AuthenticateController {
         if (lastContent != null) {
             setContent(lastContent);
         }
+    }
+    
+    private void close() {
+        Stage stage = (Stage) subscene.getScene().getWindow();
+        stage.close();
     }
 
 }
