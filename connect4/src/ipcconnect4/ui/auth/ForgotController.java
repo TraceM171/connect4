@@ -1,4 +1,4 @@
-package ipcconnect4.auth;
+package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;

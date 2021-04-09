@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.stage.Stage;
 
 public class SettingsController implements Initializable {
 
@@ -25,7 +26,7 @@ public class SettingsController implements Initializable {
     private Button saveButton;
 
     private BiHashMap<Locale, String> langs;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initLangs();
@@ -38,7 +39,7 @@ public class SettingsController implements Initializable {
                 ),
                 Locale.getDefault()
         ));
-        
+
         saveText.visibleProperty().bind(saveButton.disabledProperty().not());
     }
 
@@ -51,7 +52,8 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void cancelAction(ActionEvent event) {
-        Platform.exit();
+        Stage stage = (Stage) saveButton.getScene().getWindow();
+        stage.close();
     }
 
     private void initLangs() {

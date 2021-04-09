@@ -1,4 +1,4 @@
-package ipcconnect4;
+package ipcconnect4.ui.home;
 
 import java.net.URL;
 import java.util.ResourceBundle;

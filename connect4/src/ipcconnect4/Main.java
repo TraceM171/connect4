@@ -1,7 +1,7 @@
 package ipcconnect4;
 
 import DBAccess.Connect4DAOException;
-import ipcconnect4.auth.AuthenticateController;
+import ipcconnect4.ui.auth.AuthenticateController;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
