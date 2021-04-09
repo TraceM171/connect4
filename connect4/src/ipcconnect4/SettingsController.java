@@ -6,11 +6,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -21,21 +21,25 @@ public class SettingsController implements Initializable {
     private Spinner<String> langSpinner;
     @FXML
     private Label saveText;
+    @FXML
+    private Button saveButton;
 
     private BiHashMap<Locale, String> langs;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initLangs();
         initSpinner();
 
-        saveText.visibleProperty().bind(Bindings.notEqual(
+        saveButton.disableProperty().bind(Bindings.equal(
                 Bindings.<Locale>createObjectBinding(() -> {
                     return langs.getFirstKey(langSpinner.getValue());
                 }, langSpinner.valueProperty()
                 ),
                 Locale.getDefault()
         ));
+        
+        saveText.visibleProperty().bind(saveButton.disabledProperty().not());
     }
 
     @FXML

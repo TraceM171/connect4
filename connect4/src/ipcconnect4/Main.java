@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Connect4;
 import model.Player;
@@ -36,16 +37,12 @@ public class Main extends Application {
         try {
             Locale.setDefault(locale);
             rb = ResourceBundle.getBundle("ipcconnect4.bundles.Strings", Locale.getDefault());
-//            FXMLLoader loader = new FXMLLoader(
-//                    Main.class.getResource("/ipcconnect4/view/authenticate.fxml"),
-//                    rb
-//            );
-//            AuthenticateController controller = new AuthenticateController(1);
-//            loader.setController(controller);
             FXMLLoader loader = new FXMLLoader(
-                    Main.class.getResource("/ipcconnect4/view/settings.fxml"),
+                    Main.class.getResource("/ipcconnect4/view/authenticate.fxml"),
                     rb
             );
+            AuthenticateController controller = new AuthenticateController(1);
+            loader.setController(controller);
             return new Scene(loader.load());
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,7 +60,18 @@ public class Main extends Application {
     }
 
     public static void showSettings() {
-
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    Main.class.getResource("/ipcconnect4/view/settings.fxml"),
+                    rb
+            );
+            Stage settingsStage = new Stage();
+            settingsStage.setScene(new Scene(loader.load()));
+            settingsStage.initModality(Modality.WINDOW_MODAL);
+            settingsStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
