@@ -130,8 +130,8 @@ public class ForgotController {
                 ActionEvent.ACTION,
                 event -> {
                     StringSelection stringSelection = new StringSelection(String.valueOf(code));
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clipboard.setContents(stringSelection, null);
+                    Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clip.setContents(stringSelection, null);
                     event.consume();
                 }
         );
@@ -155,8 +155,8 @@ public class ForgotController {
                 ActionEvent.ACTION,
                 event -> {
                     StringSelection stringSelection = new StringSelection(password);
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clipboard.setContents(stringSelection, null);
+                    Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clip.setContents(stringSelection, null);
                     event.consume();
                 }
         );
