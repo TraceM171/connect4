@@ -4,6 +4,7 @@ import ipcconnect4.util.BiHashMap;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -64,7 +65,7 @@ public class SettingsController implements Initializable {
         langs = new BiHashMap<>();
         langs.put(new Locale("ca", "ES"), "Català");
         langs.put(new Locale("es", "ES"), "Español");
-        langs.put(new Locale("en", "US"), "English");
+        langs.put(new Locale("en", "GB"), "English");
     }
 
     private void initSpinner() {

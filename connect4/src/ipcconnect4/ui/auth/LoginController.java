@@ -8,6 +8,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
@@ -66,7 +67,16 @@ public class LoginController {
             Player res = Connect4.getSingletonConnect4().loginPlayer(userText.getText(), passTextMask.getText());
             if (res != null) {
                 errorText.setVisible(false);
-                listener.onLogin(res);
+                if (res.equals(Main.player1) || res.equals(Main.player2)) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle(Main.rb.getString("login_title"));
+                    alert.setHeaderText(Main.rb.getString("login_already_header"));
+                    alert.setContentText(Main.rb.getString("login_already_content"));
+
+                    alert.showAndWait();
+                } else {
+                    listener.onLogin(res);
+                }
             } else {
                 errorText.setVisible(true);
                 passTextMask.setText("");

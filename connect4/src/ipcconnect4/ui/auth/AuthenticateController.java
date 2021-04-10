@@ -4,6 +4,7 @@ import ipcconnect4.Main;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +20,12 @@ public class AuthenticateController {
 
     private final int playerNumber;
     private Node lastContent;
+    private boolean full;
 
     @FXML
     private HBox subscene;
+    @FXML
+    private HBox centerHB;
 
     public AuthenticateController(int playerNumber) {
         this.playerNumber = playerNumber;
@@ -29,6 +33,7 @@ public class AuthenticateController {
 
     @FXML
     public void initialize() {
+        full = playerNumber == 2;
         setLoginMode(new LoginController.LoginListener() {
             @Override
             public void onLogin(Player logedPlayer) {
@@ -96,6 +101,13 @@ public class AuthenticateController {
     }
 
     private void setContent(Node content) {
+        if (full) {
+            Platform.runLater(() -> {
+                centerHB.getChildren().remove(subscene);
+                centerHB.getScene().setRoot(new HBox(subscene));
+            });
+            full = false;
+        }
         ObservableList<Node> children = subscene.getChildren();
         if (children.size() > 0) {
             lastContent = children.get(0);
