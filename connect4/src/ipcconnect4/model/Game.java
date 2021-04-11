@@ -1,52 +1,123 @@
 package ipcconnect4.model;
 
-import ipcconnect4.util.Movement;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Objects;
 
+/**
+ * This class represents a Connect4 game. It is a grid of {@link Piece}, being
+ * the (0, 0) at the top left corner
+ */
 public class Game {
 
+    /**
+     * Constants that define the game grid
+     */
     public static final int ROWS = 6, COLUMNS = 7;
 
-    private final Piece[][] board  = new Piece[ROWS][COLUMNS];
-    private Movement lastMove;
-    private int rounds = 0;
-    private GameListener listener;
+    protected final Piece[][] board = new Piece[ROWS][COLUMNS];
+    private Movement lastMove = new Movement();
+    protected int rounds = 0;
+    protected GameListener listener;
 
+    /**
+     * Creates a Game initialising all cells to {@link Piece.NONE}
+     */
     public Game() {
         for (Piece[] row : board) {
             Arrays.fill(row, Piece.NONE);
         }
     }
 
+    /**
+     * Create a Game by making a deep copy of all its fields
+     *
+     * @param game Game to copy values from
+     */
+    public Game(Game game) {
+        for (int i = 0; i < game.board.length; i++) {
+            System.arraycopy(game.board[i], 0, board[i], 0, game.board[0].length);
+        }
+        lastMove = new Movement(game.lastMove);
+        rounds = game.rounds;
+        listener = null;
+    }
+
+    /**
+     * Set the GameListener
+     *
+     * @param listener
+     */
     public void setListener(GameListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * Get the Piece located at a position
+     *
+     * @param pos
+     * @return piece
+     */
     public Piece getPiece(Pos pos) {
         return board[pos.row][pos.column];
     }
 
+    /**
+     * Check if a {@link Piece} can be added to a column
+     *
+     * @param column
+     * @return boolean
+     */
     public boolean canPutPiece(int column) {
         return getFirstEmptyRow(column) != -1;
     }
 
+    /**
+     * Same as {@link Game#putPiece(int, ipcconnect4.model.Game.Piece)} but the
+     * added {@link Piece} will be chosen based on the last movement
+     *
+     * @param column
+     */
     public void putPiece(int column) {
+        putPiece(column, getNextPiece());
+    }
+
+    /**
+     * If can put a {@link Piece} in the specified column, will add it,
+     * otherwise does nothing.
+     *
+     * @param column
+     * @param piece
+     */
+    public void putPiece(int column, Piece piece) {
         if (canPutPiece(column)) {
             int nrow = getFirstEmptyRow(column);
             Pos nPos = new Pos(nrow, column);
-            board[nrow][column] = getNextPiece();
-            lastMove = new Movement(nPos, getNextPiece());
+            board[nrow][column] = piece;
+            updateLastMovement(nPos, piece);
             rounds++;
             if (listener != null) {
-                listener.onChange(nPos);
+                listener.onChange(lastMove);
             }
         }
     }
 
+    /**
+     * Updates the last movement made.
+     *
+     * @param pos New movement Pos
+     * @param piece New movement Piece
+     */
+    protected void updateLastMovement(Pos pos, Piece piece) {
+        lastMove = new Movement(pos, piece);
+    }
+
+    /**
+     * Uses last movement to determine which Piece should be added next
+     *
+     * @return piece
+     */
     public Piece getNextPiece() {
-        switch (lastMove.piece) {
+        switch (getLastMovement().piece) {
             case NONE:
             case P2:
                 return Piece.P1;
@@ -57,16 +128,32 @@ public class Game {
         }
     }
 
+    /**
+     * Get last Movement made in this Game
+     *
+     * @return movement
+     */
     public Movement getLastMovement() {
         return lastMove;
     }
 
+    /**
+     * Check if this Game is finished. A Game is finished only if there is a
+     * winner or the grid is full
+     *
+     * @return boolean
+     */
     public boolean isOver() {
-        return getWinner() != null;
+        return getWinner() != null || isFull();
     }
 
-    private boolean isFull() {
-        for (Piece piece : board[ROWS - 1]) {
+    /**
+     * Check if the grid is full
+     *
+     * @return boolean
+     */
+    protected boolean isFull() {
+        for (Piece piece : board[0]) {
             if (piece == Piece.NONE) {
                 return false;
             }
@@ -74,62 +161,31 @@ public class Game {
         return true;
     }
 
+    /**
+     * Get the WinerInfo of this Game, or null if there is none This method has
+     * a quadratic cost, based on the grid size.
+     *
+     * @return winInfo
+     */
     public WinInfo getWinner() {
         if (rounds < 7) {
             return null;
         }
 
-        WinType winType = null;
-        Pos pos = null;
+        final WinType[] winType = {null};
+        final Pos[] pos = {null};
 
-        //Winner by row
-        for (int i = ROWS - 1; i >= 0; i--) {
-            for (int j = 0; winType == null && j < 4; j++) {
-                if (board[i][j] == board[i][j + 1] && board[i][j] == board[i][j + 2] && board[i][j] == board[i][j + 3] && board[i][j] != Piece.NONE) {
-                    pos = new Pos(i, j);
-                    winType = WinType.ROW;
-                }
-            }
-        }
+        checkNIn(4, true, (posW, typeW) -> {
+            pos[0] = posW;
+            winType[0] = typeW;
+        });
 
-        //Winner by column
-        for (int i = 0; i < ROWS - 3; i++) {
-            for (int j = 0; winType == null && j < 7; j++) {
-                if (board[i][j] == board[i + 1][j] && board[i][j] == board[i + 2][j] && board[i][j] == board[i + 3][j] && board[i][j] != Piece.NONE) {
-                    pos = new Pos(i, j);
-                    winType = WinType.COLUMN;
-                }
-            }
-        }
-
-        //Winner by ascendent diagonal
-        for (int i = 0; i < ROWS - 3; i++) {
-            for (int j = 0; winType == null && j < 4; j++) {
-                if (board[i][j] == board[i + 1][j + 1] && board[i][j] == board[i + 2][j + 2] && board[i][j] == board[i + 3][j + 3] && board[i][j] != Piece.NONE) {
-                    pos = new Pos(i, j);
-                    winType = WinType.DIAGONAL_ASC;
-                }
-            }
-        }
-
-        //Winner by descendent diagonal
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; winType == null && j < COLUMNS; j++) {
-                if (canMove(new Pos(i - 3, j + 3))) {
-                    if (board[i][j] == board[i - 1][j + 1] && board[i][j] == board[i - 2][j + 2] && board[i][j] == board[i - 3][j + 3] && board[i][j] != Piece.NONE) {
-                        pos = new Pos(i, j);
-                        winType = WinType.DIAGONAL_DESC;
-                    }
-                }
-            }
-        }
-
-        if (winType == null) {
+        if (winType[0] == null) {
             // :(
             return null;
         } else {
             int pieces = -1;
-            switch (getPiece(pos)) {
+            switch (getPiece(pos[0])) {
                 case P1:
                     pieces = (rounds + 1) / 2;
                     break;
@@ -137,158 +193,96 @@ public class Game {
                     pieces = rounds / 2;
                     break;
             }
-            return new WinInfo(getPiece(pos), pos, winType, pieces);
+            return new WinInfo(getPiece(pos[0]), pos[0], winType[0], pieces);
         }
     }
 
-    public LinkedList<Game> getChildren(Piece piece) {
-        LinkedList<Game> children = new LinkedList<>();
-        for (int col = 0; col < COLUMNS && canPutPiece(col); col++) {
-            Game child = copyOf(this);
-            child.putPiece(col);
-            children.add(child);
-        }
-        return children;
-    }
-    
-    public int utilityFunction() {
-        //MAX plays 'O'
-        // +90 if 'O' wins, -90 'X' wins,
-        // +10 if three 'O' in a row, -5 three 'X' in a row,
-        // +4 if two 'O' in a row, -1 two 'X' in a row
-        int Xlines = 0;
-        int Olines = 0;
-        
-        switch(getWinner().origin) {
-            case P1:
-                Xlines = Xlines + 90;
-                break;
-            case P2:
-                Olines = Olines + 90;
-                break;
-        }	
-        Xlines  = Xlines + check3In(Piece.P1)*10 + check2In(Piece.P1)*4;
-        Olines  = Olines + check3In(Piece.P2)*5 + check2In(Piece.P2);
-	return Olines - Xlines;
-    }
-    
-    //Checks if there are 3 pieces of a same player
-    public int check3In(Piece piece) {	
-        int times = 0;
-        //In row
-        for (int i = ROWS; i >= 0; i--) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i, j + 2))) {
-                    if (board[i][j] == board[i][j + 1] && board[i][j] == board[i][j + 2] && board[i][j] == piece) {
-                        times++;
-                    }
+    protected void checkNIn(int n, boolean brake, FoundAction action) {
+        boolean brakeUsed = false;
+        //Check by row
+        for (int i = ROWS - 1; i >= 0; i--) {
+            for (int j = 0; j <= COLUMNS - n && !(brakeUsed && brake); j++) {
+                boolean valid = board[i][j] != Piece.NONE;
+                for (int k = 1; k < n && valid; k++) {
+                    valid = board[i][j] == board[i][j + k];
+                }
+                if (valid) {
+                    brakeUsed = true;
+                    action.onFound(new Pos(i, j), WinType.ROW);
                 }
             }
         }
 
-        //In column
-        for (int i = 5; i >= 0; i--) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i - 2, j))) {
-                    if (board[i][j] == board[i - 1][j] && board[i][j] == board[i - 2][j] && board[i][j] == piece) {
-                        times++;
-                    }
+        //Check by column
+        for (int i = ROWS - 1; i >= n - 1; i--) {
+            for (int j = 0; j < COLUMNS && !(brakeUsed && brake); j++) {
+                boolean valid = board[i][j] != Piece.NONE;
+                for (int k = 1; k < n && valid; k++) {
+                    valid = board[i][j] == board[i - k][j];
+                }
+                if (valid) {
+                    brakeUsed = true;
+                    action.onFound(new Pos(i, j), WinType.COLUMN);
                 }
             }
         }
 
-        //In diagonal ascendent
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i + 2, j + 2))) {
-                    if (board[i][j] == board[i + 1][j + 1] && board[i][j] == board[i + 2][j + 2] && board[i][j] == piece) {
-                        times++;
-                    }
+        //Check by ascendent diagonal
+        for (int i = ROWS - 1; i >= n - 1; i--) {
+            for (int j = 0; j <= COLUMNS - n && !(brakeUsed && brake); j++) {
+                boolean valid = board[i][j] != Piece.NONE;
+                for (int k = 1; k < n && valid; k++) {
+                    valid = board[i][j] == board[i - k][j + k];
+                }
+                if (valid) {
+                    brakeUsed = true;
+                    action.onFound(new Pos(i, j), WinType.DIAGONAL_ASC);
                 }
             }
         }
 
-        //In diagonal descendent
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i - 2, j + 2))) {
-                    if (board[i][j] == board[i - 1][j + 1] && board[i][j] == board[i - 2][j + 2] && board[i][j] == piece) {
-                        times++;
-                    }
+        //Check by descendent diagonal
+        for (int i = ROWS - n; i >= 0; i--) {
+            for (int j = 0; j <= COLUMNS - n && !(brakeUsed && brake); j++) {
+                boolean valid = board[i][j] != Piece.NONE;
+                for (int k = 1; k < n && valid; k++) {
+                    valid = board[i][j] == board[i + k][j + k];
+                }
+                if (valid) {
+                    brakeUsed = true;
+                    action.onFound(new Pos(i, j), WinType.DIAGONAL_DESC);
                 }
             }
         }
-        return times;				
     }
 
-    //Checks if there are 2 pieces of a same player
-    public int check2In(Piece piece) {	
-        int times = 0;
-        //In a row
-        for (int i = 5; i >= 0; i--) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i, j + 1))) {
-                    if (board[i][j] == board[i][j + 1] && board[i][j] == piece) {
-                        times++;
-                    }
-                }
-            }
-        }
+    protected interface FoundAction {
 
-        //In a column
-        for (int i = 5; i >= 0; i--) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i - 1, j))) {
-                    if (board[i][j] == board[i - 1][j] && board[i][j] == piece) {
-                        times++;
-                    }
-                }
-            }
-        }
-
-        //In a diagonal ascendent
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i + 1, j + 1))) {
-                    if (board[i][j] == board[i + 1][j + 1] && board[i][j] == piece) {
-                        times++;
-                    }
-                }
-            }
-        }
-
-        //In a diagonal descendent
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (canMove(new Pos(i - 1, j + 1))) {
-                    if (board[i][j] == board[i - 1][j + 1] && board[i][j] == piece) {
-                        times++;
-                    }
-                }
-            }
-        }
-        return times;
+        void onFound(Pos pos, WinType type);
     }
 
-    public static Game copyOf(Game game) {
-        Game expansion = new Game();
-        expansion.lastMove = game.lastMove;
-        expansion.rounds = game.rounds;
-        for (int i = 0; i < game.board.length; i++) {
-            System.arraycopy(game.board[i], 0, expansion.board[i], 0, game.board[i].length);
-        }
-        return expansion;
+    /**
+     * Check if a Pos is valid in this Game, will be valid only if it is not
+     * outside the grid
+     *
+     * @param pos
+     * @return boolean
+     */
+    protected boolean isValidPos(Pos pos) {
+        return !((pos.row <= -1) || (pos.column <= -1) || (pos.row >= ROWS) || (pos.column >= COLUMNS));
     }
 
-    private boolean canMove(Pos pos) {
-        return !((pos.row <= -1) || (pos.column <= -1) || (pos.row > ROWS) || (pos.column > COLUMNS));
-    }
-
-    private int getFirstEmptyRow(int column) {
+    /**
+     * Get the first empty row in a given column
+     *
+     * @param column
+     * @return int
+     */
+    protected int getFirstEmptyRow(int column) {
         if (column >= COLUMNS) {
             return -1;
         }
-        for (int i = 0; i < ROWS; i++) {
+        for (int i = ROWS - 1; i >= 0; i--) {
             if (board[i][column] == Piece.NONE) {
                 return i;
             }
@@ -296,31 +290,86 @@ public class Game {
         return -1;
     }
 
+    /**
+     * Interface used to listen to events on a Game
+     */
     public interface GameListener {
 
-        void onChange(Pos pos);
+        /**
+         * Called when a {@link Piece} has changed
+         *
+         * @param movement Movement that caused the change
+         */
+        void onChange(Movement movement);
     }
 
+    /**
+     * Represents a game piece
+     */
     public enum Piece {
+
+        /**
+         * Piece owned by player 1
+         */
         P1,
+        /**
+         * Piece owned by player 2
+         */
         P2,
+        /**
+         * Used to represent gaps, owned by nobody
+         */
         NONE
     }
 
+    /**
+     * Represents the winning method
+     */
     public enum WinType {
+
+        /**
+         * 4 Pieces in a row
+         */
         ROW,
+        /**
+         * 4 Pieces in a column
+         */
         COLUMN,
+        /**
+         * 4 Pieces in an ascending diagonal
+         */
         DIAGONAL_ASC,
+        /**
+         * 4 Pieces in an descending diagonal
+         */
         DIAGONAL_DESC
     }
 
+    /**
+     * Represents a position in the grid
+     */
     public static class Pos {
 
         public int row, column;
 
+        /**
+         * Creates a Pos with a given row and column
+         *
+         * @param row
+         * @param column
+         */
         public Pos(int row, int column) {
             this.row = row;
             this.column = column;
+        }
+
+        /**
+         * Create a Pos by making a deep copy of all its fields
+         *
+         * @param pos Pos to copy values from
+         */
+        public Pos(Pos pos) {
+            this(pos.row, pos.column);
         }
 
         @Override
@@ -348,8 +397,17 @@ public class Game {
             hash = 89 * hash + this.column;
             return hash;
         }
+
+        @Override
+        public String toString() {
+            return "(" + row + ", " + column + ")";
+        }
+
     }
 
+    /**
+     * Holds information about a Game winner, and the win method
+     */
     public static class WinInfo {
 
         public final Piece origin;
@@ -397,7 +455,6 @@ public class Game {
             hash = 97 * hash + this.pieces;
             return hash;
         }
-        
-        
+
     }
 }

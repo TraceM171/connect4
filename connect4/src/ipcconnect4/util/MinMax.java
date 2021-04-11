@@ -1,38 +1,42 @@
 package ipcconnect4.util;
 
-import ipcconnect4.model.Game;
+import ipcconnect4.model.MovementAI;
+import ipcconnect4.model.GameWithAI;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class MinMax {
 
-    //Variable that holds the maximum depth the MinMax algorithm will reach (level of the three)
-    int maxDepth;
+    private final int maxDepth;
+    public final Long seed;
 
-    public MinMax() {
-        maxDepth = 5; //This is important to get a better decision (more depth, more accurate decision, more time)
+    public MinMax(int maxDepth) {
+        this(maxDepth, null);
+    }
+    
+    public MinMax(int maxDepth, Long seed) {
+        this.maxDepth = maxDepth;
+        this.seed = seed;
     }
 
-    //Initiates the MinMax algorithm
-    public Movement getNextMove(Game game) {
-        //We want to take the lowest of its recursive generated values in order to choose the greatest
-        return max(Game.copyOf(game), 0);
+    public MovementAI getNextMove(GameWithAI game) {
+        return max(new GameWithAI(game), 0);
     }
 
-    //The max and min methods are called interchangingly, one after another until a max depth is reached
-    public Movement min(Game game, int depth) { //MIN plays 'X' (user)
-        Random r = new Random();
+    public MovementAI min(GameWithAI game, int depth) { //MIN plays P1 (user)
+        Random r = getRandom();
         // If MIN is called on a state that is terminal or after a maximum depth is reached, then a heuristic is calculated on the state and the move returned.
-        if ((game.isOver()) || (depth == maxDepth)) {
-            return new Movement(new Game.Pos(game.getLastMovement().pos.row, game.getLastMovement().pos.column), game.utilityFunction());
+        if (game.isOver() || depth == maxDepth) {
+            MovementAI baseMove = new MovementAI(game.getLastMovement().pos, game.utilityFunction());
+            return baseMove;
         } else {
             //The children-moves of the state are calculated (expansion)
-            LinkedList<Game> children = new LinkedList<>(game.getChildren(Game.Piece.P1));
-            Movement minMove = new Movement(Integer.MAX_VALUE);
+            LinkedList<GameWithAI> children = new LinkedList<>(game.getChildren(GameWithAI.Piece.P1));
+            MovementAI minMove = new MovementAI(Integer.MAX_VALUE);
             for (int i = 0; i < children.size(); i++) {
-                Game child = children.get(i);
+                GameWithAI child = children.get(i);
                 //And for each child max is called, on a lower depth
-                Movement move = max(child, depth + 1);
+                MovementAI move = max(child, depth + 1);
                 //The child-move with the lowest value is selected and returned by max
                 if (move.value <= minMove.value) {
                     if ((move.value == minMove.value)) {
@@ -51,18 +55,18 @@ public class MinMax {
         }
     }
 
-    //The max and min methods are called interchangingly, one after another until a max depth or game over is reached
-    public Movement max(Game game, int depth) { //MAX plays 'O'
-        Random r = new Random();
+    public MovementAI max(GameWithAI game, int depth) { //MAX plays P2
+        Random r = getRandom();
         //If MAX is called on a state that is terminal or after a maximum depth is reached, then a heuristic is calculated on the state and the move returned.
         if ((game.isOver()) || (depth == maxDepth)) {
-            return new Movement(new Game.Pos(game.getLastMovement().pos.row, game.getLastMovement().pos.column), game.utilityFunction());
+            MovementAI baseMove = new MovementAI(game.getLastMovement().pos, game.utilityFunction());
+            return baseMove;
         } else {
-            LinkedList<Game> children = new LinkedList<>(game.getChildren(Game.Piece.P2));
-            Movement maxMove = new Movement(Integer.MAX_VALUE);;
+            LinkedList<GameWithAI> children = new LinkedList<>(game.getChildren(GameWithAI.Piece.P2));
+            MovementAI maxMove = new MovementAI(Integer.MIN_VALUE);
             for (int i = 0; i < children.size(); i++) {
-                Game child = children.get(i);
-                Movement move = min(child, depth + 1);
+                GameWithAI child = children.get(i);
+                MovementAI move = min(child, depth + 1);
                 //Here is the difference with Min method: The greatest value is selected
                 if (move.value >= maxMove.value) {
                     if ((move.value == maxMove.value)) {
@@ -77,6 +81,14 @@ public class MinMax {
                 }
             }
             return maxMove;
+        }
+    }
+    
+    private Random getRandom() {
+        if (seed != null) {
+            return new Random(seed);
+        } else {
+            return new Random();
         }
     }
 }

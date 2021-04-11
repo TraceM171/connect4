@@ -47,7 +47,7 @@ public class GameTest {
     @Test
     public void getWinner_Column() {
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(0, 0), WinType.COLUMN, 4
+                Piece.P1, new Pos(5, 0), WinType.COLUMN, 4
         );
 
         Game game = new Game();
@@ -60,13 +60,13 @@ public class GameTest {
         game.putPiece(0);
 
         WinInfo obtained = game.getWinner();
-        assertEquals(obtained, expected);
+        assertEquals(expected, obtained);
     }
-    
+
     @Test
     public void getWinner_Row() {
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(0, 0), WinType.ROW, 4
+                Piece.P1, new Pos(5, 0), WinType.ROW, 4
         );
 
         Game game = new Game();
@@ -79,13 +79,13 @@ public class GameTest {
         game.putPiece(3);
 
         WinInfo obtained = game.getWinner();
-        assertEquals(obtained, expected);
+        assertEquals(expected, obtained);
     }
-    
+
     @Test
     public void getWinner_DiagAsc() {
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(0, 0), WinType.DIAGONAL_ASC, 6
+                Piece.P1, new Pos(5, 0), WinType.DIAGONAL_ASC, 6
         );
 
         Game game = new Game();
@@ -102,13 +102,13 @@ public class GameTest {
         game.putPiece(3);
 
         WinInfo obtained = game.getWinner();
-        assertEquals(obtained, expected);
+        assertEquals(expected, obtained);
     }
-    
+
     @Test
     public void getWinner_DiagDesc() {
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(3, 0), WinType.DIAGONAL_DESC, 6
+                Piece.P1, new Pos(2, 0), WinType.DIAGONAL_DESC, 6
         );
 
         Game game = new Game();
@@ -125,7 +125,7 @@ public class GameTest {
         game.putPiece(0);
 
         WinInfo obtained = game.getWinner();
-        assertEquals(obtained, expected);
+        assertEquals(expected, obtained);
     }
 
 }

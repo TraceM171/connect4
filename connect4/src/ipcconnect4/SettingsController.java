@@ -4,7 +4,6 @@ import ipcconnect4.util.BiHashMap;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
