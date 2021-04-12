@@ -4,7 +4,9 @@ import ipcconnect4.util.MinMax;
 import java.util.LinkedList;
 
 /**
- * This class represents a Connect4 game with an AI as the player 2.
+ * This class represents a Connect4 game with an AI as the player 2. The AI will
+ * be an instance of {@link MinMax} algorithm
+ *
  * @see Game
  */
 public class GameWithAI extends Game {
@@ -13,28 +15,59 @@ public class GameWithAI extends Game {
     private final Difficulty difficulty;
     private MovementAI lastMove = new MovementAI();
 
+    /**
+     * Same as
+     * {@link #GameWithAI(ipcconnect4.model.GameWithAI.Difficulty, java.lang.Long)},
+     * using a random seed
+     *
+     * @param difficulty
+     */
     public GameWithAI(Difficulty difficulty) {
         this(difficulty, null);
     }
 
+    /**
+     * Create a GameWithAI using {@link Game#Game()} with the given difficulty,
+     * specifying the seed for the random choices
+     *
+     * @param difficulty
+     * @param seed
+     */
     public GameWithAI(Difficulty difficulty, Long seed) {
         super();
         this.difficulty = difficulty;
         this.AI = new MinMax(difficulty.value, seed);
     }
 
+    /**
+     * Create a GameWithAI by making a deep copy of all its fields. New
+     * GameWithAI's AI will be null, so this is only used to simulate game
+     * states
+     *
+     * @param game GameWithAI to copy values from
+     */
     public GameWithAI(GameWithAI game) {
         super(game);
         difficulty = game.difficulty;
-        AI = new MinMax(difficulty.value, game.AI.seed);
+        AI = null;
         lastMove = game.lastMove;
     }
 
+    /**
+     * Make a move using the AI as the player
+     *
+     * @see #getNextAIMovement()
+     */
     public void performAIMovement() {
         putPiece(getNextAIMovement().pos.column);
     }
 
-    public Movement getNextAIMovement() {
+    /**
+     * Get the MovementAI that the AI would do next in this GameWithAI status
+     *
+     * @return movementAI
+     */
+    public MovementAI getNextAIMovement() {
         return AI.getNextMove(this);
     }
 
@@ -48,7 +81,12 @@ public class GameWithAI extends Game {
         return lastMove;
     }
 
-    // Methods needed for the AI
+    /**
+     * Calculate the quality value of this GameWithAI state, a higher value
+     * means more possibilities for the AI to win
+     *
+     * @return int
+     */
     public int utilityFunction() {
         //MAX plays 'O'
         // +90 if 'O' wins, -90 'X' wins,
@@ -67,11 +105,18 @@ public class GameWithAI extends Game {
                     break;
             }
         }
-        Xlines = Xlines + check3In(Piece.P1) * 10 + check2In(Piece.P1) * 4;
-        Olines = Olines + check3In(Piece.P2) * 5 + check2In(Piece.P2);
+        Xlines = Xlines + countNIn(3, Piece.P1) * 10 + countNIn(2, Piece.P1) * 4;
+        Olines = Olines + countNIn(3, Piece.P2) * 5 + countNIn(2, Piece.P2);
         return Olines - Xlines;
     }
 
+    /**
+     * Get a List of GameWithAI, representing the different states that can be
+     * reached from the current state
+     *
+     * @param piece
+     * @return list
+     */
     public LinkedList<GameWithAI> getChildren(Piece piece) {
         LinkedList<GameWithAI> children = new LinkedList<>();
         for (int col = 0; col < COLUMNS; col++) {
@@ -84,9 +129,16 @@ public class GameWithAI extends Game {
         return children;
     }
 
-    public int check3In(Piece piece) {
+    /**
+     * Get how many times the pattern of n consecutive Pieces is found
+     *
+     * @param n consecutive Pieces
+     * @param piece Piece of which to look for a pattern
+     * @return int
+     */
+    public int countNIn(int n, Piece piece) {
         int[] times = {0};
-        checkNIn(3, false, (posW, typeW) -> {
+        checkNIn(n, false, (posW, typeW) -> {
             if (getPiece(posW) == piece) {
                 times[0]++;
             }
@@ -94,16 +146,10 @@ public class GameWithAI extends Game {
         return times[0];
     }
 
-    public int check2In(Piece piece) {
-        int[] times = {0};
-        checkNIn(2, false, (posW, typeW) -> {
-            if (getPiece(posW) == piece) {
-                times[0]++;
-            }
-        });
-        return times[0];
-    }
-
+    /**
+     * Represents the level of difficulty that the AI has, higher difficulties
+     * means more time to compute the next movement
+     */
     public enum Difficulty {
         EASY(1),
         NORMAL(2),

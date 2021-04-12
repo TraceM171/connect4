@@ -5,25 +5,56 @@ import ipcconnect4.model.GameWithAI;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Class that uses the min max algorithm to find a good next movement on a
+ * {@link Game}, can use the depth to control the quality of the movement, more
+ * depth equals better choice but exponentially more time
+ */
 public class MinMax {
 
     private final int maxDepth;
     public final Long seed;
 
+    /**
+     * Creates a MinMax using {@link #MinMax(int, java.lang.Long)} with a random
+     * seed
+     *
+     * @param maxDepth
+     */
     public MinMax(int maxDepth) {
         this(maxDepth, null);
     }
-    
+
+    /**
+     * Create a MinMax with the given algorithm depth and a seed to use in
+     * random choices
+     *
+     * @param maxDepth
+     * @param seed
+     */
     public MinMax(int maxDepth, Long seed) {
         this.maxDepth = maxDepth;
         this.seed = seed;
     }
 
+    /**
+     * Get the MovementAI using the given game as a current game status
+     *
+     * @param game
+     * @return movementAI
+     */
     public MovementAI getNextMove(GameWithAI game) {
         return max(new GameWithAI(game), 0);
     }
 
-    public MovementAI min(GameWithAI game, int depth) { //MIN plays P1 (user)
+    /**
+     * ALGORITHM METHOD
+     *
+     * @param game
+     * @param depth
+     * @return
+     */
+    private MovementAI min(GameWithAI game, int depth) { //MIN plays P1 (user)
         Random r = getRandom();
         // If MIN is called on a state that is terminal or after a maximum depth is reached, then a heuristic is calculated on the state and the move returned.
         if (game.isOver() || depth == maxDepth) {
@@ -55,7 +86,14 @@ public class MinMax {
         }
     }
 
-    public MovementAI max(GameWithAI game, int depth) { //MAX plays P2
+    /**
+     * ALGORITHM METHOD
+     *
+     * @param game
+     * @param depth
+     * @return
+     */
+    private MovementAI max(GameWithAI game, int depth) { //MAX plays P2 (AI)
         Random r = getRandom();
         //If MAX is called on a state that is terminal or after a maximum depth is reached, then a heuristic is calculated on the state and the move returned.
         if ((game.isOver()) || (depth == maxDepth)) {
@@ -83,7 +121,12 @@ public class MinMax {
             return maxMove;
         }
     }
-    
+
+    /**
+     * Get a random, will use this object seed if it is not null
+     *
+     * @return
+     */
     private Random getRandom() {
         if (seed != null) {
             return new Random(seed);

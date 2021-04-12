@@ -33,6 +33,8 @@
             </reference>
         </references>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>Game's</word>
+            <word>int</word>
             <word>Pos</word>
         </spellchecker-wordlist>
     </configuration>

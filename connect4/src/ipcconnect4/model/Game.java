@@ -29,7 +29,8 @@ public class Game {
     }
 
     /**
-     * Create a Game by making a deep copy of all its fields
+     * Create a Game by making a deep copy of all its fields. New Game's
+     * listener will be null
      *
      * @param game Game to copy values from
      */
@@ -162,7 +163,7 @@ public class Game {
     }
 
     /**
-     * Get the WinerInfo of this Game, or null if there is none This method has
+     * Get the WinerInfo of this Game, or null if there is none. This method has
      * a quadratic cost, based on the grid size.
      *
      * @return winInfo
@@ -197,6 +198,18 @@ public class Game {
         }
     }
 
+    /**
+     * Check if there are n Pieces consecutive, either on a row, column,
+     * ascendent diagonal or descendent diagonal. This method has a quadratic
+     * cost, based on the grid size
+     *
+     * @param n Number of consecutive pieces
+     * @param brake If true, will stop the search on the first pattern found,
+     * otherwise will search for all
+     * @param action
+     * {@link FoundAction#onFound(ipcconnect4.model.Game.Pos, ipcconnect4.model.Game.WinType)}
+     * will be called every time a pattern is found
+     */
     protected void checkNIn(int n, boolean brake, FoundAction action) {
         boolean brakeUsed = false;
         //Check by row
@@ -256,11 +269,6 @@ public class Game {
         }
     }
 
-    protected interface FoundAction {
-
-        void onFound(Pos pos, WinType type);
-    }
-
     /**
      * Check if a Pos is valid in this Game, will be valid only if it is not
      * outside the grid
@@ -288,61 +296,6 @@ public class Game {
             }
         }
         return -1;
-    }
-
-    /**
-     * Interface used to listen to events on a Game
-     */
-    public interface GameListener {
-
-        /**
-         * Called when a {@link Piece} has changed
-         *
-         * @param movement Movement that caused the change
-         */
-        void onChange(Movement movement);
-    }
-
-    /**
-     * Represents a game piece
-     */
-    public enum Piece {
-
-        /**
-         * Piece owned by player 1
-         */
-        P1,
-        /**
-         * Piece owned by player 2
-         */
-        P2,
-        /**
-         * Used to represent gaps, owned by nobody
-         */
-        NONE
-    }
-
-    /**
-     * Represents the winning method
-     */
-    public enum WinType {
-
-        /**
-         * 4 Pieces in a row
-         */
-        ROW,
-        /**
-         * 4 Pieces in a column
-         */
-        COLUMN,
-        /**
-         * 4 Pieces in an ascending diagonal
-         */
-        DIAGONAL_ASC,
-        /**
-         * 4 Pieces in an descending diagonal
-         */
-        DIAGONAL_DESC
     }
 
     /**
@@ -457,4 +410,77 @@ public class Game {
         }
 
     }
+
+    /**
+     * Listener used to perform custom actions when using
+     * {@link #checkNIn(int, boolean, ipcconnect4.model.Game.FoundAction)}
+     */
+    protected interface FoundAction {
+
+        /**
+         * Called when a pattern is found in checkNIn
+         *
+         * @param pos Position of the first piece of the pattern found. Starting
+         * from left(column 0) to right(column COLUMNS - 1) and then from
+         * bottom(row ROWS) to top(row 0)
+         * @param type Pattern found
+         */
+        void onFound(Pos pos, WinType type);
+    }
+
+    /**
+     * Interface used to listen to events on a Game
+     */
+    public interface GameListener {
+
+        /**
+         * Called when a {@link Piece} has changed
+         *
+         * @param movement Movement that caused the change
+         */
+        void onChange(Movement movement);
+    }
+
+    /**
+     * Represents a game piece
+     */
+    public enum Piece {
+
+        /**
+         * Piece owned by player 1
+         */
+        P1,
+        /**
+         * Piece owned by player 2
+         */
+        P2,
+        /**
+         * Used to represent gaps, owned by nobody
+         */
+        NONE
+    }
+
+    /**
+     * Represents the winning method
+     */
+    public enum WinType {
+
+        /**
+         * 4 Pieces in a row
+         */
+        ROW,
+        /**
+         * 4 Pieces in a column
+         */
+        COLUMN,
+        /**
+         * 4 Pieces in an ascending diagonal
+         */
+        DIAGONAL_ASC,
+        /**
+         * 4 Pieces in an descending diagonal
+         */
+        DIAGONAL_DESC
+    }
+
 }
