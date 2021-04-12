@@ -3,6 +3,8 @@ package ipcconnect4.ui.home;
 import ipcconnect4.Main;
 import static ipcconnect4.Main.rb;
 import static ipcconnect4.Main.stage;
+import ipcconnect4.model.GameWithAI;
+import ipcconnect4.model.GameWithAI.Difficulty;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,7 +17,6 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Player;
 
 public class HomeController {
 
@@ -142,7 +143,7 @@ public class HomeController {
 
     @FXML
     private void startVSAIAction(MouseEvent event) {
-        Main.startGame(Main.player1, null);
+        Main.startGameAI(Main.player1, Difficulty.HARD);
     }
 
     @FXML

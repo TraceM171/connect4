@@ -1,6 +1,8 @@
 package ipcconnect4;
 
 import DBAccess.Connect4DAOException;
+import ipcconnect4.model.GameWithAI;
+import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.ui.auth.AuthenticateController;
 import ipcconnect4.ui.game.GameController;
 import java.io.IOException;
@@ -88,12 +90,19 @@ public class Main extends Application {
     }
     
     public static void startGame(Player P1, Player P2) {
+        startGame(new GameController(P1, P2));
+    }
+    
+    public static void startGameAI(Player P1, Difficulty difficulty) {
+        startGame(new GameController(P1, difficulty));
+    }
+    
+    private static void startGame(GameController controller) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("/ipcconnect4/view/game.fxml"),
                     rb
             );
-            GameController controller = new GameController(P1, P2);
             loader.setController(controller);
             stage.setScene(new Scene(loader.load()));
         } catch (IOException ex) {

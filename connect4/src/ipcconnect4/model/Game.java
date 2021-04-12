@@ -97,7 +97,7 @@ public class Game {
             updateLastMovement(nPos, piece);
             rounds++;
             if (listener != null) {
-                listener.onChange(lastMove);
+                listener.onChange(getLastMovement());
                 WinInfo wi = getWinner();
                 if (wi != null) {
                     listener.onWin(wi);
