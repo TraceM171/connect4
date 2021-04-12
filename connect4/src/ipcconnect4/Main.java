@@ -2,6 +2,7 @@ package ipcconnect4;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.ui.auth.AuthenticateController;
+import ipcconnect4.ui.game.GameController;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -80,6 +81,20 @@ public class Main extends Application {
                     Main.class.getResource("/ipcconnect4/view/home.fxml"),
                     rb
             );
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void startGame(Player P1, Player P2) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    Main.class.getResource("/ipcconnect4/view/game.fxml"),
+                    rb
+            );
+            GameController controller = new GameController(P1, P2);
+            loader.setController(controller);
             stage.setScene(new Scene(loader.load()));
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

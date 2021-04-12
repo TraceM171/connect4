@@ -15,6 +15,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Player;
 
 public class HomeController {
 
@@ -136,7 +137,17 @@ public class HomeController {
 
     @FXML
     private void settingsAction(MouseEvent event) {
-        Main.showSettings( (Stage) nickNameT1.getScene().getWindow());
+        Main.showSettings((Stage) nickNameT1.getScene().getWindow());
+    }
+
+    @FXML
+    private void startVSAIAction(MouseEvent event) {
+        Main.startGame(Main.player1, null);
+    }
+
+    @FXML
+    private void startVSPlayerAction(MouseEvent event) {
+        Main.startGame(Main.player1, Main.player2);
     }
 
     @FXML

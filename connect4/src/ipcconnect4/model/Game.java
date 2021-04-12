@@ -98,6 +98,10 @@ public class Game {
             rounds++;
             if (listener != null) {
                 listener.onChange(lastMove);
+                WinInfo wi = getWinner();
+                if (wi != null) {
+                    listener.onWin(wi);
+                }
             }
         }
     }
@@ -439,6 +443,8 @@ public class Game {
          * @param movement Movement that caused the change
          */
         void onChange(Movement movement);
+
+        void onWin(WinInfo winInfo);
     }
 
     /**

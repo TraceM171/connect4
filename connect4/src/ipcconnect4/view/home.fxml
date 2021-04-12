@@ -70,7 +70,7 @@
     <center>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" onMouseClicked="#startVSPlayerAction" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -79,7 +79,7 @@
                   </ImageView>
                </children>
             </VBox>
-            <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" onMouseClicked="#startVSAIAction" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                      <image>
