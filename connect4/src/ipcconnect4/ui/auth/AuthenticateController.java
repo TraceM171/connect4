@@ -71,7 +71,7 @@ public class AuthenticateController {
     private void setLoginMode(LoginController.LoginListener listener) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ipcconnect4/view/login.fxml"),
+                    getClass().getResource("/resources/fxml/login.fxml"),
                     Main.rb
             );
             LoginController controller = new LoginController(listener);
@@ -87,7 +87,7 @@ public class AuthenticateController {
     private void setForgotMode(ForgotController.ForgotListener listener) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ipcconnect4/view/forgot.fxml"),
+                    getClass().getResource("/resources/fxml/forgot.fxml"),
                     Main.rb
             );
             ForgotController controller = new ForgotController(listener);

@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.text.Text;
 import model.Connect4;
@@ -33,6 +35,8 @@ public class LoginController {
     private Button okButton;
     @FXML
     private Text errorText;
+    @FXML
+    private ImageView passMaskIV;
 
     public LoginController(LoginListener listener) {
         this.listener = listener;
@@ -101,8 +105,10 @@ public class LoginController {
         passTextMask.setVisible(!passTextMask.isVisible());
         if (passTextMask.isVisible()) {
             passTextMask.requestFocus();
+            passMaskIV.setImage(new Image("/resources/img/show_pass.png"));
         } else {
             passTextUnmask.requestFocus();
+            passMaskIV.setImage(new Image("/resources/img/hide_pass.png"));
         }
     }
 

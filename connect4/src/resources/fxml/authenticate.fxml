@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import ipcconnect4.view.IconButton?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <top>
-        <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#ranksAction" pickOnBounds="true" BorderPane.alignment="TOP_CENTER">
+        <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#ranksAction" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_CENTER">
             <image>
-                <Image url="@../../avatars/default.png" />
+                <Image backgroundLoading="true" url="/resources/img/ranks.png" />
             </image>
-        </ImageView>
+        </IconButton>
     </top>
     <bottom>
-        <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#settingsAction" pickOnBounds="true">
+        <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#settingsAction" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../avatars/default.png" />
+                <Image backgroundLoading="true" url="/resources/img/settings.png" />
             </image>
-        </ImageView>
+        </IconButton>
     </bottom>
     <center>
         <HBox fx:id="centerHB" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
             <children>
                 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true">
+                        <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../avatars/default.png" />
                             </image>
@@ -39,9 +41,9 @@
                             </VBox.margin>
                         </Text>
                     </children>
-               <HBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </HBox.margin>
+                    <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                    </HBox.margin>
                 </VBox>
                 <HBox fx:id="subscene" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                 </HBox>

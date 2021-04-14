@@ -3,7 +3,6 @@ package ipcconnect4.ui.home;
 import ipcconnect4.Main;
 import static ipcconnect4.Main.rb;
 import static ipcconnect4.Main.stage;
-import ipcconnect4.model.GameWithAI;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

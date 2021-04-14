@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
 import javafx.scene.text.Text;
 import model.Connect4;
 import model.Player;
@@ -110,7 +111,7 @@ public class ForgotController {
     }
 
     @FXML
-    private void cancelAction(ActionEvent event) {
+    private void cancelAction(InputEvent event) {
         listener.onFinish();
     }
 

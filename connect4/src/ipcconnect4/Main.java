@@ -39,7 +39,7 @@ public class Main extends Application {
     private static void startWithLanguage(Locale locale) {
         try {
             Locale.setDefault(locale);
-            rb = ResourceBundle.getBundle("ipcconnect4.bundles.Strings", Locale.getDefault());
+            rb = ResourceBundle.getBundle("resources.bundles.Strings", Locale.getDefault());
 //          goToAuthenticate(1);
             // TEST CODE BEGINS
             player1 = Connect4.getSingletonConnect4().getPlayer("nickName1");
@@ -63,7 +63,7 @@ public class Main extends Application {
     public static void showSettings(Stage owner) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    Main.class.getResource("/ipcconnect4/view/settings.fxml"),
+                    Main.class.getResource("/resources/fxml/settings.fxml"),
                     rb
             );
             Stage settingsStage = new Stage();
@@ -71,6 +71,7 @@ public class Main extends Application {
             settingsStage.initModality(Modality.WINDOW_MODAL);
             settingsStage.initOwner(owner);
             settingsStage.setTitle(rb.getString("app_name"));
+            settingsStage.setResizable(false);
             settingsStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +81,7 @@ public class Main extends Application {
     public static void goToHome() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    Main.class.getResource("/ipcconnect4/view/home.fxml"),
+                    Main.class.getResource("/resources/fxml/home.fxml"),
                     rb
             );
             stage.setScene(new Scene(loader.load()));
@@ -100,7 +101,7 @@ public class Main extends Application {
     private static void startGame(GameController controller) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    Main.class.getResource("/ipcconnect4/view/game.fxml"),
+                    Main.class.getResource("/resources/fxml/game.fxml"),
                     rb
             );
             loader.setController(controller);
@@ -117,7 +118,7 @@ public class Main extends Application {
     public static Scene getAuthenticateScene(int player) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    Main.class.getResource("/ipcconnect4/view/authenticate.fxml"),
+                    Main.class.getResource("/resources/fxml/authenticate.fxml"),
                     rb
             );
             AuthenticateController controller = new AuthenticateController(player);

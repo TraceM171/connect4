@@ -1,18 +1,18 @@
 package ipcconnect4;
 
 import ipcconnect4.util.BiHashMap;
+import ipcconnect4.view.IconButton;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 public class SettingsController implements Initializable {
@@ -22,7 +22,7 @@ public class SettingsController implements Initializable {
     @FXML
     private Label saveText;
     @FXML
-    private Button saveButton;
+    private IconButton saveIV;
 
     private BiHashMap<Locale, String> langs;
 
@@ -31,7 +31,7 @@ public class SettingsController implements Initializable {
         initLangs();
         initSpinner();
 
-        saveButton.disableProperty().bind(Bindings.equal(
+        saveIV.disableProperty().bind(Bindings.equal(
                 Bindings.<Locale>createObjectBinding(() -> {
                     return langs.getFirstKey(langSpinner.getValue());
                 }, langSpinner.valueProperty()
@@ -39,11 +39,11 @@ public class SettingsController implements Initializable {
                 Locale.getDefault()
         ));
 
-        saveText.visibleProperty().bind(saveButton.disabledProperty().not());
+        saveText.visibleProperty().bind(saveIV.disabledProperty().not());
     }
 
     @FXML
-    private void saveAction(ActionEvent event) {
+    private void saveAction(InputEvent event) {
         Main.changeLanguage(
                 langs.getFirstKey(langSpinner.getValue())
         );
@@ -51,12 +51,12 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void cancelAction(ActionEvent event) {
+    private void cancelAction(InputEvent event) {
         close();
     }
     
     private void close() {
-        Stage stage = (Stage) saveButton.getScene().getWindow();
+        Stage stage = (Stage) saveIV.getScene().getWindow();
         stage.close();
     }
 
