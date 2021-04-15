@@ -2,6 +2,7 @@
 
 <?import ipcconnect4.view.GameGrid?>
 <?import ipcconnect4.view.IconButton?>
+<?import ipcconnect4.view.CircleImage?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -28,11 +29,7 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <ImageView fx:id="avatarIV1" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../avatars/default.png" />
-                    </image>
-                </ImageView>
+                <CircleImage fx:id="avatarI1" radius="37.5" />
                 <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name1" GridPane.columnIndex="1">
                     <padding>
                         <Insets left="15.0" />
@@ -49,11 +46,7 @@
                         <Font size="17.0" />
                     </font>
                 </Label>
-                <ImageView fx:id="avatarIV2" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
-                    <image>
-                        <Image url="@../../avatars/default.png" />
-                    </image>
-                </ImageView>
+                <CircleImage fx:id="avatarI2" radius="37.5" GridPane.columnIndex="4" />
                 <StackPane GridPane.columnIndex="2">
                     <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -72,14 +65,14 @@
                 <Image url="/resources/img/cancel.png" />
             </image>
             <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                <Insets />
             </BorderPane.margin>
         </IconButton>
     </bottom>
     <center>
-        <HBox style="-fx-background-color: #0077EE;" BorderPane.alignment="CENTER">
+        <HBox style="-fx-background-color: #3f49ff;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                <Insets bottom="25.0" left="15.0" right="15.0" top="25.0" />
             </BorderPane.margin>
             <children>
                 <GameGrid fx:id="gameGrid" onMouseClicked="#putPieceAction" HBox.hgrow="ALWAYS">
@@ -107,4 +100,7 @@
             </children>
         </HBox>
     </center>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </BorderPane>

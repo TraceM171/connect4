@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import ipcconnect4.view.IconButton?>
+<?import ipcconnect4.view.CircleImage?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -12,9 +14,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import ipcconnect4.view.IconButton?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.home.HomeController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #d2eff7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.home.HomeController">
     <top>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -28,11 +29,7 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <ImageView fx:id="avatarIV1" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../avatars/default.png" />
-                    </image>
-                </ImageView>
+                <CircleImage fx:id="avatarI1" radius="25" />
                 <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name1" GridPane.columnIndex="1">
                     <padding>
                         <Insets left="15.0" />
@@ -54,11 +51,7 @@
                         <Font size="17.0" />
                     </font>
                 </Label>
-                <ImageView fx:id="avatarIV2" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
-                    <image>
-                        <Image url="@../../avatars/default.png" />
-                    </image>
-                </ImageView>
+                <CircleImage fx:id="avatarI2" radius="25" GridPane.columnIndex="4" />
             </children>
         </GridPane>
     </top>
@@ -70,7 +63,7 @@
         </IconButton>
     </bottom>
     <center>
-        <GridPane alignment="CENTER" hgap="20.0" vgap="5.0" BorderPane.alignment="CENTER">
+        <GridPane alignment="CENTER" hgap="20.0" vgap="10.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </BorderPane.margin>
@@ -83,7 +76,7 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" percentHeight="25.0" valignment="CENTER" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <VBox alignment="CENTER" onMouseClicked="#startVSPlayerAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" GridPane.rowSpan="2147483647">
+                <VBox alignment="CENTER" onMouseClicked="#startVSPlayerAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width: 2;" GridPane.rowSpan="2147483647">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -91,8 +84,12 @@
                             </image>
                         </ImageView>
                     </children>
+                    <effect>
+                        <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
+                    </effect>
+                    
                 </VBox>
-                <HBox alignment="CENTER" onMouseClicked="#startVSAIAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" GridPane.columnIndex="1">
+                <HBox alignment="CENTER" onMouseClicked="#startVSAIAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width:2;" GridPane.columnIndex="1">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -100,41 +97,53 @@
                             </image>
                         </ImageView>
                     </children>
+                    <effect>
+                        <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
+                    </effect>
                 </HBox>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
-                        <VBox alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="diff1VB" onMouseClicked="#difficultyAction" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
                             <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                <IconButton shadow="false" fx:id="diff1IB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../avatars/default.png" />
+                                        <Image url="/resources/img/diff_1.png" />
                                     </image>
-                                </ImageView>
+                                </IconButton>
                             </children>
                             <HBox.margin>
-                                <Insets right="5.0" />
+                                <Insets right="10.0" />
                             </HBox.margin>
+                            <effect>
+                                <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
+                            </effect>
                         </VBox>
-                        <VBox alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="diff2VB" onMouseClicked="#difficultyAction" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
                             <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                <IconButton shadow="false" fx:id="diff2IB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" >
                                     <image>
-                                        <Image url="@../../avatars/default.png" />
+                                        <Image url="/resources/img/diff_2.png" />
                                     </image>
-                                </ImageView>
+                                </IconButton>
                             </children>
                             <HBox.margin>
-                                <Insets right="5.0" />
+                                <Insets right="10.0" />
                             </HBox.margin>
+                            <effect>
+                                <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
+                            </effect>
                         </VBox>
-                        <VBox alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="diff3VB" onMouseClicked="#difficultyAction" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
                             <children>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                <IconButton shadow="false" fx:id="diff3IB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" >
                                     <image>
-                                        <Image url="@../../avatars/default.png" />
+                                        <Image url="/resources/img/diff_3.png" />
                                     </image>
-                                </ImageView>
+                                </IconButton>
                             </children>
+                            <effect>
+                                <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
+                            </effect>
                         </VBox>
                     </children>
                 </HBox>

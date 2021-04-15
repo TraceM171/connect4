@@ -4,7 +4,6 @@ import static ipcconnect4.model.Game.COLUMNS;
 import ipcconnect4.model.Game.Piece;
 import ipcconnect4.model.Game.Pos;
 import static ipcconnect4.model.Game.ROWS;
-import ipcconnect4.model.Game.WinInfo;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

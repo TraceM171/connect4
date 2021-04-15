@@ -10,6 +10,7 @@ import ipcconnect4.model.GameWithAI;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.model.Movement;
 import ipcconnect4.model.MovementAI;
+import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.GameGrid;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,13 +33,13 @@ public class GameController {
     private final boolean vsAI;
 
     @FXML
-    private ImageView avatarIV1;
+    private CircleImage avatarI1;
     @FXML
     private Label nickNameT1;
     @FXML
     private Label nickNameT2;
     @FXML
-    private ImageView avatarIV2;
+    private CircleImage avatarI2;
     @FXML
     private GameGrid gameGrid;
 
@@ -66,17 +67,17 @@ public class GameController {
 
     private void initTopBar() {
         if (P1 != null) {
-            avatarIV1.setImage(P1.getAvatar());
+            avatarI1.setImage(P1.getAvatar());
             nickNameT1.setText(P1.getNickName());
         } else {
             Platform.runLater(() -> Main.goToAuthenticate(1));
         }
 
         if (P2 != null) {
-            avatarIV2.setImage(P2.getAvatar());
+            avatarI2.setImage(P2.getAvatar());
             nickNameT2.setText(P2.getNickName());
         } else {
-            avatarIV2.setImage(new Image("/resources/img/ai.png"));
+            avatarI2.setImage(new Image("/resources/img/diff_3.png"));
             nickNameT2.setText("Computer");
         }
     }

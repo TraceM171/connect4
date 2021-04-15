@@ -51,14 +51,14 @@ public class IconButton extends ImageView {
 
     private void updateActive() {
         ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setSaturation(0);
-        updateColor(isActive(), colorAdjust);
+        colorAdjust.setSaturation(-0.85);
+        updateColor(!isActive(), colorAdjust);
     }
 
     private void updateDisabled() {
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(0.65);
-        updateColor(!isDisable(), colorAdjust);
+        updateColor(isDisable(), colorAdjust);
     }
 
     private void updateColor(boolean status, ColorAdjust ca) {
@@ -66,16 +66,16 @@ public class IconButton extends ImageView {
         lca = ca;
         if (shadow) {
             if (status) {
-                setEffect(getDropShadow());
-            } else {
                 ca.setInput(getDropShadow());
                 setEffect(ca);
+            } else {
+                setEffect(getDropShadow());
             }
         } else {
             if (status) {
-                setEffect(null);
-            } else {
                 setEffect(ca);
+            } else {
+                setEffect(null);
             }
         }
     }

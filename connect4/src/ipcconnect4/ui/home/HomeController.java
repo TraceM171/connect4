@@ -4,33 +4,61 @@ import ipcconnect4.Main;
 import static ipcconnect4.Main.rb;
 import static ipcconnect4.Main.stage;
 import ipcconnect4.model.GameWithAI.Difficulty;
+import ipcconnect4.view.CircleImage;
+import ipcconnect4.view.IconButton;
 import javafx.application.Platform;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.When;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HomeController {
 
     @FXML
-    private ImageView avatarIV1;
-    @FXML
     private Label nickNameT1;
     @FXML
     private Label nickNameT2;
     @FXML
-    private ImageView avatarIV2;
+    private CircleImage avatarI1;
+    @FXML
+    private CircleImage avatarI2;
+    @FXML
+    private VBox diff1VB;
+    @FXML
+    private IconButton diff1IB;
+    @FXML
+    private VBox diff2VB;
+    @FXML
+    private IconButton diff2IB;
+    @FXML
+    private VBox diff3VB;
+    @FXML
+    private IconButton diff3IB;
+
+    private final ObjectProperty<Difficulty> difficulty
+            = new SimpleObjectProperty<>(Difficulty.EASY);
 
     @FXML
     public void initialize() {
         initTopBar();
+        bindDifficulties();
     }
 
     private void initTopBar() {
@@ -52,19 +80,19 @@ public class HomeController {
             contextMenu.getItems().addAll(menuItem1, menuItem2);
 
             EventHandler handler = (EventHandler<ContextMenuEvent>) (event) -> {
-                contextMenu.show(avatarIV1, event.getScreenX(), event.getScreenY());
+                contextMenu.show(avatarI1, event.getScreenX(), event.getScreenY());
             };
 
             EventHandler handler1 = (EventHandler<MouseEvent>) (event) -> {
-                contextMenu.show(avatarIV1, event.getScreenX(), event.getScreenY());
+                contextMenu.show(avatarI1, event.getScreenX(), event.getScreenY());
             };
 
-            avatarIV1.setOnContextMenuRequested(handler);
-            avatarIV1.setOnMouseClicked(handler1);
+            avatarI1.setOnContextMenuRequested(handler);
+            avatarI1.setOnMouseClicked(handler1);
             nickNameT1.setOnContextMenuRequested(handler);
             nickNameT1.setOnMouseClicked(handler1);
 
-            avatarIV1.setImage(Main.player1.getAvatar());
+            avatarI1.setImage(Main.player1.getAvatar());
             nickNameT1.setText(Main.player1.getNickName());
 
         } else {
@@ -87,19 +115,19 @@ public class HomeController {
             contextMenu.getItems().addAll(menuItem1, menuItem2);
 
             EventHandler handler = (EventHandler<ContextMenuEvent>) (event) -> {
-                contextMenu.show(avatarIV2, event.getScreenX(), event.getScreenY());
+                contextMenu.show(avatarI2, event.getScreenX(), event.getScreenY());
             };
 
             EventHandler handler1 = (EventHandler<MouseEvent>) (event) -> {
-                contextMenu.show(avatarIV2, event.getScreenX(), event.getScreenY());
+                contextMenu.show(avatarI2, event.getScreenX(), event.getScreenY());
             };
 
-            avatarIV2.setOnContextMenuRequested(handler);
-            avatarIV2.setOnMouseClicked(handler1);
+            avatarI2.setOnContextMenuRequested(handler);
+            avatarI2.setOnMouseClicked(handler1);
             nickNameT2.setOnContextMenuRequested(handler);
             nickNameT2.setOnMouseClicked(handler1);
 
-            avatarIV2.setImage(Main.player2.getAvatar());
+            avatarI2.setImage(Main.player2.getAvatar());
             nickNameT2.setText(Main.player2.getNickName());
         } else {
             ContextMenu contextMenu = new ContextMenu();
@@ -118,20 +146,62 @@ public class HomeController {
             contextMenu.getItems().addAll(menuItem1);
 
             EventHandler handler = (EventHandler<ContextMenuEvent>) (event) -> {
-                contextMenu.show(avatarIV2, event.getScreenX(), event.getScreenY());
+                contextMenu.show(avatarI2, event.getScreenX(), event.getScreenY());
             };
 
             EventHandler handler1 = (EventHandler<MouseEvent>) (event) -> {
-                contextMenu.show(avatarIV2, event.getScreenX(), event.getScreenY());
+                contextMenu.show(avatarI2, event.getScreenX(), event.getScreenY());
             };
 
-            avatarIV2.setOnContextMenuRequested(handler);
-            avatarIV2.setOnMouseClicked(handler1);
+            avatarI2.setOnContextMenuRequested(handler);
+            avatarI2.setOnMouseClicked(handler1);
             nickNameT2.setOnContextMenuRequested(handler);
             nickNameT2.setOnMouseClicked(handler1);
 
-            avatarIV2.setImage(new Image("/avatars/default.png"));
+            avatarI2.setImage(new Image("/avatars/default.png"));
             nickNameT2.setText("?");
+        }
+    }
+
+    private void bindDifficulties() {
+        String activeStyle = "-fx-background-radius: 25;"
+                + "-fx-background-color: #c8bfe7;"
+                + "-fx-border-color: #635e73;"
+                + "-fx-border-radius: 25;"
+                + "-fx-border-width:2;";
+        String inactiveStyle = "-fx-background-radius: 25;"
+                + "-fx-background-color: #c8bfe7;"
+                + "-fx-border-color: #c8bfe7;"
+                + "-fx-border-radius: 25;"
+                + "-fx-border-width:2;";
+        diff1VB.styleProperty().bind(Bindings.when(diff1IB.activeProperty())
+                .then(activeStyle)
+                .otherwise(inactiveStyle));
+        diff2VB.styleProperty().bind(Bindings.when(diff2IB.activeProperty())
+                .then(activeStyle)
+                .otherwise(inactiveStyle));
+        diff3VB.styleProperty().bind(Bindings.when(diff3IB.activeProperty())
+                .then(activeStyle)
+                .otherwise(inactiveStyle));
+        
+        diff1IB.activeProperty().bind(Bindings.equal(difficulty, Difficulty.EASY));
+        diff2IB.activeProperty().bind(Bindings.equal(difficulty, Difficulty.NORMAL));
+        diff3IB.activeProperty().bind(Bindings.equal(difficulty, Difficulty.HARD));
+    }
+
+    @FXML
+    private void difficultyAction(MouseEvent event) {
+        VBox source = (VBox) event.getSource();
+        switch (source.getId()) {
+            case "diff1VB":
+                difficulty.set(Difficulty.EASY);
+                break;
+            case "diff2VB":
+                difficulty.set(Difficulty.NORMAL);
+                break;
+            case "diff3VB":
+                difficulty.set(Difficulty.HARD);
+                break;
         }
     }
 

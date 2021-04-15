@@ -37,7 +37,7 @@
                     <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../avatars/default.png" />
+                                <Image url="/resources/img/user.png" />
                             </image>
                         </ImageView>
                         <TextField fx:id="userText" maxWidth="1.7976931348623157E308" promptText="%user_input" HBox.hgrow="ALWAYS">
