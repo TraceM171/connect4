@@ -1,7 +1,6 @@
 package ipcconnect4;
 
 import DBAccess.Connect4DAOException;
-import ipcconnect4.model.GameWithAI;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.ui.auth.AuthenticateController;
 import ipcconnect4.ui.game.GameController;
@@ -25,6 +24,7 @@ public class Main extends Application {
     private static final Locale DEF_LANG = new Locale("ca", "ES");
 
     public static Player player1, player2;
+    public static Difficulty lastAIdifficulty = Difficulty.EASY;
     public static ResourceBundle rb;
     public static Stage stage;
 
@@ -89,15 +89,15 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void startGame(Player P1, Player P2) {
         startGame(new GameController(P1, P2));
     }
-    
+
     public static void startGameAI(Player P1, Difficulty difficulty) {
         startGame(new GameController(P1, difficulty));
     }
-    
+
     private static void startGame(GameController controller) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -132,15 +132,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        try {
-            Connect4.getSingletonConnect4().createDemoData(3, 3, 3);
-
-            Main.stage = stage;
-            startWithLanguage(DEF_LANG);
-            stage.show();
-        } catch (Connect4DAOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Main.stage = stage;
+        startWithLanguage(DEF_LANG);
+        stage.show();
 
     }
 

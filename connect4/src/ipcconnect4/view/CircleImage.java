@@ -1,12 +1,18 @@
 package ipcconnect4.view;
 
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class CircleImage extends Circle {
     
-    private Image image = new Image("/avatars/default.png");
+    private Image image;
+    
+    @FXML
+    private void initialize() {
+        image = new Image("/avatars/default.png");
+    }
 
     public Image getImage() {
         return image;

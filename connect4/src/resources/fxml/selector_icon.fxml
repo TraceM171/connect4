@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import ipcconnect4.view.IconButton?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.VBox?>
+
+
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
+    <children>
+        <IconButton shadow="false" fx:id="iconButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"/>
+    </children>
+</fx:root>

@@ -12,12 +12,12 @@ public class IconButton extends ImageView {
 
     private final BooleanProperty active;
     private boolean shadow = true;
-    
+    private boolean bigShadow = false;
+
     private boolean lstatus;
     private ColorAdjust lca;
 
     public IconButton() {
-        super();
         setAccessibleRole(AccessibleRole.BUTTON);
         active = new SimpleBooleanProperty();
 
@@ -26,6 +26,9 @@ public class IconButton extends ImageView {
 
         setActive(true);
         setDisabled(false);
+
+        setOnMouseEntered((event) -> setBigShadow(true));
+        setOnMouseExited((event) -> setBigShadow(false));
     }
 
     public boolean getShadow() {
@@ -36,7 +39,12 @@ public class IconButton extends ImageView {
         this.shadow = shadow;
         redoUpdate();
     }
-    
+
+    private void setBigShadow(boolean value) {
+        this.bigShadow = value;
+        redoUpdate();
+    }
+
     public final BooleanProperty activeProperty() {
         return active;
     }
@@ -79,13 +87,17 @@ public class IconButton extends ImageView {
             }
         }
     }
-    
+
     private void redoUpdate() {
         updateColor(lstatus, lca);
     }
 
-    private static DropShadow getDropShadow() {
-        return new DropShadow(5, 2.5, 2.5, Color.GRAY);
+    private DropShadow getDropShadow() {
+        if (bigShadow) {
+            return new DropShadow(13, 3, 3, Color.BLACK);
+        } else {
+            return new DropShadow(5, 2.5, 2.5, Color.GRAY);
+        }
     }
 
 }

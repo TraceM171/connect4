@@ -6,24 +6,22 @@ import static ipcconnect4.Main.stage;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.IconButton;
+import ipcconnect4.view.SelectorIcon;
 import javafx.application.Platform;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.When;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -36,29 +34,28 @@ public class HomeController {
     @FXML
     private Label nickNameT2;
     @FXML
+    private VBox pvpVB;
+    @FXML
+    private VBox blockpvpVB;
+    @FXML
     private CircleImage avatarI1;
     @FXML
     private CircleImage avatarI2;
     @FXML
-    private VBox diff1VB;
+    private SelectorIcon diff1SI;
     @FXML
-    private IconButton diff1IB;
+    private SelectorIcon diff2SI;
     @FXML
-    private VBox diff2VB;
-    @FXML
-    private IconButton diff2IB;
-    @FXML
-    private VBox diff3VB;
-    @FXML
-    private IconButton diff3IB;
+    private SelectorIcon diff3SI;
 
     private final ObjectProperty<Difficulty> difficulty
-            = new SimpleObjectProperty<>(Difficulty.EASY);
+            = new SimpleObjectProperty<>(Main.lastAIdifficulty);
 
     @FXML
     public void initialize() {
         initTopBar();
         bindDifficulties();
+        bindPvP();
     }
 
     private void initTopBar() {
@@ -89,8 +86,6 @@ public class HomeController {
 
             avatarI1.setOnContextMenuRequested(handler);
             avatarI1.setOnMouseClicked(handler1);
-            nickNameT1.setOnContextMenuRequested(handler);
-            nickNameT1.setOnMouseClicked(handler1);
 
             avatarI1.setImage(Main.player1.getAvatar());
             nickNameT1.setText(Main.player1.getNickName());
@@ -124,8 +119,6 @@ public class HomeController {
 
             avatarI2.setOnContextMenuRequested(handler);
             avatarI2.setOnMouseClicked(handler1);
-            nickNameT2.setOnContextMenuRequested(handler);
-            nickNameT2.setOnMouseClicked(handler1);
 
             avatarI2.setImage(Main.player2.getAvatar());
             nickNameT2.setText(Main.player2.getNickName());
@@ -155,8 +148,6 @@ public class HomeController {
 
             avatarI2.setOnContextMenuRequested(handler);
             avatarI2.setOnMouseClicked(handler1);
-            nickNameT2.setOnContextMenuRequested(handler);
-            nickNameT2.setOnMouseClicked(handler1);
 
             avatarI2.setImage(new Image("/avatars/default.png"));
             nickNameT2.setText("?");
@@ -164,42 +155,36 @@ public class HomeController {
     }
 
     private void bindDifficulties() {
-        String activeStyle = "-fx-background-radius: 25;"
-                + "-fx-background-color: #c8bfe7;"
-                + "-fx-border-color: #635e73;"
-                + "-fx-border-radius: 25;"
-                + "-fx-border-width:2;";
-        String inactiveStyle = "-fx-background-radius: 25;"
-                + "-fx-background-color: #c8bfe7;"
-                + "-fx-border-color: #c8bfe7;"
-                + "-fx-border-radius: 25;"
-                + "-fx-border-width:2;";
-        diff1VB.styleProperty().bind(Bindings.when(diff1IB.activeProperty())
-                .then(activeStyle)
-                .otherwise(inactiveStyle));
-        diff2VB.styleProperty().bind(Bindings.when(diff2IB.activeProperty())
-                .then(activeStyle)
-                .otherwise(inactiveStyle));
-        diff3VB.styleProperty().bind(Bindings.when(diff3IB.activeProperty())
-                .then(activeStyle)
-                .otherwise(inactiveStyle));
-        
-        diff1IB.activeProperty().bind(Bindings.equal(difficulty, Difficulty.EASY));
-        diff2IB.activeProperty().bind(Bindings.equal(difficulty, Difficulty.NORMAL));
-        diff3IB.activeProperty().bind(Bindings.equal(difficulty, Difficulty.HARD));
+        diff1SI.activeProperty().bind(Bindings.equal(difficulty, Difficulty.EASY));
+        diff2SI.activeProperty().bind(Bindings.equal(difficulty, Difficulty.NORMAL));
+        diff3SI.activeProperty().bind(Bindings.equal(difficulty, Difficulty.HARD));
+
+        difficulty.addListener((observable, oldValue, newValue)
+                -> Main.lastAIdifficulty = newValue
+        );
+    }
+    
+    private void bindPvP() {
+        if (Main.player2 == null) {
+            pvpVB.setDisable(true);
+            blockpvpVB.setVisible(true);
+        } else {
+            pvpVB.setDisable(false);
+            blockpvpVB.setVisible(false);
+        }
     }
 
     @FXML
     private void difficultyAction(MouseEvent event) {
         VBox source = (VBox) event.getSource();
         switch (source.getId()) {
-            case "diff1VB":
+            case "diff1SI":
                 difficulty.set(Difficulty.EASY);
                 break;
-            case "diff2VB":
+            case "diff2SI":
                 difficulty.set(Difficulty.NORMAL);
                 break;
-            case "diff3VB":
+            case "diff3SI":
                 difficulty.set(Difficulty.HARD);
                 break;
         }
@@ -212,7 +197,7 @@ public class HomeController {
 
     @FXML
     private void startVSAIAction(MouseEvent event) {
-        Main.startGameAI(Main.player1, Difficulty.HARD);
+        Main.startGameAI(Main.player1, difficulty.get());
     }
 
     @FXML
@@ -223,6 +208,18 @@ public class HomeController {
     @FXML
     private void ranksAction(MouseEvent event) {
         Main.showNYI();
+    }
+    
+    @FXML
+    private void mouseEnteredAction(MouseEvent event) {
+        Node source = ((Node) event.getSource());
+        source.setEffect(new DropShadow(13, 3, 3, Color.BLACK));
+    }
+    
+    @FXML
+    private void mouseExitedAction(MouseEvent event) {
+        Node source = ((Node) event.getSource());
+        source.setEffect(new DropShadow(5, 2.5, 2.5, Color.GRAY));
     }
 
 }

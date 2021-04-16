@@ -19,7 +19,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.Player;
 
@@ -31,6 +30,7 @@ public class GameController {
     private final Game game;
     private final GameWithAI gameAI;
     private final boolean vsAI;
+    private final Difficulty difficulty;
 
     @FXML
     private CircleImage avatarI1;
@@ -49,6 +49,7 @@ public class GameController {
         this.game = new Game();
         this.gameAI = null;
         this.vsAI = false;
+        this.difficulty = null;
     }
 
     public GameController(Player P1, Difficulty difficulty) {
@@ -57,6 +58,7 @@ public class GameController {
         this.game = null;
         this.gameAI = new GameWithAI(difficulty);
         this.vsAI = true;
+        this.difficulty = difficulty;
     }
 
     @FXML
@@ -73,12 +75,32 @@ public class GameController {
             Platform.runLater(() -> Main.goToAuthenticate(1));
         }
 
-        if (P2 != null) {
-            avatarI2.setImage(P2.getAvatar());
-            nickNameT2.setText(P2.getNickName());
+        if (vsAI) {
+            String imagePath, name;
+            switch (difficulty) {
+                case EASY:
+                    imagePath = "/resources/img/diff_1.png";
+                    name = "Easy AI";
+                    break;
+                case NORMAL:
+                    imagePath = "/resources/img/diff_2.png";
+                    name = "Normal AI";
+                    break;
+                case HARD:
+                default:
+                    imagePath = "/resources/img/diff_3.png";
+                    name = "Hard AI";
+                    break;
+            }
+            avatarI2.setImage(new Image(imagePath));
+            nickNameT2.setText(name);
         } else {
-            avatarI2.setImage(new Image("/resources/img/diff_3.png"));
-            nickNameT2.setText("Computer");
+            if (P2 != null) {
+                avatarI2.setImage(P2.getAvatar());
+                nickNameT2.setText(P2.getNickName());
+            } else {
+                Platform.runLater(() -> Main.goToHome());
+            }
         }
     }
 

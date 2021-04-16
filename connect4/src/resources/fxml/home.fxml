@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import ipcconnect4.view.IconButton?>
 <?import ipcconnect4.view.CircleImage?>
+<?import ipcconnect4.view.IconButton?>
+<?import ipcconnect4.view.SelectorIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -29,29 +30,43 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <CircleImage fx:id="avatarI1" radius="25" />
-                <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name1" GridPane.columnIndex="1">
+                <CircleImage fx:id="avatarI1" onMouseEntered="#mouseEnteredAction" onMouseExited="#mouseExitedAction" radius="30" stroke="#ff5b5b" strokeType="OUTSIDE" strokeWidth="3">
+                    <effect>
+                        <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
+                    </effect>
+                </CircleImage>
+                <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ff5b5b; -fx-background-radius: 15;" text="Name1" GridPane.columnIndex="1">
                     <padding>
                         <Insets left="15.0" />
                     </padding>
                     <font>
                         <Font size="17.0" />
                     </font>
+                    <GridPane.margin>
+                        <Insets left="10.0" right="25.0" />
+                    </GridPane.margin>
                 </Label>
                 <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#ranksAction" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
                         <Image backgroundLoading="true" url="/resources/img/ranks.png" />
                     </image>
                 </IconButton>
-                <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name2" GridPane.columnIndex="3">
+                <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffd951; -fx-background-radius: 15;" text="Name2" GridPane.columnIndex="3">
                     <padding>
                         <Insets right="15.0" />
                     </padding>
                     <font>
                         <Font size="17.0" />
                     </font>
+                    <GridPane.margin>
+                        <Insets left="25.0" right="10.0" />
+                    </GridPane.margin>
                 </Label>
-                <CircleImage fx:id="avatarI2" radius="25" GridPane.columnIndex="4" />
+                <CircleImage fx:id="avatarI2" onMouseEntered="#mouseEnteredAction" onMouseExited="#mouseExitedAction" radius="30" stroke="#ffd951" strokeType="OUTSIDE" strokeWidth="3" GridPane.columnIndex="4">
+                    <effect>
+                        <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
+                    </effect>
+                </CircleImage>
             </children>
         </GridPane>
     </top>
@@ -76,7 +91,7 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" percentHeight="25.0" valignment="CENTER" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <VBox alignment="CENTER" onMouseClicked="#startVSPlayerAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width: 2;" GridPane.rowSpan="2147483647">
+                <VBox fx:id="pvpVB" alignment="CENTER" onMouseClicked="#startVSPlayerAction" onMouseEntered="#mouseEnteredAction" onMouseExited="#mouseExitedAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width: 2;" GridPane.rowSpan="2147483647">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -87,9 +102,8 @@
                     <effect>
                         <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
                     </effect>
-                    
                 </VBox>
-                <HBox alignment="CENTER" onMouseClicked="#startVSAIAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width:2;" GridPane.columnIndex="1">
+                <VBox alignment="CENTER" onMouseClicked="#startVSAIAction" onMouseEntered="#mouseEnteredAction" onMouseExited="#mouseExitedAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width:2;" GridPane.columnIndex="1">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -100,53 +114,51 @@
                     <effect>
                         <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
                     </effect>
-                </HBox>
+                </VBox>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
-                        <VBox fx:id="diff1VB" onMouseClicked="#difficultyAction" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
-                            <children>
-                                <IconButton shadow="false" fx:id="diff1IB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="/resources/img/diff_1.png" />
-                                    </image>
-                                </IconButton>
-                            </children>
+                        <SelectorIcon fx:id="diff1SI" icon="/resources/img/diff_1.png" onMouseClicked="#difficultyAction" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="10.0" />
                             </HBox.margin>
-                            <effect>
-                                <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
-                            </effect>
-                        </VBox>
-                        <VBox fx:id="diff2VB" onMouseClicked="#difficultyAction" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
-                            <children>
-                                <IconButton shadow="false" fx:id="diff2IB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" >
-                                    <image>
-                                        <Image url="/resources/img/diff_2.png" />
-                                    </image>
-                                </IconButton>
-                            </children>
+                        </SelectorIcon>
+                        <SelectorIcon fx:id="diff2SI" icon="/resources/img/diff_2.png" onMouseClicked="#difficultyAction" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets right="10.0" />
                             </HBox.margin>
-                            <effect>
-                                <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
-                            </effect>
-                        </VBox>
-                        <VBox fx:id="diff3VB" onMouseClicked="#difficultyAction" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7;" HBox.hgrow="ALWAYS">
-                            <children>
-                                <IconButton shadow="false" fx:id="diff3IB" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" >
-                                    <image>
-                                        <Image url="/resources/img/diff_3.png" />
-                                    </image>
-                                </IconButton>
-                            </children>
-                            <effect>
-                                <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
-                            </effect>
-                        </VBox>
+                        </SelectorIcon>
+                        <SelectorIcon fx:id="diff3SI" icon="/resources/img/diff_3.png" onMouseClicked="#difficultyAction" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
+                        </SelectorIcon>
                     </children>
                 </HBox>
+                <VBox fx:id="blockpvpVB" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: GRAY; -fx-opacity: 0.75;" GridPane.rowSpan="2147483647">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Para jugar contra otro jugador, el jugador 2 tiene que iniciar sesión" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="/resources/img/padlock.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                            </VBox.margin>
+                        </ImageView>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Haz click en el icono de un jugador para acceder a sus ajustes" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                    </padding>
+                </VBox>
             </children>
         </GridPane>
     </center>
