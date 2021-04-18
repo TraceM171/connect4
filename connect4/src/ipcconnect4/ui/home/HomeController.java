@@ -5,7 +5,6 @@ import static ipcconnect4.Main.rb;
 import static ipcconnect4.Main.stage;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.view.CircleImage;
-import ipcconnect4.view.IconButton;
 import ipcconnect4.view.SelectorIcon;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -17,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ContextMenuEvent;
@@ -127,12 +125,14 @@ public class HomeController {
             MenuItem menuItem1 = new MenuItem("Iniciar sesión");
 
             menuItem1.setOnAction((event) -> {
-                Stage settingsStage = new Stage();
-                settingsStage.setScene(Main.getAuthenticateScene(2));
-                settingsStage.initModality(Modality.WINDOW_MODAL);
-                settingsStage.initOwner(stage);
-                settingsStage.setTitle(rb.getString("app_name"));
-                settingsStage.showAndWait();
+                Stage auth2 = new Stage();
+                auth2.setScene(Main.getAuthenticateScene(2));
+                auth2.initModality(Modality.WINDOW_MODAL);
+                auth2.initOwner(stage);
+                auth2.setTitle(rb.getString("app_name"));
+                auth2.setHeight(500);
+                auth2.setWidth(450);
+                auth2.showAndWait();
                 Main.goToHome();
             });
 

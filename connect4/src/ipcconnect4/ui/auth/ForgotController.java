@@ -2,6 +2,8 @@ package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
+import ipcconnect4.view.IconButton;
+import ipcconnect4.view.IconLabel;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -9,7 +11,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -45,13 +46,13 @@ public class ForgotController {
     @FXML
     private Text errorText1;
     @FXML
-    private Button okButton;
+    private IconLabel okButton;
     @FXML
     private TextField codeText;
     @FXML
     private Text errorText2;
     @FXML
-    private Button okButton1;
+    private IconButton okButton1;
 
     public ForgotController(ForgotListener listener) {
         this.listener = listener;
@@ -79,7 +80,7 @@ public class ForgotController {
     }
 
     @FXML
-    private void okAction(ActionEvent event) {
+    private void okAction(InputEvent event) {
         try {
             Player res = Connect4.getSingletonConnect4().getPlayer(userText.getText());
             if (res != null && res.getEmail().equals(emailText.getText())) {
@@ -95,7 +96,7 @@ public class ForgotController {
     }
 
     @FXML
-    private void verifyAction(ActionEvent event) {
+    private void verifyAction(InputEvent event) {
         if (Integer.valueOf(codeText.getText()) == code) {
             try {
                 errorText2.setVisible(false);

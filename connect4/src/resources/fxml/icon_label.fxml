@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import ipcconnect4.view.IconButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+
+<fx:root alignment="CENTER" graphicTextGap="5.0" style="-fx-background-color: #7090be; -fx-background-radius: 10;" textFill="WHITE" type="javafx.scene.control.Label" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <graphic>
+        <IconButton fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" shadow="false" />
+    </graphic>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</fx:root>

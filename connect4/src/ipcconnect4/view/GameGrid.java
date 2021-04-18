@@ -1,25 +1,30 @@
 package ipcconnect4.view;
 
+import ipcconnect4.model.Game;
 import static ipcconnect4.model.Game.COLUMNS;
 import ipcconnect4.model.Game.Piece;
 import ipcconnect4.model.Game.Pos;
 import static ipcconnect4.model.Game.ROWS;
+import java.awt.Color;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 
 public class GameGrid extends GridPane {
-    
+
     private static final int ANIMATION_DELAY = 100;
     private static final int ANIMATION_MAX_THREADS = 6;
-    
+    private static final float PREVIEW_OPACITY = 0.35F;
+
     private boolean ended;
     private final ScheduledExecutorService executor
             = Executors.newScheduledThreadPool(ANIMATION_MAX_THREADS,
@@ -29,6 +34,14 @@ public class GameGrid extends GridPane {
                         return t;
                     });
 
+    public int getColumn(MouseEvent event) {
+        double x = event.getSceneX();
+        double xOffset = localToScene(getBoundsInLocal()).getMinX() + 0.5;
+        int column = (int) ((x - xOffset) * Game.COLUMNS / getWidth());
+        column = column >= Game.COLUMNS ? Game.COLUMNS - 1 : column;
+        return column;
+    }
+
     public void updatePiece(Piece piece, Pos pos, boolean animate) {
         if (animate) {
             animatePiece(piece, new Pos(0, pos.column), pos);
@@ -37,6 +50,12 @@ public class GameGrid extends GridPane {
             removePiece(pos);
             add(pieceC, pos.column, pos.row);
         }
+    }
+
+    public void previewPiece(Piece piece, Pos pos) {
+        Circle pieceC = createPiece(piece);
+        pieceC.setOpacity(PREVIEW_OPACITY);
+        add(pieceC, pos.column, pos.row);
     }
 
     private void animatePiece(Piece piece, Pos iniPos, Pos finPos) {
@@ -68,9 +87,15 @@ public class GameGrid extends GridPane {
                 break;
             case P1:
                 circle.setFill(Paint.valueOf("#ff0000"));
+                circle.setStrokeWidth(2);
+                circle.setStrokeType(StrokeType.INSIDE);
+                circle.setStroke(Paint.valueOf("#800000"));
                 break;
             case P2:
                 circle.setFill(Paint.valueOf("#ffff00"));
+                circle.setStrokeWidth(2);
+                circle.setStrokeType(StrokeType.INSIDE);
+                circle.setStroke(Paint.valueOf("#D4AA00"));
                 break;
         }
         circle.radiusProperty().bind(Bindings.min(
@@ -81,17 +106,22 @@ public class GameGrid extends GridPane {
     }
 
     private Circle removePiece(Pos pos) {
-        ObservableList<Node> childrens = getChildren();
-        for (Node piece : childrens) {
+        Circle firstFound = null;
+        List<Node> childrens = getChildren();
+        for (int i = 0; i < childrens.size(); i++) {
+            Node piece = childrens.get(i);
             if (piece instanceof Circle
                     && GridPane.getRowIndex(piece) == pos.row
                     && GridPane.getColumnIndex(piece) == pos.column) {
                 Circle pieceC = (Circle) piece;
-                getChildren().remove(piece);
-                return pieceC;
+                childrens.remove(piece);
+                i--;
+                if (firstFound == null) {
+                    firstFound = pieceC;
+                }
             }
         }
-        return null;
+        return firstFound;
     }
 
     public void finish() {

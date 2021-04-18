@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import ipcconnect4.view.IconButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,9 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import ipcconnect4.view.IconButton?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.SettingsController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.SettingsController">
     <padding>
         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
     </padding>
@@ -40,7 +39,7 @@
                                 <Insets right="20.0" />
                             </HBox.margin>
                             <image>
-                                <Image backgroundLoading="true" url="/resources/img/lang.png" />
+                                <Image backgroundLoading="true" url="@../img/lang.png" />
                             </image>
                         </ImageView>
                         <Spinner fx:id="langSpinner" />
@@ -54,7 +53,7 @@
                     <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image backgroundLoading="true" url="/resources/img/light_mode_activated.png" />
+                                <Image backgroundLoading="true" url="@../img/light_mode_activated.png" />
                             </image>
                         </ImageView>
                         <Slider blockIncrement="1.0" majorTickUnit="1.0" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" minorTickCount="0" prefWidth="30.0" snapToTicks="true">
@@ -64,7 +63,7 @@
                         </Slider>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image backgroundLoading="true" url="/resources/img/dark_mode_disabled.png" />
+                                <Image backgroundLoading="true" url="@../img/dark_mode_disabled.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -83,12 +82,12 @@
             <children>
                 <IconButton fitHeight="30.0" fitWidth="30.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0">
                     <image>
-                        <Image backgroundLoading="true" url="/resources/img/cancel.png" />
+                        <Image backgroundLoading="true" url="@../img/cancel.png" />
                     </image>
                 </IconButton>
                 <IconButton fx:id="saveIV" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#saveAction" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
                     <image>
-                        <Image backgroundLoading="true" url="/resources/img/save.png" />
+                        <Image backgroundLoading="true" url="@../img/save.png" />
                     </image>
                 </IconButton>
             </children>

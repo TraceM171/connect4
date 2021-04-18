@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import ipcconnect4.view.IconButton?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
+<fx:root alignment="CENTER" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <IconButton shadow="false" fx:id="iconButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true"/>
+        <IconButton fx:id="iconButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" shadow="false" />
+        <Label fx:id="label">
+            <VBox.margin>
+                <Insets top="5.0" />
+            </VBox.margin>
+            <font>
+                <Font name="System Italic" size="14.0" />
+            </font>
+        </Label>
     </children>
 </fx:root>

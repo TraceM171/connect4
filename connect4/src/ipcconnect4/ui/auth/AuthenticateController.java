@@ -1,6 +1,7 @@
 package ipcconnect4.ui.auth;
 
 import ipcconnect4.Main;
+import ipcconnect4.util.Animations;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.Player;
 
@@ -23,7 +25,7 @@ public class AuthenticateController {
     private boolean full;
 
     @FXML
-    private HBox subscene;
+    private StackPane subscene;
     @FXML
     private HBox centerHB;
 
@@ -57,15 +59,15 @@ public class AuthenticateController {
             }
         });
     }
-    
+
     @FXML
     private void ranksAction(MouseEvent event) {
         Main.showNYI();
     }
-    
+
     @FXML
     public void settingsAction(MouseEvent event) {
-        Main.showSettings( (Stage) subscene.getScene().getWindow());
+        Main.showSettings((Stage) subscene.getScene().getWindow());
     }
 
     private void setLoginMode(LoginController.LoginListener listener) {
@@ -78,7 +80,7 @@ public class AuthenticateController {
             loader.setController(controller);
             Parent root = loader.load();
 
-            setContent(root);
+            setContent(root, false);
         } catch (IOException ex) {
             Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,13 +96,13 @@ public class AuthenticateController {
             loader.setController(controller);
             Parent root = loader.load();
 
-            setContent(root);
+            setContent(root, false);
         } catch (IOException ex) {
             Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void setContent(Node content) {
+    private void setContent(Node content, boolean isBack) {
         if (full) {
             Platform.runLater(() -> {
                 centerHB.getChildren().remove(subscene);
@@ -112,18 +114,23 @@ public class AuthenticateController {
         if (children.size() > 0) {
             lastContent = children.get(0);
         }
-        subscene.getChildren().clear();
-        subscene.getChildren().add(content);
-        HBox.setHgrow(content, Priority.ALWAYS);
+        
+        if (isBack) {
+            Animations.fadeIn(subscene, lastContent, content);
+        } else {
+            Animations.fadeIn(subscene, lastContent, content);
+        }
+        HBox.setHgrow(children.get(0), Priority.ALWAYS);
+        
         subscene.requestFocus();
     }
-
+    
     private void contentGoBack() {
         if (lastContent != null) {
-            setContent(lastContent);
+            setContent(lastContent, true);
         }
     }
-    
+
     private void close() {
         Stage stage = (Stage) subscene.getScene().getWindow();
         stage.close();

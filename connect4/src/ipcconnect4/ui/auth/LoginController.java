@@ -2,6 +2,7 @@ package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
+import ipcconnect4.view.IconButton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
@@ -9,11 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.Connect4;
 import model.Player;
@@ -32,7 +33,7 @@ public class LoginController {
     @FXML
     private TextField passTextUnmask;
     @FXML
-    private Button okButton;
+    private IconButton okButton;
     @FXML
     private Text errorText;
     @FXML
@@ -66,7 +67,7 @@ public class LoginController {
     }
 
     @FXML
-    private void okAction(ActionEvent event) {
+    private void okAction(MouseEvent event) {
         try {
             Player res = Connect4.getSingletonConnect4().loginPlayer(userText.getText(), passTextMask.getText());
             if (res != null) {
@@ -91,12 +92,12 @@ public class LoginController {
     }
 
     @FXML
-    private void forgotAction(ActionEvent event) {
+    private void forgotAction(MouseEvent event) {
         listener.onForgotAction();
     }
 
     @FXML
-    private void registerAction(ActionEvent event) {
+    private void registerAction(MouseEvent event) {
         Main.showNYI();
     }
 

@@ -290,7 +290,7 @@ public class Game {
      * @param column
      * @return int
      */
-    protected int getFirstEmptyRow(int column) {
+    public int getFirstEmptyRow(int column) {
         if (column >= COLUMNS) {
             return -1;
         }

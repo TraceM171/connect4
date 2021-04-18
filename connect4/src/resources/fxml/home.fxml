@@ -11,12 +11,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #d2eff7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.home.HomeController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #d2eff7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.home.HomeController">
     <top>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -48,7 +47,7 @@
                 </Label>
                 <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#ranksAction" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
-                        <Image backgroundLoading="true" url="/resources/img/ranks.png" />
+                        <Image backgroundLoading="true" url="@../img/ranks.png" />
                     </image>
                 </IconButton>
                 <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffd951; -fx-background-radius: 15;" text="Name2" GridPane.columnIndex="3">
@@ -73,14 +72,14 @@
     <bottom>
         <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#settingsAction" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image backgroundLoading="true" url="/resources/img/settings.png" />
+                <Image backgroundLoading="true" url="@../img/settings.png" />
             </image>
         </IconButton>
     </bottom>
     <center>
         <GridPane alignment="CENTER" hgap="20.0" vgap="10.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                <Insets bottom="25.0" left="25.0" right="25.0" top="35.0" />
             </BorderPane.margin>
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="50.0" />
@@ -95,7 +94,7 @@
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image backgroundLoading="true" url="/resources/img/pvp.png" />
+                                <Image backgroundLoading="true" url="@../img/pvp.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -107,7 +106,7 @@
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="/resources/img/pve.png" />
+                                <Image url="@../img/pve.png" />
                             </image>
                         </ImageView>
                     </children>
@@ -115,25 +114,21 @@
                         <DropShadow color="GRAY" offsetX="2.5" offsetY="2.5" radius="5" />
                     </effect>
                 </VBox>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <children>
-                        <SelectorIcon fx:id="diff1SI" icon="/resources/img/diff_1.png" onMouseClicked="#difficultyAction" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets right="10.0" />
-                            </HBox.margin>
-                        </SelectorIcon>
-                        <SelectorIcon fx:id="diff2SI" icon="/resources/img/diff_2.png" onMouseClicked="#difficultyAction" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets right="10.0" />
-                            </HBox.margin>
-                        </SelectorIcon>
-                        <SelectorIcon fx:id="diff3SI" icon="/resources/img/diff_3.png" onMouseClicked="#difficultyAction" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets right="10.0" />
-                            </HBox.margin>
-                        </SelectorIcon>
-                    </children>
-                </HBox>
+            <GridPane hgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="33.33" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="33.33" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="33.33" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                        <SelectorIcon fx:id="diff1SI" icon="@../img/diff_1.png" onMouseClicked="#difficultyAction" text="Easy AI" />
+                        <SelectorIcon fx:id="diff2SI" icon="@../img/diff_2.png" onMouseClicked="#difficultyAction" text="Normal AI" GridPane.columnIndex="1" />
+                        <SelectorIcon fx:id="diff3SI" icon="@../img/diff_3.png" onMouseClicked="#difficultyAction" text="Hard AI" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
                 <VBox fx:id="blockpvpVB" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: GRAY; -fx-opacity: 0.75;" GridPane.rowSpan="2147483647">
                     <children>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Para jugar contra otro jugador, el jugador 2 tiene que iniciar sesión" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
@@ -143,7 +138,7 @@
                         </Label>
                         <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="/resources/img/padlock.png" />
+                                <Image url="@../img/padlock.png" />
                             </image>
                             <VBox.margin>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

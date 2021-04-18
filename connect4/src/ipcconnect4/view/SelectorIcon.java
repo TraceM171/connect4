@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.beans.property.BooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -13,6 +14,8 @@ public class SelectorIcon extends VBox {
 
     @FXML
     private IconButton iconButton;
+    @FXML
+    private Label label;
 
     @SuppressWarnings("LeakingThisInConstructor")
     public SelectorIcon() {
@@ -38,12 +41,20 @@ public class SelectorIcon extends VBox {
         try {
             iconButton.setImage(new Image(icon));
         } catch (Exception e) {
-            
+
         }
     }
 
     public String getIcon() {
         return iconButton.getImage().toString();
+    }
+
+    public void setText(String text) {
+        label.setText(text);
+    }
+
+    public String getText() {
+        return label.getText();
     }
 
     private void bindActive() {

@@ -16,6 +16,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -43,6 +45,8 @@ public class GameController {
     @FXML
     private GameGrid gameGrid;
 
+    private final Property<Pos> previewPos = new SimpleObjectProperty<>(null);
+
     public GameController(Player P1, Player P2) {
         this.P1 = P1;
         this.P2 = P2;
@@ -65,6 +69,7 @@ public class GameController {
     public void initialize() {
         initTopBar();
         bindToGame();
+        bindPreview();
     }
 
     private void initTopBar() {
@@ -105,34 +110,58 @@ public class GameController {
     }
 
     @FXML
-    public void putPieceAction(MouseEvent event) {
-        double x = event.getSceneX();
-        double xOffset = gameGrid.localToScene(gameGrid.getBoundsInLocal()).getMinX();
-        int column = (int) ((x - xOffset) * Game.COLUMNS / gameGrid.getWidth());
-
+    private void putPieceAction(MouseEvent event) {
+        int column = gameGrid.getColumn(event);
+        unpreviewAction(null);
         if (vsAI) {
             if (gameAI.canPutPiece(column)) {
                 gameAI.putPiece(column);
-                ScheduledExecutorService executorAI = Executors.newSingleThreadScheduledExecutor(
-                        runnable -> {
-                            Thread t = new Thread(runnable);
-                            t.setDaemon(true);
-                            return t;
-                        });
-                executorAI.schedule(
-                        () -> {
-                            MovementAI movementAI = gameAI.getNextAIMovement();
-                            Platform.runLater(() -> {
-                                gameAI.putPiece(movementAI.pos.column);
+                if (!gameAI.isOver()) {
+                    ScheduledExecutorService executorAI = Executors.newSingleThreadScheduledExecutor(
+                            runnable -> {
+                                Thread t = new Thread(runnable);
+                                t.setDaemon(true);
+                                return t;
                             });
-                        },
-                        AI_DELAY,
-                        TimeUnit.MILLISECONDS
-                );
+                    executorAI.schedule(
+                            () -> {
+                                MovementAI movementAI = gameAI.getNextAIMovement();
+                                Platform.runLater(() -> {
+                                    gameAI.putPiece(movementAI.pos.column);
+                                });
+                            },
+                            AI_DELAY,
+                            TimeUnit.MILLISECONDS
+                    );
+                }
             }
         } else {
             game.putPiece(column);
         }
+    }
+
+    @FXML
+    private void previewAction(MouseEvent event) {
+        int column = gameGrid.getColumn(event);
+        Game game_ = vsAI ? gameAI : game;
+        previewPos.setValue(new Pos(game_.getFirstEmptyRow(column), column));
+    }
+
+    @FXML
+    private void unpreviewAction(MouseEvent event) {
+        previewPos.setValue(null);
+    }
+
+    private void bindPreview() {
+        previewPos.addListener((observable, oldValue, newValue) -> {
+            Game game_ = vsAI ? gameAI : game;
+            if (oldValue != null) {
+                gameGrid.updatePiece(Piece.NONE, oldValue, false);
+            }
+            if (newValue != null) {
+                gameGrid.previewPiece(game_.getNextPiece(), newValue);
+            }
+        });
     }
 
     private void bindToGame() {
@@ -145,11 +174,8 @@ public class GameController {
             @Override
             public void onChange(Movement movement) {
                 Piece piece;
-                if (vsAI) {
-                    piece = gameAI.getPiece(movement.pos);
-                } else {
-                    piece = game.getPiece(movement.pos);
-                }
+                Game game_ = vsAI ? gameAI : game;
+                piece = game_.getPiece(movement.pos);
                 gameGrid.updatePiece(piece, movement.pos, true);
             }
 
