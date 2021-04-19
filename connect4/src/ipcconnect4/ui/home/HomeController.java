@@ -130,7 +130,9 @@ public class HomeController {
                 auth2.initModality(Modality.WINDOW_MODAL);
                 auth2.initOwner(stage);
                 auth2.setTitle(rb.getString("app_name"));
+                auth2.setMinHeight(500);
                 auth2.setHeight(500);
+                auth2.setMinWidth(450);
                 auth2.setWidth(450);
                 auth2.showAndWait();
                 Main.goToHome();
