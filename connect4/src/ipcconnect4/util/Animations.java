@@ -5,6 +5,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -58,5 +59,26 @@ public class Animations {
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
+    }
+
+    public static void fadeIn(Node node) {
+        fade(node, 0, 1).play();
+    }
+
+    public static void fadeOut(Node node) {
+        Transition ft = fade(node, 1, 0);
+        ft.setOnFinished(evt -> {
+            node.setVisible(false);
+        });
+        ft.play();
+    }
+    
+    public static Transition fade(Node node, double from, double to) {
+        node.setVisible(true);
+        FadeTransition ft = new FadeTransition(DURATION);
+        ft.setNode(node);
+        ft.setFromValue(from);
+        ft.setToValue(to);
+        return ft;
     }
 }

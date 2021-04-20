@@ -57,7 +57,6 @@ public class HomeController {
     }
 
     private void initTopBar() {
-
         if (Main.player1 != null) {
             ContextMenu contextMenu = new ContextMenu();
             MenuItem menuItem1 = new MenuItem("Editar perfil");
@@ -130,6 +129,7 @@ public class HomeController {
                 auth2.initModality(Modality.WINDOW_MODAL);
                 auth2.initOwner(stage);
                 auth2.setTitle(rb.getString("app_name"));
+                auth2.getIcons().add(new Image(Main.class.getResourceAsStream("/resources/img/icon.png")));
                 auth2.setHeight(500);
                 auth2.setWidth(450);
                 auth2.setResizable(false);

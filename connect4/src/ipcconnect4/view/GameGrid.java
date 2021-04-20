@@ -4,11 +4,13 @@ import static ipcconnect4.model.Game.COLUMNS;
 import static ipcconnect4.model.Game.ROWS;
 import ipcconnect4.model.Game.Piece;
 import ipcconnect4.model.Game.Pos;
+import ipcconnect4.util.Animations;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -70,27 +72,31 @@ public class GameGrid extends GridPane {
             animatePiece(piece, new Pos(0, pos.column), pos, false);
         } else {
             Circle pieceC = createPiece(piece);
-            removePiece(pos);
+            removePiece(pos, false);
             add(pieceC, pos.column, pos.row);
         }
     }
 
-    public void previewPiece(Piece piece, Pos pos) {
+    public void previewPiece(Piece piece, Pos pos, boolean animate) {
         Circle pieceC = createPiece(piece);
-        pieceC.setOpacity(PREVIEW_OPACITY);
+        if (animate) {
+            Animations.fade(pieceC, 0, PREVIEW_OPACITY).play();
+        } else {
+            pieceC.setOpacity(PREVIEW_OPACITY);
+        }
         add(pieceC, pos.column, pos.row);
     }
 
     private void animatePiece(Piece piece, Pos iniPos, Pos finPos, boolean reset) {
         if (iniPos.row >= finPos.row) {
             if (reset) {
-                removePiece(iniPos);
+                removePiece(iniPos, false);
             } else {
                 updatePiece(piece, finPos, false);
             }
             pendingAnims.set(pendingAnims.get() - 1);
         } else {
-            removePiece(iniPos);
+            removePiece(iniPos, false);
             Circle before = createPiece(Piece.NONE);
             Circle temp = createPiece(piece);
             add(temp, iniPos.column, iniPos.row);
@@ -132,7 +138,7 @@ public class GameGrid extends GridPane {
         return circle;
     }
 
-    private Circle removePiece(Pos pos) {
+    private Circle removePiece(Pos pos, boolean animate) {
         Circle firstFound = null;
         List<Node> childrens = getChildren();
         for (int i = 0; i < childrens.size(); i++) {
@@ -141,8 +147,14 @@ public class GameGrid extends GridPane {
                     && GridPane.getRowIndex(piece) == pos.row
                     && GridPane.getColumnIndex(piece) == pos.column) {
                 Circle pieceC = (Circle) piece;
-                childrens.remove(piece);
-                i--;
+                if (animate) {
+                    Transition t = Animations.fade(pieceC, piece.getOpacity(), 0);
+                    t.setOnFinished((event) -> childrens.remove(piece));
+                    t.play();
+                } else {
+                    childrens.remove(piece);
+                    i--;
+                }
                 if (firstFound == null) {
                     firstFound = pieceC;
                 }
@@ -155,14 +167,20 @@ public class GameGrid extends GridPane {
         ended.set(true);
         afterAnimations(() -> {
             List<Node> childrens = getChildren();
-            childrens.clear();
+            
+            for (int i = 0; i < ROWS; i++) {
+                for (int j = 0; j < COLUMNS; j++) {
+                    Pos aPo = new Pos(i, j);
+                    removePiece(aPo, true);
+                }
+            }
 
             for (int i = 0; i < ROWS; i++) {
                 for (int j = 0; j < COLUMNS; j++) {
                     Pos aPo = new Pos(i, j);
                     Piece aPi = getPiece.apply(aPo);
                     if (!winPositions.contains(aPo)) {
-                        previewPiece(aPi, aPo);
+                        previewPiece(aPi, aPo, true);
                     } else {
                         updatePiece(aPi, aPo, false);
                     }
@@ -171,7 +189,7 @@ public class GameGrid extends GridPane {
         });
     }
 
-    private void afterAnimations(Runnable action) {
+    public void afterAnimations(Runnable action) {
         if (pendingAnims.get() == 0) {
             action.run();
         } else {

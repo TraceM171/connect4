@@ -1,5 +1,6 @@
 package ipcconnect4.ui.game;
 
+import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
 import ipcconnect4.model.Game;
 import ipcconnect4.model.Game.GameListener;
@@ -10,18 +11,34 @@ import ipcconnect4.model.GameWithAI;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.model.Movement;
 import ipcconnect4.model.MovementAI;
+import ipcconnect4.util.Animations;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.GameGrid;
+import ipcconnect4.view.IconButton;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
+import model.Connect4;
 import model.Player;
 
 public class GameController {
@@ -36,6 +53,8 @@ public class GameController {
     private final Difficulty difficulty;
 
     @FXML
+    private IconButton exitIB;
+    @FXML
     private CircleImage avatarI1;
     @FXML
     private Label nickNameT1;
@@ -45,6 +64,22 @@ public class GameController {
     private CircleImage avatarI2;
     @FXML
     private GameGrid gameGrid;
+    @FXML
+    private GridPane winPopUp;
+    @FXML
+    private IconButton showWinPopUpIB;
+    @FXML
+    private CircleImage avatarIWi;
+    @FXML
+    private Label nickNameTWi;
+    @FXML
+    private Label pointsLWi;
+    @FXML
+    private CircleImage avatarILo;
+    @FXML
+    private Label nickNameTLo;
+    @FXML
+    private Label pointsLLo;
 
     private final Property<Pos> previewPos = new SimpleObjectProperty<>(null);
 
@@ -167,7 +202,7 @@ public class GameController {
                 gameGrid.updatePiece(Piece.NONE, oldValue, false);
             }
             if (newValue != null) {
-                gameGrid.previewPiece(game_.getNextPiece(), newValue);
+                gameGrid.previewPiece(game_.getNextPiece(), newValue, false);
             }
         });
     }
@@ -190,6 +225,58 @@ public class GameController {
             public void onWin(WinInfo winInfo) {
                 gameGrid.finish(winInfo.poses, (pos) -> game_.getPiece(pos));
                 setTurn(Piece.NONE);
+
+                Player winner, looser;
+                Paint winColor, losColor;
+                String winStyle, losStyle;
+                if (winInfo.origin == Piece.P1) {
+                    winner = Main.player1;
+                    winColor = Paint.valueOf("#ff5b5b");
+                    winStyle = nickNameT1.getStyle();
+                    looser = Main.player2;
+                    losColor = Paint.valueOf("#ffd951");
+                    losStyle = nickNameT2.getStyle();
+                } else {
+                    winner = Main.player2;
+                    winColor = Paint.valueOf("#ffd951");
+                    winStyle = nickNameT2.getStyle();
+                    looser = Main.player1;
+                    losColor = Paint.valueOf("#ff5b5b");
+                    losStyle = nickNameT1.getStyle();
+                }
+
+                avatarIWi.setImage(winner.getAvatar());
+                avatarIWi.setStroke(winColor);
+                nickNameTWi.setText(winner.getNickName());
+                nickNameTWi.setStyle(winStyle);
+                pointsLWi.setText("+5 Puntos");
+
+                avatarILo.setImage(looser.getAvatar());
+                avatarILo.setStroke(losColor);
+                nickNameTLo.setText(looser.getNickName());
+                nickNameTLo.setStyle(losStyle);
+                pointsLLo.setText("-5 Puntos");
+
+                try {
+                    Connect4.getSingletonConnect4().regiterRound(LocalDateTime.now(), winner, looser);
+                } catch (Connect4DAOException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                exitIB.setOnMouseClicked((event) -> Main.goToHome());
+
+                Runnable showPU = () -> {
+                    Animations.fadeIn(winPopUp);
+
+                    winPopUp.visibleProperty().addListener((observable, oldValue, newValue) -> {
+                        if (newValue) {
+                            Animations.fadeOut(showWinPopUpIB);
+                        } else {
+                            Animations.fadeIn(showWinPopUpIB);
+                        }
+                    });
+                };
+                gameGrid.afterAnimations(showPU);
             }
 
             @Override
@@ -206,29 +293,60 @@ public class GameController {
     private void setTurn(Piece piece) {
         switch (piece) {
             case P1:
-                avatarI1.setOpacity(1);
-                nickNameT1.setOpacity(1);
-                avatarI2.setOpacity(0.5);
-                nickNameT2.setOpacity(0.5);
+                Animations.fade(avatarI1, avatarI1.getOpacity(), 1).play();
+                Animations.fade(nickNameT1, nickNameT1.getOpacity(), 1).play();
+                Animations.fade(avatarI2, avatarI2.getOpacity(), 0.5).play();
+                Animations.fade(nickNameT2, nickNameT2.getOpacity(), 0.5).play();
                 break;
             case P2:
-                avatarI1.setOpacity(0.5);
-                nickNameT1.setOpacity(0.5);
-                avatarI2.setOpacity(1);
-                nickNameT2.setOpacity(1);
+                Animations.fade(avatarI1, avatarI1.getOpacity(), 0.5).play();
+                Animations.fade(nickNameT1, nickNameT1.getOpacity(), 0.5).play();
+                Animations.fade(avatarI2, avatarI2.getOpacity(), 1).play();
+                Animations.fade(nickNameT2, nickNameT2.getOpacity(), 1).play();
                 break;
             case NONE:
-                avatarI1.setOpacity(1);
-                nickNameT1.setOpacity(1);
-                avatarI2.setOpacity(1);
-                nickNameT2.setOpacity(1);
+                Animations.fade(avatarI1, avatarI1.getOpacity(), 1).play();
+                Animations.fade(nickNameT1, nickNameT1.getOpacity(), 1).play();
+                Animations.fade(avatarI2, avatarI2.getOpacity(), 1).play();
+                Animations.fade(nickNameT2, nickNameT2.getOpacity(), 1).play();
                 break;
         }
     }
 
     @FXML
+    private void closeWinPopup(MouseEvent event) {
+        Animations.fadeOut(winPopUp);
+    }
+
+    @FXML
+    private void showWinPopUp(MouseEvent event) {
+        Animations.fadeIn(winPopUp);
+    }
+
+    @FXML
     private void exitAction(MouseEvent event) {
-        Main.goToHome();
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar");
+        alert.setHeaderText("Seguro que quieres salir?");
+        alert.setContentText("Si sales de la partida perderás el progreso.");
+        
+        Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/question.png"));
+        ImageView icon = new ImageView(iconImage);
+        icon.setFitHeight(50);
+        icon.setFitWidth(50);
+        alert.setGraphic(icon);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(iconImage);
+
+        ButtonType buttonTypeConfirm = new ButtonType("Confirmar", ButtonData.YES);
+        ButtonType buttonTypeCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeCancel, buttonTypeConfirm);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeConfirm) {
+            Main.goToHome();
+        }
     }
 
 }

@@ -171,6 +171,12 @@ public class Game {
         return true;
     }
 
+    /**
+     * Divide the board into two halves horizontally, if the number of rows is
+     * odd, the lower half will have one more row than the upper one. The bottom
+     * half is emptied, and the chips from the top fall to the bottom, leaving
+     * the top half empty
+     */
     public void emptyBottomHalf() {
         for (int row = ROWS / 2 - 1; row >= 0; row--) {
             board[ROWS / 2 + row] = board[row];
@@ -218,6 +224,14 @@ public class Game {
         }
     }
 
+    /**
+     * Using an starting position and a pattern, returns a list of positions
+     * that would make such pattern from the given position
+     *
+     * @param wp Pos, starting position
+     * @param winType WinType, pattern
+     * @return Positions that form the given pattern
+     */
     private List<Pos> getWinPositions(Pos wp, WinType winType) {
         List<Pos> positions = new ArrayList<>(4);
 
@@ -412,13 +426,26 @@ public class Game {
     }
 
     /**
-     * Holds information about a Game winner, and the win method
+     * Holds information about a Game winner, win method, positions involved,
+     * etc.
      */
     public static class WinInfo {
 
+        /**
+         * Piece used to know the winner player
+         */
         public final Piece origin;
+        /**
+         * List of positions that forms the winning pattern
+         */
         public final List<Pos> poses;
+        /**
+         * Pattern used to win
+         */
         public final WinType winType;
+        /**
+         * Number of pieces (rounds) that the winning player has used
+         */
         public final int pieces;
 
         public WinInfo(Piece origin, List<Pos> pos, WinType winType, int pieces) {
@@ -493,8 +520,16 @@ public class Game {
          */
         void onChange(Movement movement);
 
+        /**
+         * Called when the last movement made caused a player to win the game
+         *
+         * @param winInfo WinInfo describing the win type
+         */
         void onWin(WinInfo winInfo);
 
+        /**
+         * Called when the board is full
+         */
         void onFull();
     }
 

@@ -77,8 +77,10 @@ public class Main extends Application {
             settingsStage.setScene(new Scene(loader.load()));
             settingsStage.initModality(Modality.WINDOW_MODAL);
             settingsStage.initOwner(owner);
-            settingsStage.setTitle(rb.getString("app_name"));
+            settingsStage.setTitle(rb.getString("config_title"));
             settingsStage.setResizable(false);
+            Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/settings.png"));
+            settingsStage.getIcons().add(iconImage);
             settingsStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
