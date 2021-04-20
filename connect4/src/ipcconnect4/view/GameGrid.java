@@ -15,6 +15,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -151,24 +153,38 @@ public class GameGrid extends GridPane {
 
     public void finish(List<Pos> winPositions, Function<Pos, Piece> getPiece) {
         ended.set(true);
-        pendingAnims.addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue() == 0) {
-                List<Node> childrens = getChildren();
-                childrens.clear();
+        afterAnimations(() -> {
+            List<Node> childrens = getChildren();
+            childrens.clear();
 
-                for (int i = 0; i < ROWS; i++) {
-                    for (int j = 0; j < COLUMNS; j++) {
-                        Pos aPo = new Pos(i, j);
-                        Piece aPi = getPiece.apply(aPo);
-                        if (!winPositions.contains(aPo)) {
-                            previewPiece(aPi, aPo);
-                        } else {
-                            updatePiece(aPi, aPo, false);
-                        }
+            for (int i = 0; i < ROWS; i++) {
+                for (int j = 0; j < COLUMNS; j++) {
+                    Pos aPo = new Pos(i, j);
+                    Piece aPi = getPiece.apply(aPo);
+                    if (!winPositions.contains(aPo)) {
+                        previewPiece(aPi, aPo);
+                    } else {
+                        updatePiece(aPi, aPo, false);
                     }
                 }
             }
         });
+    }
+
+    private void afterAnimations(Runnable action) {
+        if (pendingAnims.get() == 0) {
+            action.run();
+        } else {
+            pendingAnims.addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    if (newValue.intValue() == 0) {
+                        pendingAnims.removeListener(this);
+                        action.run();
+                    }
+                }
+            });
+        }
     }
 
     public void emptyBottomHalf(Function<Pos, Piece> getPiece) {
