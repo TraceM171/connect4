@@ -13,6 +13,9 @@ import java.util.Random;
 public class MinMax {
 
     private final int maxDepth;
+    /**
+     * Seed used in random movements
+     */
     public final Long seed;
 
     /**

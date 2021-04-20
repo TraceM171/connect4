@@ -26,16 +26,15 @@ import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import model.Connect4;
@@ -65,7 +64,9 @@ public class GameController {
     @FXML
     private GameGrid gameGrid;
     @FXML
-    private GridPane winPopUp;
+    private Node winPopUp;
+    @FXML
+    private Label winnerTitleL;
     @FXML
     private IconButton showWinPopUpIB;
     @FXML
@@ -74,12 +75,6 @@ public class GameController {
     private Label nickNameTWi;
     @FXML
     private Label pointsLWi;
-    @FXML
-    private CircleImage avatarILo;
-    @FXML
-    private Label nickNameTLo;
-    @FXML
-    private Label pointsLLo;
 
     private final Property<Pos> previewPos = new SimpleObjectProperty<>(null);
 
@@ -227,42 +222,48 @@ public class GameController {
                 setTurn(Piece.NONE);
 
                 Player winner, looser;
-                Paint winColor, losColor;
-                String winStyle, losStyle;
+                Paint winColor;
+                String winStyle, winNickName;
+                Image winAvatar;
                 if (winInfo.origin == Piece.P1) {
                     winner = Main.player1;
                     winColor = Paint.valueOf("#ff5b5b");
                     winStyle = nickNameT1.getStyle();
-                    looser = Main.player2;
-                    losColor = Paint.valueOf("#ffd951");
-                    losStyle = nickNameT2.getStyle();
+                    winNickName = nickNameT1.getText();
+                    winAvatar = avatarI1.getImage();
+                    looser = vsAI ? null : Main.player2;
                 } else {
-                    winner = Main.player2;
+                    winner = vsAI ? null : Main.player2;
                     winColor = Paint.valueOf("#ffd951");
                     winStyle = nickNameT2.getStyle();
+                    winNickName = nickNameT2.getText();
+                    winAvatar = avatarI2.getImage();
                     looser = Main.player1;
-                    losColor = Paint.valueOf("#ff5b5b");
-                    losStyle = nickNameT1.getStyle();
                 }
 
-                avatarIWi.setImage(winner.getAvatar());
+                avatarIWi.setImage(winAvatar);
+                nickNameTWi.setText(winNickName);
                 avatarIWi.setStroke(winColor);
-                nickNameTWi.setText(winner.getNickName());
                 nickNameTWi.setStyle(winStyle);
-                pointsLWi.setText("+5 Puntos");
-
-                avatarILo.setImage(looser.getAvatar());
-                avatarILo.setStroke(losColor);
-                nickNameTLo.setText(looser.getNickName());
-                nickNameTLo.setStyle(losStyle);
-                pointsLLo.setText("-5 Puntos");
+                winnerTitleL.setTextFill(winColor);
 
                 try {
-                    Connect4.getSingletonConnect4().regiterRound(LocalDateTime.now(), winner, looser);
+                    Connect4 c4 = Connect4.getSingletonConnect4();
+                    int points;
+                    if (vsAI) {
+                        points = c4.getPointsAlone() * gameAI.difficulty.value;
+                    } else {
+                        points = c4.getPointsRound();
+                        c4.regiterRound(LocalDateTime.now(), winner, looser);
+                    }
+                    if (winner != null) {
+                        winner.plusPoints(points);
+                        pointsLWi.setText(Main.formatWLang("points_plus").format(new Object[]{points}));
+                    }
                 } catch (Connect4DAOException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 exitIB.setOnMouseClicked((event) -> Main.goToHome());
 
                 Runnable showPU = () -> {
@@ -326,10 +327,10 @@ public class GameController {
     @FXML
     private void exitAction(MouseEvent event) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar");
-        alert.setHeaderText("Seguro que quieres salir?");
-        alert.setContentText("Si sales de la partida perderás el progreso.");
-        
+        alert.setTitle(Main.rb.getString("confirm"));
+        alert.setHeaderText(Main.rb.getString("exitgame_header"));
+        alert.setContentText(Main.rb.getString("exitgame_content"));
+
         Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/question.png"));
         ImageView icon = new ImageView(iconImage);
         icon.setFitHeight(50);
@@ -338,8 +339,10 @@ public class GameController {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(iconImage);
 
-        ButtonType buttonTypeConfirm = new ButtonType("Confirmar", ButtonData.YES);
-        ButtonType buttonTypeCancel = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+        ButtonType buttonTypeConfirm
+                = new ButtonType(Main.rb.getString("confirm"), ButtonData.YES);
+        ButtonType buttonTypeCancel
+                = new ButtonType(Main.rb.getString("cancel"), ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(buttonTypeCancel, buttonTypeConfirm);
 

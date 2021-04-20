@@ -6,6 +6,7 @@ import ipcconnect4.ui.auth.AuthenticateController;
 import ipcconnect4.ui.game.GameController;
 import ipcconnect4.util.Animations;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -56,6 +57,12 @@ public class Main extends Application {
         } catch (Connect4DAOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static MessageFormat formatWLang(String resourceId) {
+        String pattern = rb.getString(resourceId);
+        MessageFormat formatter = new MessageFormat(pattern, Locale.getDefault());
+        return formatter;
     }
 
     public static void showNYI() {

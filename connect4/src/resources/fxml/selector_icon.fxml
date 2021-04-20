@@ -9,12 +9,12 @@
 <fx:root alignment="CENTER" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <IconButton fx:id="iconButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" shadow="false" />
-        <Label fx:id="label">
+        <Label fx:id="label" textFill="#635e73">
             <VBox.margin>
                 <Insets top="5.0" />
             </VBox.margin>
             <font>
-                <Font name="System Italic" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Label>
     </children>

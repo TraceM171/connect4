@@ -76,7 +76,7 @@
                 <Insets bottom="15.0" top="25.0" />
             </VBox.margin>
         </VBox>
-        <Label fx:id="saveText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Para aplicar los cambios, al guardar se reiniciará la aplicación" visible="false" wrapText="true">
+        <Label fx:id="saveText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%config_save_desc" visible="false" wrapText="true">
             <VBox.margin>
                 <Insets />
             </VBox.margin>

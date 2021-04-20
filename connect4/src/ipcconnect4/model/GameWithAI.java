@@ -12,7 +12,10 @@ import java.util.LinkedList;
 public class GameWithAI extends Game {
 
     private final MinMax AI;
-    private final Difficulty difficulty;
+    /**
+     * Game difficulty
+     */
+    public final Difficulty difficulty;
     private MovementAI lastMove = new MovementAI();
 
     /**
@@ -155,7 +158,11 @@ public class GameWithAI extends Game {
         NORMAL(2),
         HARD(5);
 
-        private final int value;
+        /**
+         * Difficulty value, movements that the AI will go ahead, MinMax
+         * iterations
+         */
+        public final int value;
 
         Difficulty(final int newValue) {
             value = newValue;

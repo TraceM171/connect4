@@ -92,6 +92,14 @@
             <children>
                 <VBox fx:id="pvpVB" alignment="CENTER" onMouseClicked="#startVSPlayerAction" onMouseEntered="#mouseEnteredAction" onMouseExited="#mouseExitedAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width: 2;" GridPane.rowSpan="2147483647">
                     <children>
+                  <Label text="%pvp" textFill="#635e73">
+                     <font>
+                        <Font name="System Italic" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image backgroundLoading="true" url="@../img/pvp.png" />
@@ -104,6 +112,14 @@
                 </VBox>
                 <VBox alignment="CENTER" onMouseClicked="#startVSAIAction" onMouseEntered="#mouseEnteredAction" onMouseExited="#mouseExitedAction" style="-fx-background-radius: 25; -fx-background-color: #c8bfe7; -fx-border-color: #635e73; -fx-border-radius: 25; -fx-border-width:2;" GridPane.columnIndex="1">
                     <children>
+                  <Label text="%pve" textFill="#635e73">
+                     <font>
+                        <Font name="System Italic" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../img/pve.png" />
@@ -124,14 +140,14 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                        <SelectorIcon fx:id="diff1SI" icon="@../img/diff_1.png" onMouseClicked="#difficultyAction" text="Easy AI" />
-                        <SelectorIcon fx:id="diff2SI" icon="@../img/diff_2.png" onMouseClicked="#difficultyAction" text="Normal AI" GridPane.columnIndex="1" />
-                        <SelectorIcon fx:id="diff3SI" icon="@../img/diff_3.png" onMouseClicked="#difficultyAction" text="Hard AI" GridPane.columnIndex="2" />
+                        <SelectorIcon fx:id="diff1SI" icon="@../img/diff_1.png" onMouseClicked="#difficultyAction" text="%ai_easy" />
+                        <SelectorIcon fx:id="diff2SI" icon="@../img/diff_2.png" onMouseClicked="#difficultyAction" text="%ai_normal" GridPane.columnIndex="1" />
+                        <SelectorIcon fx:id="diff3SI" icon="@../img/diff_3.png" onMouseClicked="#difficultyAction" text="%ai_hard" GridPane.columnIndex="2" />
                </children>
             </GridPane>
-                <VBox fx:id="blockpvpVB" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: GRAY; -fx-opacity: 0.75;" GridPane.rowSpan="2147483647">
+                <VBox fx:id="blockpvpVB" alignment="CENTER" style="-fx-background-radius: 25; -fx-background-color: GRAY; -fx-opacity: 0.75;" visible="false" GridPane.rowSpan="2147483647">
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Para jugar contra otro jugador, el jugador 2 tiene que iniciar sesión" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%pvp_block_msg1" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -144,7 +160,7 @@
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                             </VBox.margin>
                         </ImageView>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Haz click en el icono de un jugador para acceder a sus ajustes" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%pvp_block_msg2" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="16.0" />
                             </font>

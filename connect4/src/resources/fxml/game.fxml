@@ -16,25 +16,24 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <bottom>
-      <StackPane>
-         <children>
-              <IconButton fx:id="exitIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-                  <image>
-                      <Image url="@../img/cancel.png" />
-                  </image>
-              </IconButton>
-            <IconButton fx:id="showWinPopUpIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#showWinPopUp" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER">
-               <image>
-                  <Image url="@../img/winner.png" />
-               </image>
-            </IconButton>
-         </children>
-      </StackPane>
+        <StackPane>
+            <children>
+                <IconButton fx:id="exitIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                    <image>
+                        <Image url="@../img/cancel.png" />
+                    </image>
+                </IconButton>
+                <IconButton fx:id="showWinPopUpIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#showWinPopUp" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER">
+                    <image>
+                        <Image url="@../img/winner.png" />
+                    </image>
+                </IconButton>
+            </children>
+        </StackPane>
     </bottom>
     <center>
         <StackPane style="-fx-background-color: #7090be; -fx-background-radius: 25;" BorderPane.alignment="CENTER">
@@ -61,139 +60,80 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GameGrid>
-                <GridPane fx:id="winPopUp" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: WHITE; -fx-background-radius: 25;" visible="false">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="49.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="2.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="49.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                <VBox fx:id="winPopUp" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: WHITE; -fx-background-radius: 25;" visible="false">
                     <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
                         <HBox alignment="CENTER">
-                           <children>
-                              <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/light_mode_disabled.png" />
-                                 </image>
-                              </ImageView>
-                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Perdedor" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font name="System Italic" size="18.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/light_mode_disabled.png" />
-                                 </image>
-                              </ImageView>
-                              <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                           </children>
+                            <children>
+                                <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../img/light_mode_activated.png" />
+                                    </image>
+                                </ImageView>
+                                <Label fx:id="winnerTitleL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="%winner" HBox.hgrow="ALWAYS">
+                                    <font>
+                                        <Font name="System Bold Italic" size="24.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../img/light_mode_activated.png" />
+                                    </image>
+                                </ImageView>
+                                <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                            </children>
                         </HBox>
-                        <CircleImage fx:id="avatarILo" radius="50.0" stroke="#ff5b5b" strokeType="OUTSIDE" strokeWidth="3" />
-                        <Label fx:id="nickNameTLo" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" style="-fx-background-color: #ff5b5b; -fx-background-radius: 15;" text="Name1" VBox.vgrow="ALWAYS">
-                           <padding>
-                              <Insets left="50.0" right="50.0" />
-                           </padding>
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <HBox alignment="BOTTOM_LEFT" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="pointsLLo" text="-25 points" textFill="RED">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                        <Line opacity="0.15" startY="200.0" GridPane.columnIndex="1" />
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-                     <children>
-                        <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup">
-                           <image>
-                              <Image url="@../img/accept.png" />
-                           </image>
-                        </IconButton>
-                     </children>
-                  </HBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
-                     <children>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/light_mode_activated.png" />
-                                 </image>
-                              </ImageView>
-                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Ganador" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font name="System Italic" size="18.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/light_mode_activated.png" />
-                                 </image>
-                              </ImageView>
-                              <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
+                        <Pane VBox.vgrow="ALWAYS" />
                         <StackPane alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity">
-                           <children>
-                              <CircleImage fx:id="avatarIWi" radius="50.0" stroke="#ffd951" strokeType="OUTSIDE" strokeWidth="3" />
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/winner.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
+                            <children>
+                                <CircleImage fx:id="avatarIWi" radius="50.0" stroke="#ffd951" strokeType="OUTSIDE" strokeWidth="3" />
+                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../img/winner.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
                         </StackPane>
-                        <Label fx:id="nickNameTWi" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" style="-fx-background-color: #ffd951; -fx-background-radius: 15;" text="Name1" VBox.vgrow="ALWAYS">
-                           <padding>
-                              <Insets left="50.0" right="50.0" />
-                           </padding>
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <HBox alignment="BOTTOM_RIGHT" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="pointsLWi" text="+25 points" textFill="GREEN">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
+                        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets top="15.0" />
+                            </VBox.margin>
+                            <children>
+                                <Pane HBox.hgrow="ALWAYS" />
+                                <Label fx:id="nickNameTWi" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffd951; -fx-background-radius: 15;" text="Name1" HBox.hgrow="ALWAYS">
+                                    <padding>
+                                        <Insets left="50.0" right="50.0" />
+                                    </padding>
+                                    <font>
+                                        <Font size="19.0" />
+                                    </font>
+                                </Label>
+                                <Pane HBox.hgrow="ALWAYS" />
+                            </children>
                         </HBox>
-                     </children>
-                  </VBox>
+                        <Pane VBox.vgrow="ALWAYS" />
+                        <StackPane alignment="BOTTOM_CENTER">
+                            <children>
+                                <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup" StackPane.alignment="CENTER_RIGHT">
+                                    <image>
+                                        <Image url="@../img/accept.png" />
+                                    </image>
+                                </IconButton>
+                                <Label fx:id="pointsLWi" textFill="GREEN" StackPane.alignment="CENTER_LEFT">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </StackPane>
                     </children>
                     <effect>
                         <DropShadow color="BLACK" offsetX="7" offsetY="7" radius="30" />
                     </effect>
-               <StackPane.margin>
-                  <Insets bottom="40.0" left="60.0" right="60.0" top="40.0" />
-               </StackPane.margin>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
-                </GridPane>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </VBox>
             </children>
             <padding>
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />

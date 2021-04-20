@@ -74,6 +74,7 @@ public class Animations {
     }
     
     public static Transition fade(Node node, double from, double to) {
+        node.setOpacity(from);
         node.setVisible(true);
         FadeTransition ft = new FadeTransition(DURATION);
         ft.setNode(node);

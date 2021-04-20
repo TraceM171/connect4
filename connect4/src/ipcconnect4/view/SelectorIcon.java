@@ -64,8 +64,8 @@ public class SelectorIcon extends VBox {
                 + "-fx-border-radius: 25;"
                 + "-fx-border-width:2;";
         String inactiveStyle = "-fx-background-radius: 25;"
-                + "-fx-background-color: #c8bfe7;"
-                + "-fx-border-color: #c8bfe7;"
+                + "-fx-background-color: #d6d2e7;"
+                + "-fx-border-color: #d6d2e7;"
                 + "-fx-border-radius: 25;"
                 + "-fx-border-width:2;";
         iconButton.activeProperty().addListener((observable, oldValue, newValue) -> {
