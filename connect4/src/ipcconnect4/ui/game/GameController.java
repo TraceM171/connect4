@@ -196,8 +196,8 @@ public class GameController {
             public void onFull() {
                 if (!game_.isOver()) {
                     Game lGame = new Game(game_);
-                    gameGrid.reset((pos) -> lGame.getPiece(pos));
-                    game_.initBoard();
+                    gameGrid.emptyBottomHalf((pos) -> lGame.getPiece(pos));
+                    game_.emptyBottomHalf();
                 }
             }
         });

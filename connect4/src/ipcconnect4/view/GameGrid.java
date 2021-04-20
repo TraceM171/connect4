@@ -171,13 +171,12 @@ public class GameGrid extends GridPane {
         });
     }
 
-    public void reset(Function<Pos, Piece> getPiece) {
+    public void emptyBottomHalf(Function<Pos, Piece> getPiece) {
         pendingAnims.set(pendingAnims.get() + 1);
-        reset(getPiece, new Pos(ROWS - 1, 0));
+        emptyBottomHalf(getPiece, new Pos(ROWS - 1, 0));
     }
 
-    private void reset(Function<Pos, Piece> getPiece, Pos pos) {
-        Pos finPos = new Pos(ROWS, pos.column);
+    private void emptyBottomHalf(Function<Pos, Piece> getPiece, Pos pos) {
         if (pos.column >= COLUMNS) {
             pos.column = 0;
             pos.row--;
@@ -185,17 +184,34 @@ public class GameGrid extends GridPane {
         if (pos.row < 0) {
             pendingAnims.set(pendingAnims.get() - 1);
         } else {
-            resetExecutor.schedule(
-                    () -> {
-                        Platform.runLater(() -> {
-                            pendingAnims.set(pendingAnims.get() + 1);
-                            animatePiece(getPiece.apply(pos), new Pos(pos), finPos, true);
-                            pos.column++;
-                            reset(getPiece, new Pos(pos));
-                        });
-                    },
-                    RESET_DELAY,
-                    TimeUnit.MILLISECONDS);
+            Pos finPos;
+            if (pos.row < ROWS / 2) {
+                finPos = new Pos(ROWS / 2 + pos.row, pos.column);
+                resetExecutor.schedule(
+                        () -> {
+                            Platform.runLater(() -> {
+                                pendingAnims.set(pendingAnims.get() + 1);
+                                animatePiece(getPiece.apply(pos), new Pos(pos), finPos, false);
+                                pos.column++;
+                                emptyBottomHalf(getPiece, new Pos(pos));
+                            });
+                        },
+                        RESET_DELAY,
+                        TimeUnit.MILLISECONDS);
+            } else {
+                finPos = new Pos(ROWS, pos.column);
+                resetExecutor.schedule(
+                        () -> {
+                            Platform.runLater(() -> {
+                                pendingAnims.set(pendingAnims.get() + 1);
+                                animatePiece(getPiece.apply(pos), new Pos(pos), finPos, true);
+                                pos.column++;
+                                emptyBottomHalf(getPiece, new Pos(pos));
+                            });
+                        },
+                        RESET_DELAY,
+                        TimeUnit.MILLISECONDS);
+            }
         }
     }
 }

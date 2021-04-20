@@ -25,7 +25,9 @@ public class Game {
      * Creates a Game initialising all cells to {@link Piece.NONE}
      */
     public Game() {
-        initBoard();
+        for (Piece[] row : board) {
+            Arrays.fill(row, Piece.NONE);
+        }
     }
 
     /**
@@ -168,10 +170,14 @@ public class Game {
         }
         return true;
     }
-    
-    public final void initBoard() {
-        for (Piece[] row : board) {
-            Arrays.fill(row, Piece.NONE);
+
+    public void emptyBottomHalf() {
+        for (int row = ROWS / 2 - 1; row >= 0; row--) {
+            board[ROWS / 2 + row] = board[row];
+        }
+        for (int row = ROWS / 2 - 1; row >= 0; row--) {
+            board[row] = new Piece[COLUMNS];
+            Arrays.fill(board[row], Piece.NONE);
         }
     }
 
@@ -488,7 +494,7 @@ public class Game {
         void onChange(Movement movement);
 
         void onWin(WinInfo winInfo);
-        
+
         void onFull();
     }
 
