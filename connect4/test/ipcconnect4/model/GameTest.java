@@ -4,6 +4,8 @@ import ipcconnect4.model.Game.Piece;
 import ipcconnect4.model.Game.Pos;
 import ipcconnect4.model.Game.WinInfo;
 import ipcconnect4.model.Game.WinType;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,8 +48,14 @@ public class GameTest {
 
     @Test
     public void getWinner_Column() {
+        List<Pos> poses = Arrays.asList(
+                new Pos(5, 0),
+                new Pos(4, 0),
+                new Pos(3, 0),
+                new Pos(2, 0)
+        );
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(5, 0), WinType.COLUMN, 4
+                Piece.P1, poses, WinType.COLUMN, 4
         );
 
         Game game = new Game();
@@ -65,8 +73,14 @@ public class GameTest {
 
     @Test
     public void getWinner_Row() {
+        List<Pos> poses = Arrays.asList(
+                new Pos(5, 0),
+                new Pos(5, 1),
+                new Pos(5, 2),
+                new Pos(5, 3)
+        );
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(5, 0), WinType.ROW, 4
+                Piece.P1, poses, WinType.ROW, 4
         );
 
         Game game = new Game();
@@ -84,8 +98,14 @@ public class GameTest {
 
     @Test
     public void getWinner_DiagAsc() {
+        List<Pos> poses = Arrays.asList(
+                new Pos(5, 0),
+                new Pos(4, 1),
+                new Pos(3, 2),
+                new Pos(2, 3)
+        );
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(5, 0), WinType.DIAGONAL_ASC, 6
+                Piece.P1, poses, WinType.DIAGONAL_ASC, 6
         );
 
         Game game = new Game();
@@ -107,8 +127,14 @@ public class GameTest {
 
     @Test
     public void getWinner_DiagDesc() {
+        List<Pos> poses = Arrays.asList(
+                new Pos(2, 0),
+                new Pos(3, 1),
+                new Pos(4, 2),
+                new Pos(5, 3)
+        );
         WinInfo expected = new WinInfo(
-                Piece.P1, new Pos(2, 0), WinType.DIAGONAL_DESC, 6
+                Piece.P1, poses, WinType.DIAGONAL_DESC, 6
         );
 
         Game game = new Game();

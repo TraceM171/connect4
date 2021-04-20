@@ -130,10 +130,9 @@ public class HomeController {
                 auth2.initModality(Modality.WINDOW_MODAL);
                 auth2.initOwner(stage);
                 auth2.setTitle(rb.getString("app_name"));
-                auth2.setMinHeight(500);
                 auth2.setHeight(500);
-                auth2.setMinWidth(450);
                 auth2.setWidth(450);
+                auth2.setResizable(false);
                 auth2.showAndWait();
                 Main.goToHome();
             });
@@ -165,7 +164,7 @@ public class HomeController {
                 -> Main.lastAIdifficulty = newValue
         );
     }
-    
+
     private void bindPvP() {
         if (Main.player2 == null) {
             pvpVB.setDisable(true);
@@ -211,13 +210,13 @@ public class HomeController {
     private void ranksAction(MouseEvent event) {
         Main.showNYI();
     }
-    
+
     @FXML
     private void mouseEnteredAction(MouseEvent event) {
         Node source = ((Node) event.getSource());
         source.setEffect(new DropShadow(13, 3, 3, Color.BLACK));
     }
-    
+
     @FXML
     private void mouseExitedAction(MouseEvent event) {
         Node source = ((Node) event.getSource());

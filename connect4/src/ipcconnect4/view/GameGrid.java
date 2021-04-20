@@ -1,17 +1,21 @@
 package ipcconnect4.view;
 
-import ipcconnect4.model.Game;
 import static ipcconnect4.model.Game.COLUMNS;
+import static ipcconnect4.model.Game.ROWS;
 import ipcconnect4.model.Game.Piece;
 import ipcconnect4.model.Game.Pos;
-import static ipcconnect4.model.Game.ROWS;
-import java.awt.Color;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -22,11 +26,20 @@ import javafx.scene.shape.StrokeType;
 public class GameGrid extends GridPane {
 
     private static final int ANIMATION_DELAY = 100;
+    private static final int RESET_DELAY = 100;
     private static final int ANIMATION_MAX_THREADS = 6;
     private static final float PREVIEW_OPACITY = 0.35F;
 
-    private boolean ended;
-    private final ScheduledExecutorService executor
+    private final BooleanProperty ended = new SimpleBooleanProperty(false);
+    public final IntegerProperty pendingAnims = new SimpleIntegerProperty(0);
+    private final ScheduledExecutorService resetExecutor
+            = Executors.newSingleThreadScheduledExecutor(
+                    runnable -> {
+                        Thread t = new Thread(runnable);
+                        t.setDaemon(true);
+                        return t;
+                    });
+    private final ScheduledExecutorService animExecutor
             = Executors.newScheduledThreadPool(ANIMATION_MAX_THREADS,
                     runnable -> {
                         Thread t = new Thread(runnable);
@@ -34,17 +47,25 @@ public class GameGrid extends GridPane {
                         return t;
                     });
 
+    public GameGrid() {
+        disableProperty().bind(Bindings.or(
+                Bindings.notEqual(pendingAnims, 0),
+                ended
+        ));
+    }
+
     public int getColumn(MouseEvent event) {
         double x = event.getSceneX();
         double xOffset = localToScene(getBoundsInLocal()).getMinX() + 0.5;
-        int column = (int) ((x - xOffset) * Game.COLUMNS / getWidth());
-        column = column >= Game.COLUMNS ? Game.COLUMNS - 1 : column;
+        int column = (int) ((x - xOffset) * COLUMNS / getWidth());
+        column = column >= COLUMNS ? COLUMNS - 1 : column;
         return column;
     }
 
     public void updatePiece(Piece piece, Pos pos, boolean animate) {
         if (animate) {
-            animatePiece(piece, new Pos(0, pos.column), pos);
+            pendingAnims.set(pendingAnims.get() + 1);
+            animatePiece(piece, new Pos(0, pos.column), pos, false);
         } else {
             Circle pieceC = createPiece(piece);
             removePiece(pos);
@@ -58,21 +79,25 @@ public class GameGrid extends GridPane {
         add(pieceC, pos.column, pos.row);
     }
 
-    private void animatePiece(Piece piece, Pos iniPos, Pos finPos) {
+    private void animatePiece(Piece piece, Pos iniPos, Pos finPos, boolean reset) {
         if (iniPos.row >= finPos.row) {
-            updatePiece(piece, finPos, false);
-            setDisable(ended);
+            if (reset) {
+                removePiece(iniPos);
+            } else {
+                updatePiece(piece, finPos, false);
+            }
+            pendingAnims.set(pendingAnims.get() - 1);
         } else {
-            Circle before = removePiece(iniPos);
+            removePiece(iniPos);
+            Circle before = createPiece(Piece.NONE);
             Circle temp = createPiece(piece);
             add(temp, iniPos.column, iniPos.row);
-            setDisable(true);
 
-            executor.schedule(
+            animExecutor.schedule(
                     () -> Platform.runLater(() -> {
                         getChildren().remove(temp);
                         add(before, iniPos.column, iniPos.row);
-                        animatePiece(piece, new Pos(iniPos.row + 1, iniPos.column), finPos);
+                        animatePiece(piece, new Pos(iniPos.row + 1, iniPos.column), finPos, reset);
                     }),
                     ANIMATION_DELAY,
                     TimeUnit.MILLISECONDS);
@@ -86,16 +111,16 @@ public class GameGrid extends GridPane {
                 circle.setFill(Paint.valueOf("#ffffff"));
                 break;
             case P1:
-                circle.setFill(Paint.valueOf("#ff0000"));
+                circle.setFill(Paint.valueOf("#FF5B5B"));
                 circle.setStrokeWidth(2);
                 circle.setStrokeType(StrokeType.INSIDE);
-                circle.setStroke(Paint.valueOf("#800000"));
+                circle.setStroke(Paint.valueOf("#DC4E4E"));
                 break;
             case P2:
-                circle.setFill(Paint.valueOf("#ffff00"));
+                circle.setFill(Paint.valueOf("#FFD951"));
                 circle.setStrokeWidth(2);
                 circle.setStrokeType(StrokeType.INSIDE);
-                circle.setStroke(Paint.valueOf("#D4AA00"));
+                circle.setStroke(Paint.valueOf("#DCBB46"));
                 break;
         }
         circle.radiusProperty().bind(Bindings.min(
@@ -124,8 +149,53 @@ public class GameGrid extends GridPane {
         return firstFound;
     }
 
-    public void finish() {
-        ended = true;
-        setDisable(true);
+    public void finish(List<Pos> winPositions, Function<Pos, Piece> getPiece) {
+        ended.set(true);
+        pendingAnims.addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() == 0) {
+                List<Node> childrens = getChildren();
+                childrens.clear();
+
+                for (int i = 0; i < ROWS; i++) {
+                    for (int j = 0; j < COLUMNS; j++) {
+                        Pos aPo = new Pos(i, j);
+                        Piece aPi = getPiece.apply(aPo);
+                        if (!winPositions.contains(aPo)) {
+                            previewPiece(aPi, aPo);
+                        } else {
+                            updatePiece(aPi, aPo, false);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void reset(Function<Pos, Piece> getPiece) {
+        pendingAnims.set(pendingAnims.get() + 1);
+        reset(getPiece, new Pos(ROWS - 1, 0));
+    }
+
+    private void reset(Function<Pos, Piece> getPiece, Pos pos) {
+        Pos finPos = new Pos(ROWS, pos.column);
+        if (pos.column >= COLUMNS) {
+            pos.column = 0;
+            pos.row--;
+        }
+        if (pos.row < 0) {
+            pendingAnims.set(pendingAnims.get() - 1);
+        } else {
+            resetExecutor.schedule(
+                    () -> {
+                        Platform.runLater(() -> {
+                            pendingAnims.set(pendingAnims.get() + 1);
+                            animatePiece(getPiece.apply(pos), new Pos(pos), finPos, true);
+                            pos.column++;
+                            reset(getPiece, new Pos(pos));
+                        });
+                    },
+                    RESET_DELAY,
+                    TimeUnit.MILLISECONDS);
+        }
     }
 }

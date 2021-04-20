@@ -1,6 +1,8 @@
 package ipcconnect4.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,9 +25,7 @@ public class Game {
      * Creates a Game initialising all cells to {@link Piece.NONE}
      */
     public Game() {
-        for (Piece[] row : board) {
-            Arrays.fill(row, Piece.NONE);
-        }
+        initBoard();
     }
 
     /**
@@ -102,6 +102,9 @@ public class Game {
                 if (wi != null) {
                     listener.onWin(wi);
                 }
+                if (isFull()) {
+                    listener.onFull();
+                }
             }
         }
     }
@@ -149,7 +152,7 @@ public class Game {
      * @return boolean
      */
     public boolean isOver() {
-        return getWinner() != null || isFull();
+        return getWinner() != null;
     }
 
     /**
@@ -164,6 +167,12 @@ public class Game {
             }
         }
         return true;
+    }
+    
+    public final void initBoard() {
+        for (Piece[] row : board) {
+            Arrays.fill(row, Piece.NONE);
+        }
     }
 
     /**
@@ -198,8 +207,42 @@ public class Game {
                     pieces = rounds / 2;
                     break;
             }
-            return new WinInfo(getPiece(pos[0]), pos[0], winType[0], pieces);
+            List<Pos> poses = getWinPositions(pos[0], winType[0]);
+            return new WinInfo(getPiece(pos[0]), poses, winType[0], pieces);
         }
+    }
+
+    private List<Pos> getWinPositions(Pos wp, WinType winType) {
+        List<Pos> positions = new ArrayList<>(4);
+
+        switch (winType) {
+            case ROW:
+                positions.add(new Pos(wp.row, wp.column + 0));
+                positions.add(new Pos(wp.row, wp.column + 1));
+                positions.add(new Pos(wp.row, wp.column + 2));
+                positions.add(new Pos(wp.row, wp.column + 3));
+                break;
+            case COLUMN:
+                positions.add(new Pos(wp.row - 0, wp.column));
+                positions.add(new Pos(wp.row - 1, wp.column));
+                positions.add(new Pos(wp.row - 2, wp.column));
+                positions.add(new Pos(wp.row - 3, wp.column));
+                break;
+            case DIAGONAL_ASC:
+                positions.add(new Pos(wp.row - 0, wp.column + 0));
+                positions.add(new Pos(wp.row - 1, wp.column + 1));
+                positions.add(new Pos(wp.row - 2, wp.column + 2));
+                positions.add(new Pos(wp.row - 3, wp.column + 3));
+                break;
+            case DIAGONAL_DESC:
+                positions.add(new Pos(wp.row + 0, wp.column + 0));
+                positions.add(new Pos(wp.row + 1, wp.column + 1));
+                positions.add(new Pos(wp.row + 2, wp.column + 2));
+                positions.add(new Pos(wp.row + 3, wp.column + 3));
+                break;
+        }
+
+        return positions;
     }
 
     /**
@@ -368,13 +411,13 @@ public class Game {
     public static class WinInfo {
 
         public final Piece origin;
-        public final Pos pos;
+        public final List<Pos> poses;
         public final WinType winType;
         public final int pieces;
 
-        public WinInfo(Piece origin, Pos pos, WinType winType, int pieces) {
+        public WinInfo(Piece origin, List<Pos> pos, WinType winType, int pieces) {
             this.origin = origin;
-            this.pos = pos;
+            this.poses = pos;
             this.winType = winType;
             this.pieces = pieces;
         }
@@ -397,7 +440,7 @@ public class Game {
             if (this.origin != other.origin) {
                 return false;
             }
-            if (!Objects.equals(this.pos, other.pos)) {
+            if (!Objects.equals(this.poses, other.poses)) {
                 return false;
             }
             return this.winType == other.winType;
@@ -407,7 +450,7 @@ public class Game {
         public int hashCode() {
             int hash = 3;
             hash = 97 * hash + Objects.hashCode(this.origin);
-            hash = 97 * hash + Objects.hashCode(this.pos);
+            hash = 97 * hash + Objects.hashCode(this.poses);
             hash = 97 * hash + Objects.hashCode(this.winType);
             hash = 97 * hash + this.pieces;
             return hash;
@@ -445,6 +488,8 @@ public class Game {
         void onChange(Movement movement);
 
         void onWin(WinInfo winInfo);
+        
+        void onFull();
     }
 
     /**

@@ -17,9 +17,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Connect4;
@@ -50,6 +49,7 @@ public class Main extends Application {
 //          goToAuthenticate(1);
             // TEST CODE BEGINS
             player1 = Connect4.getSingletonConnect4().getPlayer("nickName1");
+            player2 = Connect4.getSingletonConnect4().getPlayer("nickName2");
             goToHome();
             // TEST CODE ENDS
             stage.setTitle(rb.getString("app_name"));
@@ -92,6 +92,8 @@ public class Main extends Application {
                     rb
             );
             changeContent(loader.load());
+            stage.setMinHeight(650);
+            stage.setMinWidth(900);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,6 +122,8 @@ public class Main extends Application {
 
     public static void goToAuthenticate(int player) {
         changeContent(getAuthenticateScene(player).getRoot());
+        stage.setMinHeight(650);
+        stage.setMinWidth(700);
     }
 
     public static Scene getAuthenticateScene(int player) {
@@ -149,8 +153,13 @@ public class Main extends Application {
     public void start(Stage stage) {
         try {
             Connect4.getSingletonConnect4();
-        } catch (Connect4DAOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            // TEST CODE BEGINS
+            if (Connect4.getSingletonConnect4().getPlayer("nickName1") == null) {
+                Connect4.getSingletonConnect4().createDemoData(3, 3, 3);
+            }
+            // TEST CODE ENDS
+        } catch (Connect4DAOException e) {
+            System.err.print(e);
         }
         Main.stage = stage;
         try {
@@ -162,6 +171,7 @@ public class Main extends Application {
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/resources/img/icon.png")));
         stage.show();
     }
 

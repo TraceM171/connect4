@@ -27,6 +27,7 @@ import model.Player;
 public class GameController {
 
     private static final int AI_DELAY = 300;
+    private static final boolean ANIMATION = true;
 
     private final Player P1, P2;
     private final Game game;
@@ -107,6 +108,7 @@ public class GameController {
                 Platform.runLater(() -> Main.goToHome());
             }
         }
+        setTurn((vsAI ? gameAI : game).getNextPiece());
     }
 
     @FXML
@@ -117,6 +119,7 @@ public class GameController {
             if (gameAI.canPutPiece(column)) {
                 gameAI.putPiece(column);
                 if (!gameAI.isOver()) {
+                    gameGrid.pendingAnims.set(gameGrid.pendingAnims.get() + 1);
                     ScheduledExecutorService executorAI = Executors.newSingleThreadScheduledExecutor(
                             runnable -> {
                                 Thread t = new Thread(runnable);
@@ -128,6 +131,7 @@ public class GameController {
                                 MovementAI movementAI = gameAI.getNextAIMovement();
                                 Platform.runLater(() -> {
                                     gameAI.putPiece(movementAI.pos.column);
+                                    gameGrid.pendingAnims.set(gameGrid.pendingAnims.get() - 1);
                                 });
                             },
                             AI_DELAY,
@@ -144,7 +148,11 @@ public class GameController {
     private void previewAction(MouseEvent event) {
         int column = gameGrid.getColumn(event);
         Game game_ = vsAI ? gameAI : game;
-        previewPos.setValue(new Pos(game_.getFirstEmptyRow(column), column));
+        if (game_.getFirstEmptyRow(column) == -1) {
+            unpreviewAction(null);
+        } else {
+            previewPos.setValue(new Pos(game_.getFirstEmptyRow(column), column));
+        }
     }
 
     @FXML
@@ -170,24 +178,51 @@ public class GameController {
                 gameGrid.updatePiece(Piece.NONE, new Pos(row, col), false);
             }
         }
-        GameListener listener = new GameListener() {
+        Game game_ = vsAI ? gameAI : game;
+        game_.setListener(new GameListener() {
             @Override
             public void onChange(Movement movement) {
-                Piece piece;
-                Game game_ = vsAI ? gameAI : game;
-                piece = game_.getPiece(movement.pos);
-                gameGrid.updatePiece(piece, movement.pos, true);
+                gameGrid.updatePiece(movement.piece, movement.pos, ANIMATION);
+                setTurn(game_.getNextPiece());
             }
 
             @Override
             public void onWin(WinInfo winInfo) {
-                gameGrid.finish();
+                gameGrid.finish(winInfo.poses, (pos) -> game_.getPiece(pos));
+                setTurn(Piece.NONE);
             }
-        };
-        if (vsAI) {
-            gameAI.setListener(listener);
-        } else {
-            game.setListener(listener);
+
+            @Override
+            public void onFull() {
+                if (!game_.isOver()) {
+                    Game lGame = new Game(game_);
+                    gameGrid.reset((pos) -> lGame.getPiece(pos));
+                    game_.initBoard();
+                }
+            }
+        });
+    }
+
+    private void setTurn(Piece piece) {
+        switch (piece) {
+            case P1:
+                avatarI1.setOpacity(1);
+                nickNameT1.setOpacity(1);
+                avatarI2.setOpacity(0.5);
+                nickNameT2.setOpacity(0.5);
+                break;
+            case P2:
+                avatarI1.setOpacity(0.5);
+                nickNameT1.setOpacity(0.5);
+                avatarI2.setOpacity(1);
+                nickNameT2.setOpacity(1);
+                break;
+            case NONE:
+                avatarI1.setOpacity(1);
+                nickNameT1.setOpacity(1);
+                avatarI2.setOpacity(1);
+                nickNameT2.setOpacity(1);
+                break;
         }
     }
 
