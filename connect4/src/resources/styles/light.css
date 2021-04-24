@@ -10,6 +10,7 @@
     -fx-color-accent: #99d8ea;
     -fx-color-accent-light: derive(-fx-color-accent, 50%);
     -fx-color-accent-dark: #7090be;
+    -fx-color-accent-darker: derive(-fx-color-accent-dark, -35%);
     -fx-color-accent2: #c8bfe7;
     -fx-color-accent2-light: derive(-fx-color-accent2, 25%);
     -fx-color-accent2-dark: derive(-fx-color-accent2, -50%);
@@ -122,6 +123,14 @@
 }
 .label-nickname-p2 {
     -fx-background-color: -fx-p2-color;
+}
+.label-points {
+    -fx-padding: 2.5 3.5 2.5 3.5;
+    -fx-background-color: -fx-color-accent;
+    -fx-text-fill: -fx-color-accent-darker;
+}
+.label-points-win {
+    -fx-background-radius: 0 0 15 15;
 }
 
 

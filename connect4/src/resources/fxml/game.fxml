@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/dark.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <bottom>
         <StackPane>
             <children>
@@ -115,7 +115,22 @@
                                 <Pane HBox.hgrow="ALWAYS" />
                             </children>
                         </HBox>
-                        <Pane VBox.vgrow="ALWAYS" />
+                  <HBox alignment="TOP_CENTER">
+                     <children>
+                        <Label fx:id="totalPointsLWi">
+                           <styleClass>
+                              <String fx:value="label-points-win" />
+                              <String fx:value="label-points" />
+                           </styleClass>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                         <StackPane alignment="BOTTOM_CENTER">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup" StackPane.alignment="CENTER_RIGHT">
@@ -169,41 +184,67 @@
                         <String fx:value="circle-image-p1" />
                     </styleClass>
                 </CircleImage>
-                <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name1" GridPane.columnIndex="1">
-                    <padding>
-                        <Insets left="15.0" />
-                    </padding>
-                    <font>
-                        <Font size="19.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                    </GridPane.margin>
-                    <styleClass>
+            <StackPane GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+               <children>
+                      <Label fx:id="nickNameT1" maxHeight="-Infinity" maxWidth="-Infinity" text="Name1" StackPane.alignment="CENTER_LEFT">
+                          <font>
+                              <Font size="19.0" />
+                          </font>
+                      </Label>
+                  <Label fx:id="pointsT1" StackPane.alignment="BOTTOM_RIGHT">
+                     <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-nickname-p1" />
-                    </styleClass>
-                </Label>
+                        <String fx:value="label-points" />
+                     </styleClass>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+               <styleClass>
+                  <String fx:value="label-nickname" />
+                  <String fx:value="label-nickname-p1" />
+               </styleClass>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </StackPane>
                 <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
                         <Image url="@../img/vs.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name2" GridPane.columnIndex="3">
-                    <padding>
-                        <Insets right="15.0" />
-                    </padding>
-                    <font>
-                        <Font size="19.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                    </GridPane.margin>
-                    <styleClass>
+            <StackPane GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+               <children>
+                      <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" text="Name2" StackPane.alignment="CENTER_RIGHT">
+                          <font>
+                              <Font size="19.0" />
+                          </font>
+                      </Label>
+                  <Label fx:id="pointsT2" StackPane.alignment="BOTTOM_LEFT">
+                     <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-nickname-p2" />
-                    </styleClass>
-                </Label>
+                        <String fx:value="label-points" />
+                     </styleClass>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+               <styleClass>
+                  <String fx:value="label-nickname" />
+                  <String fx:value="label-nickname-p2" />
+               </styleClass>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </StackPane>
                 <CircleImage fx:id="avatarI2" radius="35.0" GridPane.columnIndex="4">
                     <image>
                         <Image url="@../../avatars/default.png" />

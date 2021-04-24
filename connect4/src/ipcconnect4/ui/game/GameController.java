@@ -22,6 +22,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.binding.StringExpression;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -57,7 +61,11 @@ public class GameController {
     @FXML
     private Label nickNameT1;
     @FXML
+    private Label pointsT1;
+    @FXML
     private Label nickNameT2;
+    @FXML
+    private Label pointsT2;
     @FXML
     private CircleImage avatarI2;
     @FXML
@@ -74,6 +82,8 @@ public class GameController {
     private Label nickNameTWi;
     @FXML
     private Label pointsLWi;
+    @FXML
+    private Label totalPointsLWi;
 
     private final Property<Pos> previewPos = new SimpleObjectProperty<>(null);
 
@@ -106,6 +116,7 @@ public class GameController {
         if (P1 != null) {
             avatarI1.setImage(P1.getAvatar());
             nickNameT1.setText(P1.getNickName());
+            pointsT1.setText(Main.formatWLang("points", Main.player1.getPoints()));
         } else {
             Platform.runLater(() -> Main.goToAuthenticate(1));
         }
@@ -116,15 +127,18 @@ public class GameController {
                 case EASY:
                     imagePath = "/resources/img/diff_1.png";
                     name = "Easy AI";
+                    pointsT2.setText(Main.formatWLang("points", 100));
                     break;
                 case NORMAL:
                     imagePath = "/resources/img/diff_2.png";
                     name = "Normal AI";
+                    pointsT2.setText(Main.formatWLang("points", 1000));
                     break;
                 case HARD:
                 default:
                     imagePath = "/resources/img/diff_3.png";
                     name = "Hard AI";
+                    pointsT2.setText(Main.formatWLang("points", -2));
                     break;
             }
             avatarI2.setImage(new Image(imagePath));
@@ -133,6 +147,7 @@ public class GameController {
             if (P2 != null) {
                 avatarI2.setImage(P2.getAvatar());
                 nickNameT2.setText(P2.getNickName());
+                pointsT2.setText(Main.formatWLang("points", Main.player2.getPoints()));
             } else {
                 Platform.runLater(() -> Main.goToHome());
             }
@@ -227,18 +242,21 @@ public class GameController {
                 String nickNameSC = "label-nickname-";
                 String avatarSC = "circle-image-";
                 String titleSC = "win-title-";
+                Label winnerPointsLabel;
                 if (winInfo.origin == Piece.P1) {
                     winner = Main.player1;
                     winnerStyleName = "p1";
                     winNickName = nickNameT1.getText();
                     winAvatar = avatarI1.getImage();
                     looser = vsAI ? null : Main.player2;
+                    winnerPointsLabel = pointsT1;
                 } else {
                     winner = vsAI ? null : Main.player2;
                     winnerStyleName = "p1";
                     winNickName = nickNameT2.getText();
                     winAvatar = avatarI2.getImage();
                     looser = Main.player1;
+                    winnerPointsLabel = pointsT2;
                 }
 
                 avatarIWi.setImage(winAvatar);
@@ -247,9 +265,9 @@ public class GameController {
                 avatarIWi.getStyleClass().add(avatarSC + winnerStyleName);
                 winnerTitleL.getStyleClass().add(titleSC + winnerStyleName);
 
+                int points = 0;
                 try {
                     Connect4 c4 = Connect4.getSingletonConnect4();
-                    int points;
                     if (vsAI) {
                         points = c4.getPointsAlone() * gameAI.difficulty.value;
                     } else {
@@ -258,24 +276,48 @@ public class GameController {
                     }
                     if (winner != null) {
                         winner.plusPoints(points);
-                        pointsLWi.setText(Main.formatWLang("points_plus", points));
                     }
                 } catch (Connect4DAOException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+                final int points_ = points;
+                if (winner != null) {
+                    pointsLWi.setText("+" + Main.formatWLang("points", points));
+                    IntegerProperty animationIP
+                            = Animations.count(
+                                    winner.getPoints() - points_,
+                                    winner.getPoints()
+                            );
+                    winnerPointsLabel.textProperty().bind(Bindings.createStringBinding(
+                            () -> Main.formatWLang("points", animationIP.get()),
+                            animationIP));
+                } else {
+                    totalPointsLWi.setText(winnerPointsLabel.getText());
+                }
+
                 exitIB.setOnMouseClicked((event) -> Main.goToHome());
 
                 Runnable showPU = () -> {
-                    Animations.fadeIn(winPopUp);
-
                     winPopUp.visibleProperty().addListener((observable, oldValue, newValue) -> {
                         if (newValue) {
                             Animations.fadeOut(showWinPopUpIB);
+                            if (winner != null) {
+                                IntegerProperty animationIP
+                                        = Animations.count(
+                                                winner.getPoints() - points_,
+                                                winner.getPoints()
+                                        );
+                                totalPointsLWi.textProperty().bind(Bindings.createStringBinding(
+                                        () -> Main.formatWLang("points", animationIP.get()),
+                                        animationIP));
+                            }
                         } else {
                             Animations.fadeIn(showWinPopUpIB);
                         }
                     });
+                    
+                    Animations.fadeIn(winPopUp);
                 };
                 gameGrid.afterAnimations(showPU);
             }
@@ -338,7 +380,7 @@ public class GameController {
         alert.setGraphic(icon);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(iconImage);
-        
+
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(
                 Main.class.getResource("/resources/styles/dark.css").toExternalForm());

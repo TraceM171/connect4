@@ -12,16 +12,13 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -30,7 +27,11 @@ public class HomeController {
     @FXML
     private Label nickNameT1;
     @FXML
+    private Label pointsT1;
+    @FXML
     private Label nickNameT2;
+    @FXML
+    private Label pointsT2;
     @FXML
     private VBox pvpVB;
     @FXML
@@ -86,7 +87,7 @@ public class HomeController {
 
             avatarI1.setImage(Main.player1.getAvatar());
             nickNameT1.setText(Main.player1.getNickName());
-
+            pointsT1.setText(Main.formatWLang("points", Main.player1.getPoints()));
         } else {
             Platform.runLater(() -> Main.goToAuthenticate(1));
         }
@@ -119,6 +120,7 @@ public class HomeController {
 
             avatarI2.setImage(Main.player2.getAvatar());
             nickNameT2.setText(Main.player2.getNickName());
+            pointsT2.setText(Main.formatWLang("points", Main.player2.getPoints()));
         } else {
             ContextMenu contextMenu = new ContextMenu();
             MenuItem menuItem1 = new MenuItem("Iniciar sesión");
@@ -152,6 +154,7 @@ public class HomeController {
 
             avatarI2.setImage(new Image("/avatars/default.png"));
             nickNameT2.setText("?");
+            pointsT2.setText(Main.formatWLang("points", -1));
         }
     }
 

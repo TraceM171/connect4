@@ -11,10 +11,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/dark.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.home.HomeController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.home.HomeController">
     <top>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -38,21 +39,30 @@
                         <Image url="@../../avatars/default.png" />
                     </image>
                 </CircleImage>
-                <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name1" GridPane.columnIndex="1">
-                    <padding>
-                        <Insets left="15.0" />
-                    </padding>
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets left="10.0" right="25.0" />
-                    </GridPane.margin>
-                    <styleClass>
+            <StackPane GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" right="25.0" />
+               </GridPane.margin>
+               <children>
+                  <Label fx:id="pointsT1" StackPane.alignment="BOTTOM_RIGHT">
+                     <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-nickname-p1" />
-                    </styleClass>
-                </Label>
+                        <String fx:value="label-points" />
+                     </styleClass></Label>
+                      <Label fx:id="nickNameT1" maxHeight="-Infinity" maxWidth="-Infinity" text="Name1" StackPane.alignment="CENTER_LEFT">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+               </children>
+               <styleClass>
+                  <String fx:value="label-nickname" />
+                  <String fx:value="label-nickname-p1" />
+               </styleClass>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </StackPane>
                 <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#ranksAction" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
                         <Image backgroundLoading="true" url="@../img/ranks.png" />
@@ -62,21 +72,30 @@
                   <String fx:value="clickable" />
                </styleClass>
                 </ImageView>
-                <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name2" GridPane.columnIndex="3">
-                    <padding>
-                        <Insets right="15.0" />
-                    </padding>
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets left="25.0" right="10.0" />
-                    </GridPane.margin>
-                    <styleClass>
+            <StackPane GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets left="25.0" right="10.0" />
+               </GridPane.margin>
+               <children>
+                      <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" text="Name2" StackPane.alignment="CENTER_RIGHT">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+                  <Label fx:id="pointsT2" StackPane.alignment="BOTTOM_LEFT">
+                     <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-nickname-p2" />
-                    </styleClass>
-                </Label>
+                        <String fx:value="label-points" />
+                     </styleClass></Label>
+               </children>
+               <styleClass>
+                  <String fx:value="label-nickname" />
+                  <String fx:value="label-nickname-p2" />
+               </styleClass>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </StackPane>
                 <CircleImage fx:id="avatarI2" radius="30" GridPane.columnIndex="4">
                     <styleClass>
                         <String fx:value="circle-image" />

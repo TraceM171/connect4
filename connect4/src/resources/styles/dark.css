@@ -127,6 +127,14 @@
 .label-nickname-p2 {
     -fx-background-color: -fx-p2-color;
 }
+.label-points {
+    -fx-padding: 2.5 3.5 2.5 3.5;
+    -fx-background-color: -fx-color-accent;
+    -fx-text-fill: -fx-color-accent-darker;
+}
+.label-points-win {
+    -fx-background-radius: 0 0 15 15;
+}
 
 
 /* home big buttons */
