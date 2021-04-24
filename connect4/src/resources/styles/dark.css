@@ -1,0 +1,264 @@
+/* === CSS for DARK mode === */
+
+
+/* shared values */
+* {
+    -fx-black0: #181818;
+    -fx-black1: #212121;
+    -fx-black2: #3D3D3D;
+    -fx-black3: #AAAAAA;
+    -fx-shadow: dropshadow(three-pass-box, grey, 7, 0, 2.5, 2.5);
+    -fx-shadow-no: dropshadow(three-pass-box, transparent, 0, 0, 0, 0);
+    -fx-shadow-big: dropshadow(three-pass-box, grey, 15, 0, 3, 3);
+    -fx-shadow-bigger: dropshadow(three-pass-box, -fx-black0, 32, 0, 7, 7);
+    -fx-color-accent: #2f8eaa;
+    -fx-color-accent-light: derive(-fx-color-accent, 50%);
+    -fx-color-accent-dark: #43608a;
+    -fx-color-accent2: #7c6bb9;
+    -fx-color-accent2-light: derive(-fx-color-accent2, 25%);
+    -fx-color-accent2-dark: derive(-fx-color-accent2, -50%);
+    -fx-p1-color: #d94e4e;
+    -fx-p1-color-dark: derive(-fx-p1-color, -25%);
+    -fx-p2-color: #d9b945;
+    -fx-p2-color-dark: derive(-fx-p2-color, -25%);
+}
+
+
+/* clickable default style */
+.clickable {
+    -fx-effect: -fx-shadow;
+}
+.clickable:hover, .clickable:focused {
+    -fx-effect: -fx-shadow-big;
+}
+.clickable:pressed, .clickable:disabled {
+    -fx-effect: -fx-shadow-no;
+}
+
+
+/* base node style */
+.root {
+    -fx-base: -fx-black1;
+    -fx-background-color: -fx-black0;
+}
+
+
+/* standard section box */
+.section {
+    -fx-background-color: -fx-color-accent;
+    -fx-background-radius: 10;
+}
+
+
+/* circle image used for avatars */
+.circle-image {
+    -fx-stroke-type: outside;
+    -fx-stroke-width: 3;
+}
+.circle-image-p1 {
+    -fx-stroke: -fx-p1-color;
+}
+.circle-image-p2 {
+    -fx-stroke: -fx-p2-color;
+}
+
+
+/* style for icon_label, which is used as a button with text and  */
+.icon-label {
+    -fx-alignment: CENTER;
+    -fx-padding: 5;
+    -fx-graphic-text-gap: 5.0;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-color: -fx-color-accent-dark;
+    -fx-background-radius: 10;
+    -fx-focus-traversable: true;
+}
+.icon-label:disabled {
+    -fx-text-fill: whitesmoke;
+    -fx-effect: -fx-shadow-no;
+}
+
+
+/* style for icon_button */
+.icon-button:disabled {
+    -fx-opacity: 0.5;
+}
+
+
+/* Spinner style */
+.spinner {
+    -fx-background-color: transparent, -fx-black2;
+    -fx-background-radius: 5 5 5 5;
+    -fx-background-insets: 0, 2 2 2 2;
+    -fx-padding: 2;
+}
+.spinner:hover, .spinner:focused {
+    -fx-background-color: -fx-color-accent-dark, -fx-black2;
+}
+.spinner .text-field {
+    -fx-background-color: -fx-color-accent-dark, -fx-black2;
+    -fx-background-radius: 5 0 0 5;
+    -fx-background-insets: 0, 0 1 0 0;
+}
+.spinner .increment-arrow-button {
+    -fx-background-color: transparent, -fx-black2;
+    -fx-background-radius: 0 5 0 0;
+}
+.spinner .decrement-arrow-button {
+    -fx-background-color: transparent, -fx-black2;
+    -fx-background-radius: 0 0 5 0;
+}
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover,
+.spinner .increment-arrow-button:pressed,
+.spinner .decrement-arrow-button:pressed {
+    -fx-background-color: -fx-black3;
+}
+
+
+/* labels used for players nicknames */
+.label-nickname {
+    -fx-background-radius: 15;
+}
+.label-nickname-p1 {
+    -fx-background-color: -fx-p1-color;
+}
+.label-nickname-p2 {
+    -fx-background-color: -fx-p2-color;
+}
+
+
+/* home big buttons */
+.big-button {
+    -fx-alignment: CENTER;
+    -fx-background-radius: 25;
+    -fx-background-color: -fx-color-accent2;
+    -fx-border-color: -fx-color-accent2-dark;
+    -fx-border-radius: 25;
+    -fx-border-width: 2;
+}
+.big-button .label {
+    -fx-text-fill: -fx-color-accent2-dark;
+    -fx-font-style: italic;
+    -fx-font-size: 24px;
+}
+
+
+/* big button blocked overlay */
+.big-button-block-overlay {
+    -fx-background-color: -fx-black2;
+    -fx-border-color: -fx-black2;
+    -fx-opacity: 0.75;
+}
+.big-button-block-overlay .label {
+    -fx-text-fill: white;
+    -fx-font-style: normal;
+    -fx-font-size: 16px;
+}
+
+
+/* home big buttons that can be selected */
+.big-button-sel .label {
+    -fx-font-style: normal;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 0 0;
+}
+.big-button-sel-unselected {
+    -fx-background-color: -fx-color-accent2-light;
+    -fx-border-color: transparent;
+}
+.big-button-sel-selected:hover, .big-button-sel-selected:focused {
+    -fx-effect: -fx-shadow;
+}
+
+
+/* game board style */
+.game-board {
+    -fx-background-color: -fx-color-accent-dark;
+    -fx-background-radius: 25;
+}
+
+
+/* circle pieces */
+.circle-piece-none {
+    -fx-fill: -fx-base;
+}
+.circle-piece-p1, .circle-piece-p2 {
+    -fx-stroke-width: 2px;
+    -fx-stroke-type: inside;
+}
+.circle-piece-p1 {
+    -fx-fill: -fx-p1-color;
+    -fx-stroke: -fx-p1-color-dark;
+}
+.circle-piece-p2 {
+    -fx-fill: -fx-p2-color;
+    -fx-stroke: -fx-p2-color-dark;
+}
+
+
+/* winner dialog */
+#winPopUp {
+    -fx-background-color: -fx-black2;
+    -fx-background-radius: 25;
+    -fx-effect: -fx-shadow-bigger;
+}
+#winPopUp #pointsLWi {
+    -fx-text-fill: green;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+#winPopUp #winnerTitleL {
+    -fx-font-size: 24px;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+}
+.win-title-p1 {
+    -fx-text-fill: -fx-p1-color;
+}
+.win-title-p2 {
+    -fx-text-fill: -fx-p2-color;
+}
+
+
+/* TextField style */
+.text-field {
+    -fx-background-color: transparent, -fx-black1;
+    -fx-text-fill: whitesmoke;
+    -fx-prompt-text-fill: -fx-black3;
+    -fx-background-insets: 0, 0 0 2 0;
+    -fx-background-radius: 5 5 5 5;
+}
+.text-field:hover, .text-field:focused {
+    -fx-background-color: -fx-color-accent-dark, -fx-background;
+}
+
+
+/* standard text for titles */
+.text-def {
+    -fx-fill: whitesmoke;
+    -fx-text-fill: whitesmoke;
+}
+/* used for error texts */
+.text-error {
+    -fx-text-fill: red;
+}
+
+
+/* dialogs */
+.dialog {
+    -fx-background-color: -fx-black0;
+}
+.dialog > *.button-bar > *.container {
+    -fx-background-color: -fx-black0;
+}
+.dialog:header *.header-panel {
+    -fx-background-color: -fx-black1;
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+}
+.dialog > *.label {
+    -fx-fill: whitesmoke;
+    -fx-font-size: 14px;
+}

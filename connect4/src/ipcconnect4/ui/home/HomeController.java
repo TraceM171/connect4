@@ -156,9 +156,9 @@ public class HomeController {
     }
 
     private void bindDifficulties() {
-        diff1SI.activeProperty().bind(Bindings.equal(difficulty, Difficulty.EASY));
-        diff2SI.activeProperty().bind(Bindings.equal(difficulty, Difficulty.NORMAL));
-        diff3SI.activeProperty().bind(Bindings.equal(difficulty, Difficulty.HARD));
+        diff1SI.selectedProperty().bind(Bindings.equal(difficulty, Difficulty.EASY));
+        diff2SI.selectedProperty().bind(Bindings.equal(difficulty, Difficulty.NORMAL));
+        diff3SI.selectedProperty().bind(Bindings.equal(difficulty, Difficulty.HARD));
 
         difficulty.addListener((observable, oldValue, newValue)
                 -> Main.lastAIdifficulty = newValue
@@ -209,18 +209,6 @@ public class HomeController {
     @FXML
     private void ranksAction(MouseEvent event) {
         Main.showNYI();
-    }
-
-    @FXML
-    private void mouseEnteredAction(MouseEvent event) {
-        Node source = ((Node) event.getSource());
-        source.setEffect(new DropShadow(13, 3, 3, Color.BLACK));
-    }
-
-    @FXML
-    private void mouseExitedAction(MouseEvent event) {
-        Node source = ((Node) event.getSource());
-        source.setEffect(new DropShadow(5, 2.5, 2.5, Color.GRAY));
     }
 
 }

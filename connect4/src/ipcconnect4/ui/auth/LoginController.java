@@ -2,10 +2,10 @@ package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
-import ipcconnect4.view.IconButton;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -32,7 +32,7 @@ public class LoginController {
     @FXML
     private TextField passTextUnmask;
     @FXML
-    private IconButton okButton;
+    private ImageView okButton;
     @FXML
     private Text errorText;
     @FXML
@@ -43,7 +43,7 @@ public class LoginController {
     }
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         // okButton disabled if userText or passText are empty
         okButton.disableProperty().bind(Bindings.or(
                 userText.textProperty().isEmpty(),
@@ -63,6 +63,13 @@ public class LoginController {
                 firstfocus = false;
             }
         });
+    }
+    
+    @FXML
+    private void tfOkAction(ActionEvent event) {
+        if (!okButton.isDisable()) {
+            okAction(null);
+        }
     }
 
     @FXML
@@ -104,9 +111,11 @@ public class LoginController {
     private void changePassMask(InputEvent event) {
         passTextMask.setVisible(!passTextMask.isVisible());
         if (passTextMask.isVisible()) {
+            passTextUnmask.setFocusTraversable(false);
             passTextMask.requestFocus();
             passMaskIV.setImage(new Image("/resources/img/show_pass.png"));
         } else {
+            passTextMask.setFocusTraversable(false);
             passTextUnmask.requestFocus();
             passMaskIV.setImage(new Image("/resources/img/hide_pass.png"));
         }

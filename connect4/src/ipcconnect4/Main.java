@@ -18,7 +18,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -59,10 +61,10 @@ public class Main extends Application {
         }
     }
 
-    public static MessageFormat formatWLang(String resourceId) {
+    public static String formatWLang(String resourceId, Object... params) {
         String pattern = rb.getString(resourceId);
         MessageFormat formatter = new MessageFormat(pattern, Locale.getDefault());
-        return formatter;
+        return formatter.format(params);
     }
 
     public static void showNYI() {
@@ -70,6 +72,15 @@ public class Main extends Application {
         alert.setTitle(Main.rb.getString("nyi"));
         alert.setHeaderText(Main.rb.getString("nyi_title"));
         alert.setContentText(Main.rb.getString("nyi_explanation"));
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                Main.class.getResource("/resources/styles/light.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog");
+        
+        Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/icon.png"));
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        alertStage.getIcons().add(iconImage);
 
         alert.showAndWait();
     }

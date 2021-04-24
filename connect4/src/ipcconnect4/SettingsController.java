@@ -1,17 +1,19 @@
 package ipcconnect4;
 
 import ipcconnect4.util.BiHashMap;
-import ipcconnect4.view.IconButton;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
@@ -22,7 +24,9 @@ public class SettingsController implements Initializable {
     @FXML
     private Label saveText;
     @FXML
-    private IconButton saveIV;
+    private ImageView saveIV;
+    @FXML
+    private Node root;
 
     private BiHashMap<Locale, String> langs;
 
@@ -40,6 +44,7 @@ public class SettingsController implements Initializable {
         ));
 
         saveText.visibleProperty().bind(saveIV.disabledProperty().not());
+        Platform.runLater(() -> root.requestFocus());
     }
 
     @FXML

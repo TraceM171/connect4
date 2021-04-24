@@ -2,7 +2,7 @@
 
 <?import ipcconnect4.view.CircleImage?>
 <?import ipcconnect4.view.GameGrid?>
-<?import ipcconnect4.view.IconButton?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -18,25 +18,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/dark.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <bottom>
         <StackPane>
             <children>
-                <IconButton fx:id="exitIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                <ImageView fx:id="exitIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                     <image>
                         <Image url="@../img/cancel.png" />
                     </image>
-                </IconButton>
-                <IconButton fx:id="showWinPopUpIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#showWinPopUp" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER">
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
+                </ImageView>
+                <ImageView fx:id="showWinPopUpIB" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#showWinPopUp" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER">
                     <image>
                         <Image url="@../img/winner.png" />
                     </image>
-                </IconButton>
+               <styleClass>
+                  <String fx:value="icon-button" />
+                  <String fx:value="clickable" />
+               </styleClass>
+                </ImageView>
             </children>
         </StackPane>
     </bottom>
     <center>
-        <StackPane style="-fx-background-color: #7090be; -fx-background-radius: 25;" BorderPane.alignment="CENTER">
+        <StackPane styleClass="game-board" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="25.0" left="15.0" right="15.0" top="25.0" />
             </BorderPane.margin>
@@ -60,24 +68,20 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GameGrid>
-                <VBox fx:id="winPopUp" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: WHITE; -fx-background-radius: 25;" visible="false">
+                <VBox fx:id="winPopUp" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" visible="false">
                     <children>
                         <HBox alignment="CENTER">
                             <children>
                                 <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../img/light_mode_activated.png" />
+                                        <Image url="@../img/fireworks_2.png" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="winnerTitleL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="%winner" HBox.hgrow="ALWAYS">
-                                    <font>
-                                        <Font name="System Bold Italic" size="24.0" />
-                                    </font>
-                                </Label>
+                                <Label fx:id="winnerTitleL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="%winner" HBox.hgrow="ALWAYS" />
                                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../img/light_mode_activated.png" />
+                                        <Image url="@../img/fireworks_1.png" />
                                     </image>
                                 </ImageView>
                                 <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
@@ -86,7 +90,7 @@
                         <Pane VBox.vgrow="ALWAYS" />
                         <StackPane alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity">
                             <children>
-                                <CircleImage fx:id="avatarIWi" radius="50.0" stroke="#ffd951" strokeType="OUTSIDE" strokeWidth="3" />
+                                <CircleImage fx:id="avatarIWi" radius="50.0" styleClass="circle-image" />
                                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../img/winner.png" />
@@ -100,7 +104,7 @@
                             </VBox.margin>
                             <children>
                                 <Pane HBox.hgrow="ALWAYS" />
-                                <Label fx:id="nickNameTWi" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffd951; -fx-background-radius: 15;" text="Name1" HBox.hgrow="ALWAYS">
+                                <Label fx:id="nickNameTWi" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="label-nickname" text="Name1" HBox.hgrow="ALWAYS">
                                     <padding>
                                         <Insets left="50.0" right="50.0" />
                                     </padding>
@@ -114,16 +118,16 @@
                         <Pane VBox.vgrow="ALWAYS" />
                         <StackPane alignment="BOTTOM_CENTER">
                             <children>
-                                <IconButton fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup" StackPane.alignment="CENTER_RIGHT">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup" StackPane.alignment="CENTER_RIGHT">
                                     <image>
                                         <Image url="@../img/accept.png" />
                                     </image>
-                                </IconButton>
-                                <Label fx:id="pointsLWi" textFill="GREEN" StackPane.alignment="CENTER_LEFT">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
+                           <styleClass>
+                              <String fx:value="icon-button" />
+                              <String fx:value="clickable" />
+                           </styleClass>
+                                </ImageView>
+                                <Label fx:id="pointsLWi" StackPane.alignment="CENTER_LEFT" />
                             </children>
                         </StackPane>
                     </children>
@@ -156,8 +160,16 @@
                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <CircleImage fx:id="avatarI1" radius="35.0" stroke="#ff5b5b" strokeType="OUTSIDE" strokeWidth="3" />
-                <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ff5b5b; -fx-background-radius: 15;" text="Name1" GridPane.columnIndex="1">
+                <CircleImage fx:id="avatarI1" radius="35.0">
+                    <image>
+                        <Image url="@../../avatars/default.png" />
+                    </image>
+                    <styleClass>
+                        <String fx:value="circle-image" />
+                        <String fx:value="circle-image-p1" />
+                    </styleClass>
+                </CircleImage>
+                <Label fx:id="nickNameT1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name1" GridPane.columnIndex="1">
                     <padding>
                         <Insets left="15.0" />
                     </padding>
@@ -167,13 +179,17 @@
                     <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                     </GridPane.margin>
+                    <styleClass>
+                        <String fx:value="label-nickname" />
+                        <String fx:value="label-nickname-p1" />
+                    </styleClass>
                 </Label>
-                <IconButton fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" shadow="false" GridPane.columnIndex="2">
+                <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
                         <Image url="@../img/vs.png" />
                     </image>
-                </IconButton>
-                <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #ffd951; -fx-background-radius: 15;" text="Name2" GridPane.columnIndex="3">
+                </ImageView>
+                <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name2" GridPane.columnIndex="3">
                     <padding>
                         <Insets right="15.0" />
                     </padding>
@@ -183,8 +199,20 @@
                     <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                     </GridPane.margin>
+                    <styleClass>
+                        <String fx:value="label-nickname" />
+                        <String fx:value="label-nickname-p2" />
+                    </styleClass>
                 </Label>
-                <CircleImage fx:id="avatarI2" radius="35.0" stroke="#ffd951" strokeType="OUTSIDE" strokeWidth="3" GridPane.columnIndex="4" />
+                <CircleImage fx:id="avatarI2" radius="35.0" GridPane.columnIndex="4">
+                    <image>
+                        <Image url="@../../avatars/default.png" />
+                    </image>
+                    <styleClass>
+                        <String fx:value="circle-image" />
+                        <String fx:value="circle-image-p2" />
+                    </styleClass>
+                </CircleImage>
             </children>
         </GridPane>
     </top>

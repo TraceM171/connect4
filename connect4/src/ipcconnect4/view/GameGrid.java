@@ -115,19 +115,13 @@ public class GameGrid extends GridPane {
         Circle circle = new Circle();
         switch (piece) {
             case NONE:
-                circle.setFill(Paint.valueOf("#ffffff"));
+                circle.getStyleClass().add("circle-piece-none");
                 break;
             case P1:
-                circle.setFill(Paint.valueOf("#FF5B5B"));
-                circle.setStrokeWidth(2);
-                circle.setStrokeType(StrokeType.INSIDE);
-                circle.setStroke(Paint.valueOf("#DC4E4E"));
+                circle.getStyleClass().add("circle-piece-p1");
                 break;
             case P2:
-                circle.setFill(Paint.valueOf("#FFD951"));
-                circle.setStrokeWidth(2);
-                circle.setStrokeType(StrokeType.INSIDE);
-                circle.setStroke(Paint.valueOf("#DCBB46"));
+                circle.getStyleClass().add("circle-piece-p2");
                 break;
         }
         circle.radiusProperty().bind(Bindings.min(

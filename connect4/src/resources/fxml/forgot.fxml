@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import ipcconnect4.view.IconButton?>
 <?import ipcconnect4.view.IconLabel?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -13,24 +13,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="600.0" prefWidth="300.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="600.0" prefWidth="300.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%forgot_title">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-def" text="%forgot_title">
                     <font>
                         <Font name="System Italic" size="24.0" />
                     </font>
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
                 </Text>
             </children>
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
         </VBox>
-        <Label text="%forgot_explanation" wrapText="true">
+        <Label styleClass="text-def" text="%forgot_explanation" wrapText="true">
             <VBox.margin>
                 <Insets top="10.0" />
             </VBox.margin>
@@ -40,7 +34,7 @@
         </Label>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" style="-fx-background-color: #99d8ea; -fx-background-radius: 10;">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="section">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -63,14 +57,14 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" style="-fx-background-color: #99d8ea; -fx-background-radius: 10;">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="section">
                <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image backgroundLoading="true" url="@../img/mail.png" />
                             </image>
                         </ImageView>
-                        <TextField fx:id="emailText" maxWidth="1.7976931348623157E308" promptText="%email_input" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="emailText" maxWidth="1.7976931348623157E308" onAction="#tfOkAction" promptText="%email_input" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets left="10.0" />
                             </HBox.margin>
@@ -89,7 +83,7 @@
                 <Insets bottom="10.0" top="20.0" />
             </VBox.margin>
         </VBox>
-        <Text fx:id="errorText1" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="%forgot_error" visible="false">
+        <Text fx:id="errorText1" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-error" text="%forgot_error" visible="false">
             <VBox.margin>
                 <Insets bottom="5.0" />
             </VBox.margin>
@@ -98,21 +92,18 @@
          </font>
         </Text>
       <HBox alignment="CENTER_RIGHT">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
          <children>
-            <IconLabel fx:id="okButton" icon="@../img/send.png" onMouseClicked="#okAction" text="%send" />
+            <IconLabel fx:id="okButton" icon="@../img/send.png" onMouseClicked="#okAction" styleClass="clickable" text="%send" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #99d8ea; -fx-background-radius: 10;">
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="section">
          <children>
                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image backgroundLoading="true" url="@../img/code.png" />
                     </image>
                 </ImageView>
-                <TextField fx:id="codeText" maxWidth="1.7976931348623157E308" prefWidth="125.0" promptText="%code_input">
+                <TextField fx:id="codeText" maxWidth="1.7976931348623157E308" onAction="#tfVerifyAction" prefWidth="125.0" promptText="%code_input">
                     <HBox.margin>
                         <Insets left="10.0" />
                     </HBox.margin>
@@ -128,7 +119,7 @@
             <Insets bottom="10.0" top="15.0" />
          </VBox.margin>
       </HBox>
-        <Text fx:id="errorText2" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="%forgot_error_code" visible="false">
+        <Text fx:id="errorText2" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-error" text="%forgot_error_code" visible="false">
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin>
@@ -141,17 +132,25 @@
             <Insets />
          </VBox.margin>
          <children>
-                <IconButton fitHeight="35.0" fitWidth="35.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image backgroundLoading="true" url="@../img/back.png" />
                     </image>
-                </IconButton>
+               <styleClass>
+                  <String fx:value="icon-button" />
+                  <String fx:value="clickable" />
+               </styleClass>
+                </ImageView>
             <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <IconButton fx:id="okButton1" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#verifyAction" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="okButton1" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#verifyAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image backgroundLoading="true" url="@../img/accept.png" />
                </image>
-            </IconButton>
+               <styleClass>
+                  <String fx:value="icon-button" />
+                  <String fx:value="clickable" />
+               </styleClass>
+            </ImageView>
          </children>
       </HBox>
     </children>

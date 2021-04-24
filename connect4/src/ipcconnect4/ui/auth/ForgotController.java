@@ -2,8 +2,6 @@ package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
-import ipcconnect4.view.IconButton;
-import ipcconnect4.view.IconLabel;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -18,7 +16,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.text.Text;
 import model.Connect4;
@@ -46,13 +46,13 @@ public class ForgotController {
     @FXML
     private Text errorText1;
     @FXML
-    private IconLabel okButton;
+    private Label okButton;
     @FXML
     private TextField codeText;
     @FXML
     private Text errorText2;
     @FXML
-    private IconButton okButton1;
+    private ImageView okButton1;
 
     public ForgotController(ForgotListener listener) {
         this.listener = listener;
@@ -78,6 +78,13 @@ public class ForgotController {
             }
         });
     }
+    
+    @FXML
+    private void tfOkAction(ActionEvent event) {
+        if (!okButton.isDisable()) {
+            okAction(null);
+        }
+    }
 
     @FXML
     private void okAction(InputEvent event) {
@@ -95,6 +102,13 @@ public class ForgotController {
         }
     }
 
+    @FXML
+    private void tfVerifyAction(ActionEvent event) {
+        if (!okButton1.isDisable()) {
+            verifyAction(null);
+        }
+    }
+    
     @FXML
     private void verifyAction(InputEvent event) {
         if (Integer.valueOf(codeText.getText()) == code) {

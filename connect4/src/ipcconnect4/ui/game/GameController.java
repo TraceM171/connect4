@@ -14,7 +14,6 @@ import ipcconnect4.model.MovementAI;
 import ipcconnect4.util.Animations;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.GameGrid;
-import ipcconnect4.view.IconButton;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -31,11 +30,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import model.Connect4;
 import model.Player;
@@ -52,7 +51,7 @@ public class GameController {
     private final Difficulty difficulty;
 
     @FXML
-    private IconButton exitIB;
+    private ImageView exitIB;
     @FXML
     private CircleImage avatarI1;
     @FXML
@@ -68,7 +67,7 @@ public class GameController {
     @FXML
     private Label winnerTitleL;
     @FXML
-    private IconButton showWinPopUpIB;
+    private ImageView showWinPopUpIB;
     @FXML
     private CircleImage avatarIWi;
     @FXML
@@ -222,20 +221,21 @@ public class GameController {
                 setTurn(Piece.NONE);
 
                 Player winner, looser;
-                Paint winColor;
-                String winStyle, winNickName;
                 Image winAvatar;
+                String winNickName;
+                String winnerStyleName;
+                String nickNameSC = "label-nickname-";
+                String avatarSC = "circle-image-";
+                String titleSC = "win-title-";
                 if (winInfo.origin == Piece.P1) {
                     winner = Main.player1;
-                    winColor = Paint.valueOf("#ff5b5b");
-                    winStyle = nickNameT1.getStyle();
+                    winnerStyleName = "p1";
                     winNickName = nickNameT1.getText();
                     winAvatar = avatarI1.getImage();
                     looser = vsAI ? null : Main.player2;
                 } else {
                     winner = vsAI ? null : Main.player2;
-                    winColor = Paint.valueOf("#ffd951");
-                    winStyle = nickNameT2.getStyle();
+                    winnerStyleName = "p1";
                     winNickName = nickNameT2.getText();
                     winAvatar = avatarI2.getImage();
                     looser = Main.player1;
@@ -243,9 +243,9 @@ public class GameController {
 
                 avatarIWi.setImage(winAvatar);
                 nickNameTWi.setText(winNickName);
-                avatarIWi.setStroke(winColor);
-                nickNameTWi.setStyle(winStyle);
-                winnerTitleL.setTextFill(winColor);
+                nickNameTWi.getStyleClass().add(nickNameSC + winnerStyleName);
+                avatarIWi.getStyleClass().add(avatarSC + winnerStyleName);
+                winnerTitleL.getStyleClass().add(titleSC + winnerStyleName);
 
                 try {
                     Connect4 c4 = Connect4.getSingletonConnect4();
@@ -258,7 +258,7 @@ public class GameController {
                     }
                     if (winner != null) {
                         winner.plusPoints(points);
-                        pointsLWi.setText(Main.formatWLang("points_plus").format(new Object[]{points}));
+                        pointsLWi.setText(Main.formatWLang("points_plus", points));
                     }
                 } catch (Connect4DAOException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
@@ -338,6 +338,11 @@ public class GameController {
         alert.setGraphic(icon);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(iconImage);
+        
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(
+                Main.class.getResource("/resources/styles/dark.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog");
 
         ButtonType buttonTypeConfirm
                 = new ButtonType(Main.rb.getString("confirm"), ButtonData.YES);

@@ -2,23 +2,31 @@ package ipcconnect4.view;
 
 import java.io.IOException;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 public class SelectorIcon extends VBox {
 
+    private static final String SELECTED_CLASS = "big-button-sel-selected";
+    private static final String UNSELECTED_CLASS = "big-button-sel-unselected";
+
     @FXML
-    private IconButton iconButton;
+    private ImageView iconButton;
     @FXML
     private Label label;
 
+    private final BooleanProperty selected;
+
     @SuppressWarnings("LeakingThisInConstructor")
     public SelectorIcon() {
+        selected = new SimpleBooleanProperty(true);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 "/resources/fxml/selector_icon.fxml"));
         fxmlLoader.setRoot(this);
@@ -33,8 +41,22 @@ public class SelectorIcon extends VBox {
 
     @FXML
     private void initialize() {
-        bindActive();
-        bindMouseEnter();
+        selected.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                getStyleClass().add(SELECTED_CLASS);
+                getStyleClass().remove(UNSELECTED_CLASS);
+                ColorAdjust ca = new ColorAdjust();
+                ca.setSaturation(0);
+                iconButton.setEffect(ca);
+            } else {
+                getStyleClass().add(UNSELECTED_CLASS);
+                getStyleClass().remove(SELECTED_CLASS);
+                ColorAdjust ca = new ColorAdjust();
+                ca.setSaturation(-0.85);
+                iconButton.setEffect(ca);
+            }
+        });
+        selected.setValue(false);
     }
 
     public void setIcon(String icon) {
@@ -57,57 +79,15 @@ public class SelectorIcon extends VBox {
         return label.getText();
     }
 
-    private void bindActive() {
-        String activeStyle = "-fx-background-radius: 25;"
-                + "-fx-background-color: #c8bfe7;"
-                + "-fx-border-color: #635e73;"
-                + "-fx-border-radius: 25;"
-                + "-fx-border-width:2;";
-        String inactiveStyle = "-fx-background-radius: 25;"
-                + "-fx-background-color: #d6d2e7;"
-                + "-fx-border-color: #d6d2e7;"
-                + "-fx-border-radius: 25;"
-                + "-fx-border-width:2;";
-        iconButton.activeProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                setStyle(activeStyle);
-                setBigShadow(false);
-            } else {
-                setStyle(inactiveStyle);
-            }
-        });
-        setStyle(activeStyle);
-        setBigShadow(false);
+    public final BooleanProperty selectedProperty() {
+        return selected;
     }
 
-    private void bindMouseEnter() {
-        setOnMouseEntered((event) -> {
-            if (!iconButton.isActive()) {
-                setBigShadow(true);
-            }
-        });
-        setOnMouseExited((event) -> {
-            setBigShadow(false);
-        });
+    public final boolean isSelected() {
+        return selected.get();
     }
 
-    private void setBigShadow(boolean big) {
-        if (big) {
-            setEffect(new DropShadow(13, 3, 3, Color.BLACK));
-        } else {
-            setEffect(new DropShadow(5, 2.5, 2.5, Color.GRAY));
-        }
-    }
-
-    public final BooleanProperty activeProperty() {
-        return iconButton.activeProperty();
-    }
-
-    public final boolean isActive() {
-        return iconButton.isActive();
-    }
-
-    public final void setActive(boolean value) {
-        iconButton.setActive(value);
+    public final void setSelected(boolean value) {
+        selected.set(value);
     }
 }
