@@ -5,6 +5,7 @@ import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.ui.auth.AuthenticateController;
 import ipcconnect4.ui.game.GameController;
 import ipcconnect4.util.Animations;
+import ipcconnect4.util.LocalPreferences;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -15,6 +16,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,11 +30,10 @@ import model.Player;
 
 public class Main extends Application {
 
-    public static final Locale DEF_LANG = new Locale("ca", "ES");
-
     public static Player player1, player2;
     public static Difficulty lastAIdifficulty = Difficulty.EASY;
     public static ResourceBundle rb;
+    public static String styleSheet;
     public static Stage stage;
     public static Pane root;
 
@@ -41,19 +42,33 @@ public class Main extends Application {
     }
 
     public static void changeLanguage(Locale locale) {
-        startWithLanguage(locale);
+        LocalPreferences.getInstance().setLang(locale);
+        Locale.setDefault(locale);
     }
 
-    public static void startWithLanguage(Locale locale) {
-        Locale.setDefault(locale);
+    public static void changeIsDarkMode(boolean isDark) {
+        LocalPreferences.getInstance().setIsDarkMode(isDark);
+        if (isDark) {
+            styleSheet = Main.class
+                    .getResource("/resources/styles/dark.css")
+                    .toExternalForm();
+        } else {
+            styleSheet = Main.class
+                    .getResource("/resources/styles/light.css")
+                    .toExternalForm();
+        }
+    }
+
+    public static void reset() {
         rb = ResourceBundle.getBundle("resources.bundles.Strings", Locale.getDefault());
-        goToAuthenticate(1);
-        // TEST CODE BEGINS
-//            player1 = Connect4.getSingletonConnect4().getPlayer("nickName1");
-//            player2 = Connect4.getSingletonConnect4().getPlayer("nickName2");
-//            goToHome();
-        // TEST CODE ENDS
+        if (player1 == null) {
+            goToAuthenticate(1);
+        } else {
+            goToHome();
+        }
         stage.setTitle(rb.getString("app_name"));
+        root.getStylesheets().clear();
+        root.getStylesheets().add(styleSheet);
     }
 
     public static String formatWLang(String resourceId, Object... params) {
@@ -69,8 +84,8 @@ public class Main extends Application {
         alert.setContentText(Main.rb.getString("nyi_explanation"));
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(
-                Main.class.getResource("/resources/styles/light.css").toExternalForm());
+        dialogPane.getStylesheets().clear();
+        dialogPane.getStylesheets().add(styleSheet);
         dialogPane.getStyleClass().add("dialog");
 
         Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/icon.png"));
@@ -94,6 +109,8 @@ public class Main extends Application {
             settingsStage.setResizable(false);
             Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/settings.png"));
             settingsStage.getIcons().add(iconImage);
+            settingsStage.getScene().getRoot().getStylesheets().clear();
+            settingsStage.getScene().getRoot().getStylesheets().add(styleSheet);
             settingsStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -156,11 +173,13 @@ public class Main extends Application {
         return null;
     }
 
-    private static void changeContent(Node newRoot) {
+    private static void changeContent(Parent newRoot) {
         Node oldRoot = null;
         if (root.getChildren().size() > 0) {
             oldRoot = root.getChildren().get(0);
         }
+        newRoot.getStylesheets().clear();
+        newRoot.getStylesheets().add(styleSheet);
         Animations.fadeIn(root, oldRoot, newRoot);
     }
 
@@ -192,7 +211,7 @@ public class Main extends Application {
 
     @FXML
     private void initialize() {
-        startWithLanguage(DEF_LANG);
+        reset();
     }
 
 }

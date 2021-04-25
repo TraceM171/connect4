@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="root" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="600.0" prefHeight="300.0" prefWidth="300.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="root" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="600.0" prefHeight="300.0" prefWidth="300.0" styleClass="root" stylesheets="@../styles/dark.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
             <children>
@@ -82,10 +82,10 @@
                             <image>
                                 <Image backgroundLoading="true" url="@../img/show_pass.png" />
                             </image>
-                            <styleClass>
-                                <String fx:value="icon-button" />
-                                <String fx:value="clickable" />
-                            </styleClass>
+                     <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                     </styleClass>
                         </ImageView>
                     </children>
                     <padding>

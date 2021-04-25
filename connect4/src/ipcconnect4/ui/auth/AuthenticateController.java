@@ -1,6 +1,7 @@
 package ipcconnect4.ui.auth;
 
 import ipcconnect4.Main;
+import static ipcconnect4.Main.styleSheet;
 import ipcconnect4.util.Animations;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -102,7 +103,7 @@ public class AuthenticateController {
         }
     }
 
-    private void setContent(Node content, boolean isBack) {
+    private void setContent(Parent content, boolean isBack) {
         if (full) {
             Platform.runLater(() -> {
                 centerHB.getChildren().remove(subscene);
@@ -114,7 +115,8 @@ public class AuthenticateController {
         if (children.size() > 0) {
             lastContent = children.get(0);
         }
-        
+        content.getStylesheets().clear();
+        content.getStylesheets().add(styleSheet);
         if (isBack) {
             Animations.fadeIn(subscene, lastContent, content);
         } else {
@@ -127,7 +129,7 @@ public class AuthenticateController {
     
     private void contentGoBack() {
         if (lastContent != null) {
-            setContent(lastContent, true);
+            setContent((Parent) lastContent, true);
         }
     }
 

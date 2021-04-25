@@ -130,7 +130,7 @@
 .label-points {
     -fx-padding: 2.5 3.5 2.5 3.5;
     -fx-background-color: -fx-color-accent;
-    -fx-text-fill: -fx-color-accent-darker;
+    -fx-text-fill: whitesmoke;
 }
 .label-points-win {
     -fx-background-radius: 0 0 15 15;
@@ -232,7 +232,7 @@
 
 /* TextField style */
 .text-field {
-    -fx-background-color: transparent, -fx-black1;
+    -fx-background-color: transparent, -fx-black2;
     -fx-text-fill: whitesmoke;
     -fx-prompt-text-fill: -fx-black3;
     -fx-background-insets: 0, 0 0 2 0;

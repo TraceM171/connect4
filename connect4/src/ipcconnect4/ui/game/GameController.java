@@ -61,9 +61,13 @@ public class GameController {
     @FXML
     private Label nickNameT1;
     @FXML
+    private Node nickNameBack1;
+    @FXML
     private Label pointsT1;
     @FXML
     private Label nickNameT2;
+    @FXML
+    private Node nickNameBack2;
     @FXML
     private Label pointsT2;
     @FXML
@@ -349,21 +353,21 @@ public class GameController {
         switch (piece) {
             case P1:
                 Animations.fade(avatarI1, avatarI1.getOpacity(), 1).play();
-                Animations.fade(nickNameT1, nickNameT1.getOpacity(), 1).play();
+                Animations.fade(nickNameBack1, nickNameBack1.getOpacity(), 1).play();
                 Animations.fade(avatarI2, avatarI2.getOpacity(), 0.5).play();
-                Animations.fade(nickNameT2, nickNameT2.getOpacity(), 0.5).play();
+                Animations.fade(nickNameBack2, nickNameBack2.getOpacity(), 0.5).play();
                 break;
             case P2:
                 Animations.fade(avatarI1, avatarI1.getOpacity(), 0.5).play();
-                Animations.fade(nickNameT1, nickNameT1.getOpacity(), 0.5).play();
+                Animations.fade(nickNameBack1, nickNameBack1.getOpacity(), 0.5).play();
                 Animations.fade(avatarI2, avatarI2.getOpacity(), 1).play();
-                Animations.fade(nickNameT2, nickNameT2.getOpacity(), 1).play();
+                Animations.fade(nickNameBack2, nickNameBack2.getOpacity(), 1).play();
                 break;
             case NONE:
                 Animations.fade(avatarI1, avatarI1.getOpacity(), 1).play();
-                Animations.fade(nickNameT1, nickNameT1.getOpacity(), 1).play();
+                Animations.fade(nickNameBack1, nickNameBack1.getOpacity(), 1).play();
                 Animations.fade(avatarI2, avatarI2.getOpacity(), 1).play();
-                Animations.fade(nickNameT2, nickNameT2.getOpacity(), 1).play();
+                Animations.fade(nickNameBack2, nickNameBack2.getOpacity(), 1).play();
                 break;
         }
     }
