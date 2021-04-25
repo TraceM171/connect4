@@ -5,6 +5,12 @@ import ipcconnect4.model.GameWithAI;
 import java.util.LinkedList;
 import java.util.Random;
 
+// ***************************************
+// * REFERENCES USED TO CREATE THIS CODE *
+// ***************************************
+// https://github.com/raulgonzalezcz/Connect4-AI-Java/blob/a7a8d9cd2b58d1c8eb4e2b68debf1789becac232/src/MinMax.java
+// Used the minmax algorith developed by this user, and adapted it to use our model classes
+//
 /**
  * Class that uses the min max algorithm to find a good next movement on a
  * {@link Game}, can use the depth to control the quality of the movement, more

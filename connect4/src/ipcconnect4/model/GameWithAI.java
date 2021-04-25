@@ -3,6 +3,13 @@ package ipcconnect4.model;
 import ipcconnect4.util.MinMax;
 import java.util.LinkedList;
 
+// ***************************************
+// * REFERENCES USED TO CREATE THIS CODE *
+// ***************************************
+// https://github.com/raulgonzalezcz/Connect4-AI-Java/blob/a7a8d9cd2b58d1c8eb4e2b68debf1789becac232/src/State.java#L120
+// Used the code that checks assings a quality value to a movement,
+// called utility function
+//
 /**
  * This class represents a Connect4 game with an AI as the player 2. The AI will
  * be an instance of {@link MinMax} algorithm

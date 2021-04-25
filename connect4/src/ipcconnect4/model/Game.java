@@ -5,6 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+// ***************************************
+// * REFERENCES USED TO CREATE THIS CODE *
+// ***************************************
+// https://github.com/raulgonzalezcz/Connect4-AI-Java/blob/a7a8d9cd2b58d1c8eb4e2b68debf1789becac232/src/State.java#L140
+// Used the code that checks the win state to create our checkNIn,
+// and optimized it to only check the strictly necessary positions
+//
 /**
  * This class represents a Connect4 game. It is a grid of {@link Piece}, being
  * the (0, 0) at the top left corner
@@ -207,7 +214,6 @@ public class Game {
         });
 
         if (winType[0] == null) {
-            // :(
             return null;
         } else {
             int pieces = -1;
