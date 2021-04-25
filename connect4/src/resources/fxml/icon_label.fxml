@@ -8,8 +8,8 @@
     <graphic>
         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
     </graphic>
-   <styleClass>
-      <String fx:value="icon-label" />
-      <String fx:value="clickable" />
-   </styleClass>
+    <styleClass>
+        <String fx:value="icon-label" />
+        <String fx:value="clickable" />
+    </styleClass>
 </fx:root>

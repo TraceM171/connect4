@@ -28,37 +28,37 @@
             <VBox.margin>
                 <Insets top="10.0" />
             </VBox.margin>
-         <font>
-            <Font size="13.0" />
-         </font>
+            <font>
+                <Font size="13.0" />
+            </font>
         </Label>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="section">
-               <children>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/user.png" />
-                     </image>
-                  </ImageView>
-                  <TextField fx:id="userText" maxWidth="1.7976931348623157E308" promptText="%user_input" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </TextField>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="section">
-               <children>
+                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="section">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../img/user.png" />
+                            </image>
+                        </ImageView>
+                        <TextField fx:id="userText" maxWidth="1.7976931348623157E308" promptText="%user_input" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </TextField>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" styleClass="section">
+                    <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image backgroundLoading="true" url="@../img/mail.png" />
@@ -72,11 +72,11 @@
                                 <Font size="16.0" />
                             </font>
                         </TextField>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </HBox>
                 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" />
             </children>
             <VBox.margin>
@@ -87,17 +87,17 @@
             <VBox.margin>
                 <Insets bottom="5.0" />
             </VBox.margin>
-         <font>
-            <Font size="13.0" />
-         </font>
+            <font>
+                <Font size="13.0" />
+            </font>
         </Text>
-      <HBox alignment="CENTER_RIGHT">
-         <children>
-            <IconLabel fx:id="okButton" icon="@../img/send.png" onMouseClicked="#okAction" styleClass="clickable" text="%send" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="section">
-         <children>
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <IconLabel fx:id="okButton" icon="@../img/send.png" onMouseClicked="#okAction" styleClass="clickable" text="%send" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="section">
+            <children>
                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image backgroundLoading="true" url="@../img/code.png" />
@@ -111,48 +111,48 @@
                         <Font size="16.0" />
                     </font>
                 </TextField>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <VBox.margin>
-            <Insets bottom="10.0" top="15.0" />
-         </VBox.margin>
-      </HBox>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            <VBox.margin>
+                <Insets bottom="10.0" top="15.0" />
+            </VBox.margin>
+        </HBox>
         <Text fx:id="errorText2" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-error" text="%forgot_error_code" visible="false">
             <VBox.margin>
                 <Insets bottom="10.0" />
             </VBox.margin>
-         <font>
-            <Font size="13.0" />
-         </font>
+            <font>
+                <Font size="13.0" />
+            </font>
         </Text>
-      <HBox alignment="CENTER">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <children>
+        <HBox alignment="CENTER">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+            <children>
                 <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image backgroundLoading="true" url="@../img/back.png" />
                     </image>
-               <styleClass>
-                  <String fx:value="icon-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </ImageView>
-            <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <ImageView fx:id="okButton1" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#verifyAction" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image backgroundLoading="true" url="@../img/accept.png" />
-               </image>
-               <styleClass>
-                  <String fx:value="icon-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
-            </ImageView>
-         </children>
-      </HBox>
+                <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                <ImageView fx:id="okButton1" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#verifyAction" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image backgroundLoading="true" url="@../img/accept.png" />
+                    </image>
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
+                </ImageView>
+            </children>
+        </HBox>
     </children>
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

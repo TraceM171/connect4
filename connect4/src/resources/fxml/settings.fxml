@@ -90,19 +90,19 @@
                     <image>
                         <Image backgroundLoading="true" url="@../img/cancel.png" />
                     </image>
-               <styleClass>
-                  <String fx:value="icon-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </ImageView>
                 <ImageView fx:id="saveIV" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#saveAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
                     <image>
                         <Image backgroundLoading="true" url="@../img/save.png" />
                     </image>
-               <styleClass>
-                  <String fx:value="icon-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </ImageView>
             </children>
         </StackPane>

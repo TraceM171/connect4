@@ -33,74 +33,76 @@
                     <styleClass>
                         <String fx:value="circle-image" />
                         <String fx:value="circle-image-p1" />
-                  <String fx:value="clickable" />
+                        <String fx:value="clickable" />
                     </styleClass>
                     <image>
                         <Image url="@../../avatars/default.png" />
                     </image>
                 </CircleImage>
-            <StackPane GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets left="10.0" right="25.0" />
-               </GridPane.margin>
-               <children>
-                  <Label fx:id="pointsT1" StackPane.alignment="BOTTOM_RIGHT">
-                     <styleClass>
+                <StackPane GridPane.columnIndex="1">
+                    <GridPane.margin>
+                        <Insets left="10.0" right="25.0" />
+                    </GridPane.margin>
+                    <children>
+                        <Label fx:id="pointsT1" StackPane.alignment="BOTTOM_RIGHT">
+                            <styleClass>
+                                <String fx:value="label-nickname" />
+                                <String fx:value="label-points" />
+                            </styleClass>
+                        </Label>
+                        <Label fx:id="nickNameT1" maxHeight="-Infinity" maxWidth="-Infinity" text="Name1" StackPane.alignment="CENTER_LEFT">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-points" />
-                     </styleClass></Label>
-                      <Label fx:id="nickNameT1" maxHeight="-Infinity" maxWidth="-Infinity" text="Name1" StackPane.alignment="CENTER_LEFT">
-                          <font>
-                              <Font size="18.0" />
-                          </font>
-                      </Label>
-               </children>
-               <styleClass>
-                  <String fx:value="label-nickname" />
-                  <String fx:value="label-nickname-p1" />
-               </styleClass>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
-            </StackPane>
+                        <String fx:value="label-nickname-p1" />
+                    </styleClass>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </StackPane>
                 <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#ranksAction" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
                         <Image backgroundLoading="true" url="@../img/ranks.png" />
                     </image>
-               <styleClass>
-                  <String fx:value="icon-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </ImageView>
-            <StackPane GridPane.columnIndex="3">
-               <GridPane.margin>
-                  <Insets left="25.0" right="10.0" />
-               </GridPane.margin>
-               <children>
-                      <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" text="Name2" StackPane.alignment="CENTER_RIGHT">
-                          <font>
-                              <Font size="18.0" />
-                          </font>
-                      </Label>
-                  <Label fx:id="pointsT2" StackPane.alignment="BOTTOM_LEFT">
-                     <styleClass>
+                <StackPane GridPane.columnIndex="3">
+                    <GridPane.margin>
+                        <Insets left="25.0" right="10.0" />
+                    </GridPane.margin>
+                    <children>
+                        <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" text="Name2" StackPane.alignment="CENTER_RIGHT">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="pointsT2" StackPane.alignment="BOTTOM_LEFT">
+                            <styleClass>
+                                <String fx:value="label-nickname" />
+                                <String fx:value="label-points" />
+                            </styleClass>
+                        </Label>
+                    </children>
+                    <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-points" />
-                     </styleClass></Label>
-               </children>
-               <styleClass>
-                  <String fx:value="label-nickname" />
-                  <String fx:value="label-nickname-p2" />
-               </styleClass>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
-            </StackPane>
+                        <String fx:value="label-nickname-p2" />
+                    </styleClass>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </StackPane>
                 <CircleImage fx:id="avatarI2" radius="30" GridPane.columnIndex="4">
                     <styleClass>
                         <String fx:value="circle-image" />
                         <String fx:value="circle-image-p2" />
-                  <String fx:value="clickable" />
+                        <String fx:value="clickable" />
                     </styleClass>
                     <image>
                         <Image url="@../../avatars/default.png" />
@@ -114,10 +116,10 @@
             <image>
                 <Image backgroundLoading="true" url="@../img/settings.png" />
             </image>
-         <styleClass>
-            <String fx:value="icon-button" />
-            <String fx:value="clickable" />
-         </styleClass>
+            <styleClass>
+                <String fx:value="icon-button" />
+                <String fx:value="clickable" />
+            </styleClass>
         </ImageView>
     </bottom>
     <center>
@@ -147,10 +149,10 @@
                             </image>
                         </ImageView>
                     </children>
-               <styleClass>
-                  <String fx:value="big-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="big-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </VBox>
                 <VBox alignment="CENTER" onMouseClicked="#startVSAIAction" GridPane.columnIndex="1">
                     <children>
@@ -165,10 +167,10 @@
                             </image>
                         </ImageView>
                     </children>
-               <styleClass>
-                  <String fx:value="big-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="big-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </VBox>
                 <GridPane hgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columnConstraints>
@@ -184,21 +186,21 @@
                             <styleClass>
                                 <String fx:value="big-button" />
                                 <String fx:value="big-button-sel" />
-                        <String fx:value="clickable" />
+                                <String fx:value="clickable" />
                             </styleClass>
                         </SelectorIcon>
                         <SelectorIcon fx:id="diff2SI" icon="@../img/diff_2.png" onMouseClicked="#difficultyAction" text="%ai_normal" GridPane.columnIndex="1">
                             <styleClass>
                                 <String fx:value="big-button" />
                                 <String fx:value="big-button-sel" />
-                        <String fx:value="clickable" />
+                                <String fx:value="clickable" />
                             </styleClass>
                         </SelectorIcon>
                         <SelectorIcon fx:id="diff3SI" icon="@../img/diff_3.png" onMouseClicked="#difficultyAction" text="%ai_hard" GridPane.columnIndex="2">
                             <styleClass>
                                 <String fx:value="big-button" />
                                 <String fx:value="big-button-sel" />
-                        <String fx:value="clickable" />
+                                <String fx:value="clickable" />
                             </styleClass>
                         </SelectorIcon>
                     </children>
@@ -227,10 +229,10 @@
                     <padding>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                     </padding>
-               <styleClass>
-                  <String fx:value="big-button" />
-                  <String fx:value="big-button-block-overlay" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="big-button" />
+                        <String fx:value="big-button-block-overlay" />
+                    </styleClass>
                 </VBox>
             </children>
         </GridPane>

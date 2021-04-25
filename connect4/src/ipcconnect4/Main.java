@@ -45,19 +45,15 @@ public class Main extends Application {
     }
 
     public static void startWithLanguage(Locale locale) {
-        try {
-            Locale.setDefault(locale);
-            rb = ResourceBundle.getBundle("resources.bundles.Strings", Locale.getDefault());
-//          goToAuthenticate(1);
-            // TEST CODE BEGINS
-            player1 = Connect4.getSingletonConnect4().getPlayer("nickName1");
-            player2 = Connect4.getSingletonConnect4().getPlayer("nickName2");
-            goToHome();
-            // TEST CODE ENDS
-            stage.setTitle(rb.getString("app_name"));
-        } catch (Connect4DAOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Locale.setDefault(locale);
+        rb = ResourceBundle.getBundle("resources.bundles.Strings", Locale.getDefault());
+        goToAuthenticate(1);
+        // TEST CODE BEGINS
+//            player1 = Connect4.getSingletonConnect4().getPlayer("nickName1");
+//            player2 = Connect4.getSingletonConnect4().getPlayer("nickName2");
+//            goToHome();
+        // TEST CODE ENDS
+        stage.setTitle(rb.getString("app_name"));
     }
 
     public static String formatWLang(String resourceId, Object... params) {
@@ -76,7 +72,7 @@ public class Main extends Application {
         dialogPane.getStylesheets().add(
                 Main.class.getResource("/resources/styles/light.css").toExternalForm());
         dialogPane.getStyleClass().add("dialog");
-        
+
         Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/icon.png"));
         Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
         alertStage.getIcons().add(iconImage);

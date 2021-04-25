@@ -82,10 +82,10 @@
                             <image>
                                 <Image backgroundLoading="true" url="@../img/show_pass.png" />
                             </image>
-                     <styleClass>
-                        <String fx:value="icon-button" />
-                        <String fx:value="clickable" />
-                     </styleClass>
+                            <styleClass>
+                                <String fx:value="icon-button" />
+                                <String fx:value="clickable" />
+                            </styleClass>
                         </ImageView>
                     </children>
                     <padding>
@@ -113,10 +113,10 @@
                     <image>
                         <Image url="@../img/accept.png" />
                     </image>
-               <styleClass>
-                  <String fx:value="icon-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </ImageView>
             </children>
         </HBox>

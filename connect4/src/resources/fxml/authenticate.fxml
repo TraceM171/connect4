@@ -24,10 +24,10 @@
             <image>
                 <Image backgroundLoading="true" url="@../img/settings.png" />
             </image>
-         <styleClass>
-            <String fx:value="icon-button" />
-            <String fx:value="clickable" />
-         </styleClass>
+            <styleClass>
+                <String fx:value="icon-button" />
+                <String fx:value="clickable" />
+            </styleClass>
         </ImageView>
     </bottom>
     <center>

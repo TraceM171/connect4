@@ -35,10 +35,10 @@
                     <image>
                         <Image url="@../img/winner.png" />
                     </image>
-               <styleClass>
-                  <String fx:value="icon-button" />
-                  <String fx:value="clickable" />
-               </styleClass>
+                    <styleClass>
+                        <String fx:value="icon-button" />
+                        <String fx:value="clickable" />
+                    </styleClass>
                 </ImageView>
             </children>
         </StackPane>
@@ -115,32 +115,32 @@
                                 <Pane HBox.hgrow="ALWAYS" />
                             </children>
                         </HBox>
-                  <HBox alignment="TOP_CENTER">
-                     <children>
-                        <Label fx:id="totalPointsLWi">
-                           <styleClass>
-                              <String fx:value="label-points-win" />
-                              <String fx:value="label-points" />
-                           </styleClass>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
+                        <HBox alignment="TOP_CENTER">
+                            <children>
+                                <Label fx:id="totalPointsLWi">
+                                    <styleClass>
+                                        <String fx:value="label-points-win" />
+                                        <String fx:value="label-points" />
+                                    </styleClass>
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
                         <StackPane alignment="BOTTOM_CENTER">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup" StackPane.alignment="CENTER_RIGHT">
                                     <image>
                                         <Image url="@../img/accept.png" />
                                     </image>
-                           <styleClass>
-                              <String fx:value="icon-button" />
-                              <String fx:value="clickable" />
-                           </styleClass>
+                                    <styleClass>
+                                        <String fx:value="icon-button" />
+                                        <String fx:value="clickable" />
+                                    </styleClass>
                                 </ImageView>
                                 <Label fx:id="pointsLWi" StackPane.alignment="CENTER_LEFT" />
                             </children>
@@ -184,67 +184,67 @@
                         <String fx:value="circle-image-p1" />
                     </styleClass>
                 </CircleImage>
-            <StackPane GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets left="10.0" right="10.0" />
-               </GridPane.margin>
-               <children>
-                      <Label fx:id="nickNameT1" maxHeight="-Infinity" maxWidth="-Infinity" text="Name1" StackPane.alignment="CENTER_LEFT">
-                          <font>
-                              <Font size="19.0" />
-                          </font>
-                      </Label>
-                  <Label fx:id="pointsT1" StackPane.alignment="BOTTOM_RIGHT">
-                     <styleClass>
+                <StackPane GridPane.columnIndex="1">
+                    <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </GridPane.margin>
+                    <children>
+                        <Label fx:id="nickNameT1" maxHeight="-Infinity" maxWidth="-Infinity" text="Name1" StackPane.alignment="CENTER_LEFT">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="pointsT1" StackPane.alignment="BOTTOM_RIGHT">
+                            <styleClass>
+                                <String fx:value="label-nickname" />
+                                <String fx:value="label-points" />
+                            </styleClass>
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-points" />
-                     </styleClass>
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-               </children>
-               <styleClass>
-                  <String fx:value="label-nickname" />
-                  <String fx:value="label-nickname-p1" />
-               </styleClass>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
-            </StackPane>
+                        <String fx:value="label-nickname-p1" />
+                    </styleClass>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </StackPane>
                 <ImageView fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                     <image>
                         <Image url="@../img/vs.png" />
                     </image>
                 </ImageView>
-            <StackPane GridPane.columnIndex="3">
-               <GridPane.margin>
-                  <Insets left="10.0" right="10.0" />
-               </GridPane.margin>
-               <children>
-                      <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" text="Name2" StackPane.alignment="CENTER_RIGHT">
-                          <font>
-                              <Font size="19.0" />
-                          </font>
-                      </Label>
-                  <Label fx:id="pointsT2" StackPane.alignment="BOTTOM_LEFT">
-                     <styleClass>
+                <StackPane GridPane.columnIndex="3">
+                    <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </GridPane.margin>
+                    <children>
+                        <Label fx:id="nickNameT2" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" text="Name2" StackPane.alignment="CENTER_RIGHT">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="pointsT2" StackPane.alignment="BOTTOM_LEFT">
+                            <styleClass>
+                                <String fx:value="label-nickname" />
+                                <String fx:value="label-points" />
+                            </styleClass>
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <styleClass>
                         <String fx:value="label-nickname" />
-                        <String fx:value="label-points" />
-                     </styleClass>
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-               </children>
-               <styleClass>
-                  <String fx:value="label-nickname" />
-                  <String fx:value="label-nickname-p2" />
-               </styleClass>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
-            </StackPane>
+                        <String fx:value="label-nickname-p2" />
+                    </styleClass>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </StackPane>
                 <CircleImage fx:id="avatarI2" radius="35.0" GridPane.columnIndex="4">
                     <image>
                         <Image url="@../../avatars/default.png" />

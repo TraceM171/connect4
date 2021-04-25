@@ -44,7 +44,6 @@ public class LoginController {
 
     @FXML
     private void initialize() {
-        // okButton disabled if userText or passText are empty
         okButton.disableProperty().bind(Bindings.or(
                 userText.textProperty().isEmpty(),
                 passTextMask.textProperty().isEmpty()
