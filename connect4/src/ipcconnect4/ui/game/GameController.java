@@ -2,6 +2,7 @@ package ipcconnect4.ui.game;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
+import static ipcconnect4.Main.rb;
 import ipcconnect4.model.Game;
 import ipcconnect4.model.Game.GameListener;
 import ipcconnect4.model.Game.Piece;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +47,8 @@ import model.Player;
 
 public class GameController {
 
-    private static final int AI_DELAY = 300;
+    private static final int AI_DELAY_MIN = 1000;
+    private static final int AI_DELAY_MAX = 1500;
     private static final boolean ANIMATION = true;
 
     private final Player P1, P2;
@@ -130,18 +133,18 @@ public class GameController {
             switch (difficulty) {
                 case EASY:
                     imagePath = "/resources/img/diff_1.png";
-                    name = "Easy AI";
+                    name = rb.getString("ai_easy");
                     pointsT2.setText(Main.formatWLang("points", 100));
                     break;
                 case NORMAL:
                     imagePath = "/resources/img/diff_2.png";
-                    name = "Normal AI";
+                    name = rb.getString("ai_normal");
                     pointsT2.setText(Main.formatWLang("points", 1000));
                     break;
                 case HARD:
                 default:
                     imagePath = "/resources/img/diff_3.png";
-                    name = "Hard AI";
+                    name = rb.getString("ai_hard");
                     pointsT2.setText(Main.formatWLang("points", -2));
                     break;
             }
@@ -182,7 +185,7 @@ public class GameController {
                                     gameGrid.pendingAnims.set(gameGrid.pendingAnims.get() - 1);
                                 });
                             },
-                            AI_DELAY,
+                            ThreadLocalRandom.current().nextInt(AI_DELAY_MIN, AI_DELAY_MAX + 1),
                             TimeUnit.MILLISECONDS
                     );
                 }
@@ -398,8 +401,7 @@ public class GameController {
         stage.getIcons().add(iconImage);
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(
-                Main.class.getResource("/resources/styles/dark.css").toExternalForm());
+        dialogPane.getStylesheets().add(Main.styleSheet);
         dialogPane.getStyleClass().add("dialog");
 
         ButtonType buttonTypeConfirm

@@ -4,6 +4,7 @@ import ipcconnect4.Main;
 import static ipcconnect4.Main.rb;
 import static ipcconnect4.Main.stage;
 import ipcconnect4.model.GameWithAI.Difficulty;
+import ipcconnect4.util.LocalPreferences;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.SelectorIcon;
 import javafx.application.Platform;
@@ -12,6 +13,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -67,9 +69,15 @@ public class HomeController {
                 Main.showNYI();
             });
             menuItem2.setOnAction((event) -> {
-                Main.player1 = null;
+                LocalPreferences.getInstance().setPlayer1(Main.player2);
+                LocalPreferences.getInstance().setPlayer2(null);
+                Main.player1 = Main.player2;
                 Main.player2 = null;
-                Main.goToAuthenticate(1);
+                if (Main.player1 == null) {
+                    Main.goToAuthenticate(1);
+                } else {
+                    Main.goToHome();
+                }
             });
 
             contextMenu.getItems().addAll(menuItem1, menuItem2);
@@ -102,6 +110,7 @@ public class HomeController {
             });
             menuItem2.setOnAction((event) -> {
                 Main.player2 = null;
+                LocalPreferences.getInstance().setPlayer2(null);
                 Main.goToHome();
             });
 
@@ -127,7 +136,7 @@ public class HomeController {
 
             menuItem1.setOnAction((event) -> {
                 Stage auth2 = new Stage();
-                auth2.setScene(Main.getAuthenticateScene(2));
+                auth2.setScene(new Scene(Main.getAuthenticateScene(2)));
                 auth2.initModality(Modality.WINDOW_MODAL);
                 auth2.initOwner(stage);
                 auth2.setTitle(rb.getString("app_name"));

@@ -153,12 +153,12 @@ public class Main extends Application {
     }
 
     public static void goToAuthenticate(int player) {
-        changeContent(getAuthenticateScene(player).getRoot());
+        changeContent(getAuthenticateScene(player));
         stage.setMinHeight(650);
         stage.setMinWidth(700);
     }
 
-    public static Scene getAuthenticateScene(int player) {
+    public static Parent getAuthenticateScene(int player) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("/resources/fxml/authenticate.fxml"),
@@ -166,7 +166,7 @@ public class Main extends Application {
             );
             AuthenticateController controller = new AuthenticateController(player);
             loader.setController(controller);
-            return new Scene(loader.load());
+            return loader.load();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

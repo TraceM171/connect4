@@ -3,6 +3,7 @@ package ipcconnect4.ui.auth;
 import ipcconnect4.Main;
 import static ipcconnect4.Main.styleSheet;
 import ipcconnect4.util.Animations;
+import ipcconnect4.util.LocalPreferences;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,10 +44,12 @@ public class AuthenticateController {
                 switch (playerNumber) {
                     case 1:
                         Main.player1 = logedPlayer;
+                        LocalPreferences.getInstance().setPlayer1(logedPlayer);
                         Main.goToHome();
                         break;
                     case 2:
                         Main.player2 = logedPlayer;
+                        LocalPreferences.getInstance().setPlayer2(logedPlayer);
                         close();
                         break;
                 }
@@ -117,6 +120,8 @@ public class AuthenticateController {
         }
         content.getStylesheets().clear();
         content.getStylesheets().add(styleSheet);
+        subscene.getStylesheets().clear();
+        subscene.getStylesheets().add(styleSheet);
         if (isBack) {
             Animations.fadeIn(subscene, lastContent, content);
         } else {

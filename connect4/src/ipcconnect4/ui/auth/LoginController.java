@@ -2,6 +2,7 @@ package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
+import static ipcconnect4.Main.styleSheet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
@@ -9,12 +10,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Connect4;
 import model.Player;
 
@@ -63,7 +66,7 @@ public class LoginController {
             }
         });
     }
-    
+
     @FXML
     private void tfOkAction(ActionEvent event) {
         if (!okButton.isDisable()) {
@@ -82,6 +85,15 @@ public class LoginController {
                     alert.setTitle(Main.rb.getString("login_title"));
                     alert.setHeaderText(Main.rb.getString("login_already_header"));
                     alert.setContentText(Main.rb.getString("login_already_content"));
+
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().clear();
+                    dialogPane.getStylesheets().add(styleSheet);
+                    dialogPane.getStyleClass().add("dialog");
+
+                    Image iconImage = new Image(Main.class.getResourceAsStream("/resources/img/icon.png"));
+                    Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    alertStage.getIcons().add(iconImage);
 
                     alert.showAndWait();
                 } else {

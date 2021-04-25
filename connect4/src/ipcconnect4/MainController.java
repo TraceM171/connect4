@@ -19,6 +19,8 @@ public class MainController implements Initializable {
         Main.root = root;
         Locale.setDefault(prefs.getLang());
         Main.changeIsDarkMode(prefs.getIsDarkMode());
+        Main.player1 = prefs.getPlayer1();
+        Main.player2 = prefs.getPlayer2();
         Main.reset();
     }
 

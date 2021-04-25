@@ -53,7 +53,7 @@
                         <Insets />
                     </HBox.margin>
                 </VBox>
-                <StackPane fx:id="subscene" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <StackPane fx:id="subscene" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="root" HBox.hgrow="ALWAYS">
                 </StackPane>
             </children>
             <BorderPane.margin>
