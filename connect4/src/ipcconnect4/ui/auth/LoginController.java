@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -40,6 +41,8 @@ public class LoginController {
     private Text errorText;
     @FXML
     private ImageView passMaskIV;
+    @FXML
+    private CheckBox rememberCB;
 
     public LoginController(LoginListener listener) {
         this.listener = listener;
@@ -97,7 +100,7 @@ public class LoginController {
 
                     alert.showAndWait();
                 } else {
-                    listener.onLogin(res);
+                    listener.onLogin(res, rememberCB.isSelected());
                 }
             } else {
                 errorText.setVisible(true);
@@ -134,7 +137,7 @@ public class LoginController {
 
     public interface LoginListener {
 
-        void onLogin(Player logedPlayer);
+        void onLogin(Player logedPlayer, boolean remember);
 
         void onForgotAction();
     }

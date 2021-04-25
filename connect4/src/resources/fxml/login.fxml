@@ -3,6 +3,7 @@
 <?import ipcconnect4.view.IconLabel?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="root" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="600.0" prefHeight="300.0" prefWidth="300.0" styleClass="root" stylesheets="@../styles/dark.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="root" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="600.0" prefHeight="300.0" prefWidth="300.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
             <children>
@@ -101,7 +102,15 @@
             <font>
                 <Font size="13.0" />
             </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
         </Text>
+      <CheckBox fx:id="rememberCB" mnemonicParsing="false" text="%remember_me">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </CheckBox>
         <HBox alignment="CENTER">
             <VBox.margin>
                 <Insets bottom="25.0" top="20.0" />

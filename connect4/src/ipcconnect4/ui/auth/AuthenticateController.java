@@ -40,16 +40,24 @@ public class AuthenticateController {
         full = playerNumber == 2;
         setLoginMode(new LoginController.LoginListener() {
             @Override
-            public void onLogin(Player logedPlayer) {
+            public void onLogin(Player logedPlayer, boolean remember) {
                 switch (playerNumber) {
                     case 1:
                         Main.player1 = logedPlayer;
-                        LocalPreferences.getInstance().setPlayer1(logedPlayer);
+                        if (remember) {
+                            LocalPreferences.getInstance().setPlayer1(logedPlayer);
+                        } else {
+                            LocalPreferences.getInstance().setPlayer1(null);
+                        }
                         Main.goToHome();
                         break;
                     case 2:
                         Main.player2 = logedPlayer;
-                        LocalPreferences.getInstance().setPlayer2(logedPlayer);
+                        if (remember) {
+                            LocalPreferences.getInstance().setPlayer2(logedPlayer);
+                        } else {
+                            LocalPreferences.getInstance().setPlayer2(null);
+                        }
                         close();
                         break;
                 }
