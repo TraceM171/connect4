@@ -14,6 +14,8 @@ import ipcconnect4.model.MovementAI;
 import ipcconnect4.util.Animations;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.GameGrid;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -155,7 +157,7 @@ public class GameController {
 
     @FXML
     private void putPieceAction(MouseEvent event) {
-        int column = gameGrid.getColumn(event);
+        int column = gameGrid.getColumn(event.getSceneX());
         unpreviewAction(null);
         if (vsAI) {
             if (gameAI.canPutPiece(column)) {
@@ -188,13 +190,8 @@ public class GameController {
 
     @FXML
     private void previewAction(MouseEvent event) {
-        int column = gameGrid.getColumn(event);
-        Game game_ = vsAI ? gameAI : game;
-        if (game_.getFirstEmptyRow(column) == -1) {
-            unpreviewAction(null);
-        } else {
-            previewPos.setValue(new Pos(game_.getFirstEmptyRow(column), column));
-        }
+        int column = gameGrid.getColumn(event.getSceneX());
+        setPreview(column);
     }
 
     @FXML
@@ -226,6 +223,10 @@ public class GameController {
             public void onChange(Movement movement) {
                 gameGrid.updatePiece(movement.piece, movement.pos, ANIMATION);
                 setTurn(game_.getNextPiece());
+                gameGrid.afterAnimations(() -> {
+                    Point mouse = MouseInfo.getPointerInfo().getLocation();
+                    setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX()));
+                });
             }
 
             @Override
@@ -314,7 +315,7 @@ public class GameController {
                             Animations.fadeIn(showWinPopUpIB);
                         }
                     });
-                    
+
                     Animations.fadeIn(winPopUp);
                 };
                 gameGrid.afterAnimations(showPU);
@@ -326,9 +327,22 @@ public class GameController {
                     Game lGame = new Game(game_);
                     gameGrid.emptyBottomHalf((pos) -> lGame.getPiece(pos));
                     game_.emptyBottomHalf();
+                    gameGrid.afterAnimations(() -> {
+                        Point mouse = MouseInfo.getPointerInfo().getLocation();
+                        setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX()));
+                    });
                 }
             }
         });
+    }
+
+    private void setPreview(int column) {
+        Game game_ = vsAI ? gameAI : game;
+        if (game_.getFirstEmptyRow(column) == -1) {
+            unpreviewAction(null);
+        } else {
+            previewPos.setValue(new Pos(game_.getFirstEmptyRow(column), column));
+        }
     }
 
     private void setTurn(Piece piece) {

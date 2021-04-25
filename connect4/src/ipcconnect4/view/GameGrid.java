@@ -20,7 +20,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 
@@ -55,10 +54,9 @@ public class GameGrid extends GridPane {
         ));
     }
 
-    public int getColumn(MouseEvent event) {
-        double x = event.getSceneX();
+    public int getColumn(double xPosition) {
         double xOffset = localToScene(getBoundsInLocal()).getMinX() + 0.5;
-        int column = (int) ((x - xOffset) * COLUMNS / getWidth());
+        int column = (int) ((xPosition - xOffset) * COLUMNS / getWidth());
         column = column >= COLUMNS ? COLUMNS - 1 : column;
         return column;
     }
