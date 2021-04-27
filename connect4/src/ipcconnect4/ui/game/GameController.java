@@ -258,7 +258,7 @@ public class GameController {
                     winnerPointsLabel = pointsT1;
                 } else {
                     winner = vsAI ? null : Main.player2;
-                    winnerStyleName = "p1";
+                    winnerStyleName = "p2";
                     winNickName = nickNameT2.getText();
                     winAvatar = avatarI2.getImage();
                     looser = Main.player1;

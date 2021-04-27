@@ -10,7 +10,7 @@
     -fx-shadow: dropshadow(three-pass-box, grey, 7, 0, 2.5, 2.5);
     -fx-shadow-no: dropshadow(three-pass-box, transparent, 0, 0, 0, 0);
     -fx-shadow-big: dropshadow(three-pass-box, grey, 15, 0, 3, 3);
-    -fx-shadow-bigger: dropshadow(three-pass-box, -fx-black0, 32, 0, 7, 7);
+    -fx-shadow-bigger: dropshadow(three-pass-box, -fx-black0, 27, 0, 7, 7);
     -fx-color-accent: #2f8eaa;
     -fx-color-accent-light: derive(-fx-color-accent, 50%);
     -fx-color-accent-dark: #43608a;
