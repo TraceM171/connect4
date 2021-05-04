@@ -69,6 +69,13 @@ public class AuthenticateController {
                     contentGoBack();
                 });
             }
+            
+            @Override
+            public void onRegisterAction() {
+                setRegisterMode(() -> {
+                    contentGoBack();
+                });
+            }
         });
     }
 
@@ -105,6 +112,22 @@ public class AuthenticateController {
                     Main.rb
             );
             ForgotController controller = new ForgotController(listener);
+            loader.setController(controller);
+            Parent root = loader.load();
+
+            setContent(root, false);
+        } catch (IOException ex) {
+            Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void setRegisterMode(RegisterController.RegisterListener listener) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/resources/fxml/register.fxml"),
+                    Main.rb
+            );
+            RegisterController controller = new RegisterController(listener);
             loader.setController(controller);
             Parent root = loader.load();
 

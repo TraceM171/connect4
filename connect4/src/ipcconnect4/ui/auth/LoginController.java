@@ -118,7 +118,7 @@ public class LoginController {
 
     @FXML
     private void registerAction(MouseEvent event) {
-        Main.showNYI();
+        listener.onRegisterAction();
     }
 
     @FXML
@@ -140,6 +140,8 @@ public class LoginController {
         void onLogin(Player logedPlayer, boolean remember);
 
         void onForgotAction();
+        
+        void onRegisterAction();
     }
 
 }
