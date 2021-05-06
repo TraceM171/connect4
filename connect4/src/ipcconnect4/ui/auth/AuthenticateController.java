@@ -1,7 +1,9 @@
 package ipcconnect4.ui.auth;
 
+import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
 import static ipcconnect4.Main.styleSheet;
+import ipcconnect4.ui.auth.RegisterController.RegisterListener;
 import ipcconnect4.util.Animations;
 import ipcconnect4.util.LocalPreferences;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import model.Connect4;
 import model.Player;
 
 public class AuthenticateController {
@@ -69,11 +72,31 @@ public class AuthenticateController {
                     contentGoBack();
                 });
             }
-            
+
             @Override
             public void onRegisterAction() {
-                setRegisterMode(() -> {
-                    contentGoBack();
+                setRegisterMode(new RegisterListener() {
+                    @Override
+                    public void onCancel() {
+                        contentGoBack();
+                    }
+
+                    @Override
+                    public void onRegister(Player newPlayer) {
+                        try {
+                            Connect4.getSingletonConnect4().registerPlayer(
+                                    newPlayer.getNickName(), 
+                                    newPlayer.getEmail(),
+                                    newPlayer.getPassword(),
+                                    newPlayer.getAvatar(),
+                                    newPlayer.getBirthdate(),
+                                    newPlayer.getPoints()
+                            );
+                            contentGoBack();
+                        } catch (Connect4DAOException ex) {
+                            Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                 });
             }
         });
@@ -120,14 +143,14 @@ public class AuthenticateController {
             Logger.getLogger(AuthenticateController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void setRegisterMode(RegisterController.RegisterListener listener) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/resources/fxml/register.fxml"),
                     Main.rb
             );
-            RegisterController controller = new RegisterController(listener);
+            RegisterController controller = new RegisterController(listener, null);
             loader.setController(controller);
             Parent root = loader.load();
 
@@ -159,10 +182,10 @@ public class AuthenticateController {
             Animations.fadeIn(subscene, lastContent, content);
         }
         HBox.setHgrow(children.get(0), Priority.ALWAYS);
-        
+
         subscene.requestFocus();
     }
-    
+
     private void contentGoBack() {
         if (lastContent != null) {
             setContent((Parent) lastContent, true);

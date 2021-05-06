@@ -1,18 +1,27 @@
 package ipcconnect4.ui.home;
 
+import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
 import static ipcconnect4.Main.rb;
 import static ipcconnect4.Main.stage;
 import ipcconnect4.model.GameWithAI.Difficulty;
+import ipcconnect4.ui.auth.AuthenticateController;
+import ipcconnect4.ui.auth.RegisterController;
 import ipcconnect4.util.LocalPreferences;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.SelectorIcon;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -23,6 +32,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Connect4;
+import model.Player;
 
 public class HomeController {
 
@@ -66,7 +77,7 @@ public class HomeController {
             MenuItem menuItem2 = new MenuItem("Cerrar sesión");
 
             menuItem1.setOnAction((event) -> {
-                Main.showNYI();
+                showProfileEditor(Main.player1);
             });
             menuItem2.setOnAction((event) -> {
                 LocalPreferences.getInstance().setPlayer1(Main.player2);
@@ -106,7 +117,7 @@ public class HomeController {
             MenuItem menuItem2 = new MenuItem("Cerrar sesión");
 
             menuItem1.setOnAction((event) -> {
-                Main.showNYI();
+                showProfileEditor(Main.player2);
             });
             menuItem2.setOnAction((event) -> {
                 Main.player2 = null;
@@ -185,6 +196,54 @@ public class HomeController {
             pvpVB.setDisable(false);
             blockpvpVB.setVisible(false);
         }
+    }
+
+    private void showProfileEditor(Player player) {
+        Stage auth2 = new Stage();
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/resources/fxml/register.fxml"),
+                Main.rb
+        );
+        RegisterController controller = new RegisterController(new RegisterController.RegisterListener() {
+            @Override
+            public void onCancel() {
+                auth2.close();
+            }
+
+            @Override
+            public void onRegister(Player newPlayer) {
+                try {
+                    player.setEmail(newPlayer.getEmail());
+                    player.setPassword(newPlayer.getPassword());
+                    player.setAvatar(newPlayer.getAvatar());
+                    player.setBirthdate(newPlayer.getBirthdate());
+                    player.setPoints(newPlayer.getPoints());
+
+                    auth2.close();
+                    Main.goToHome();
+                } catch (Connect4DAOException ex) {
+                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }, player);
+        loader.setController(controller);
+        Parent root;
+        try {
+            root = loader.load();
+            auth2.setScene(new Scene(root));
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        auth2.initModality(Modality.WINDOW_MODAL);
+        auth2.initOwner(stage);
+        auth2.setTitle(rb.getString("app_name"));
+        auth2.getIcons().add(new Image(Main.class.getResourceAsStream("/resources/img/icon.png")));
+        auth2.setHeight(500);
+        auth2.setWidth(450);
+        auth2.setResizable(false);
+        auth2.showAndWait();
     }
 
     @FXML

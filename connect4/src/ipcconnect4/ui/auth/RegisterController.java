@@ -1,6 +1,7 @@
 package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
+import ipcconnect4.Main;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.PassFieldValid;
 import ipcconnect4.view.TextFieldValid;
@@ -12,10 +13,8 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
@@ -28,9 +27,12 @@ import model.Player;
 public class RegisterController {
 
     private final RegisterListener listener;
+    private final Player editPlayer;
 
     private String avatarPath = "";
 
+    @FXML
+    private Text title;
     @FXML
     private TextFieldValid userText;
     @FXML
@@ -48,14 +50,17 @@ public class RegisterController {
     @FXML
     private ImageView okButton;
     @FXML
+    private ImageView backButton;
+    @FXML
     private ImageView passMaskIV;
     @FXML
     private CircleImage avatar;
     @FXML
     private Text errorDate;
 
-    public RegisterController(RegisterListener listener) {
+    public RegisterController(RegisterListener listener, Player editPlayer) {
         this.listener = listener;
+        this.editPlayer = editPlayer;
     }
 
     @FXML
@@ -115,37 +120,43 @@ public class RegisterController {
                     return !picked.before(now);
                 }, datePicker.valueProperty()
         ));
+        
+        if (editPlayer != null) {
+            title.setText("Editar Perfil");
+            backButton.setImage(new Image("/resources/img/cancel.png"));
+            userText.setDisable(true);
+            avatar.setImage(editPlayer.getAvatar());
+            userText.tf().setText(editPlayer.getNickName());
+            emailText.tf().setText(editPlayer.getEmail());
+            passTextMask.tf().setText(editPlayer.getPassword());
+            passTextMask1.tf().setText(editPlayer.getPassword());
+            datePicker.setValue(editPlayer.getBirthdate());
+        }
     }
 
     @FXML
     private void okAction(InputEvent event) {
         try {
             Connect4 db = Connect4.getSingletonConnect4();
-            if (db.exitsNickName(userText.tf().getText())) {
+
+            if (db.exitsNickName(userText.tf().getText()) && editPlayer == null) {
                 userText.valid.set(false);
                 userText.setErrorMsg("Usuario ja existente");
                 return;
             }
-            if (avatarPath.equals(CircleImage.DEF_IMG_PATH)) {
-                db.registerPlayer(
-                        userText.tf().getText(),
-                        emailText.tf().getText(),
-                        passTextMask.tf().getText(),
-                        datePicker.getValue(),
-                        0
-                );
-            } else {
-                db.registerPlayer(
-                        userText.tf().getText(),
-                        emailText.tf().getText(),
-                        passTextMask.tf().getText(),
-                        avatar.getImage(),
-                        datePicker.getValue(),
-                        0
-                );
-            }
 
-            listener.onFinish();
+            Image profPic = avatarPath.equals(CircleImage.DEF_IMG_PATH)
+                    ? null
+                    : avatar.getImage();
+
+            listener.onRegister(new Player(
+                    userText.tf().getText(),
+                    emailText.tf().getText(),
+                    passTextMask.tf().getText(),
+                    profPic,
+                    datePicker.getValue(),
+                    0
+            ));
 
         } catch (Connect4DAOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
@@ -154,7 +165,7 @@ public class RegisterController {
 
     @FXML
     private void cancelAction(InputEvent event) {
-        listener.onFinish();
+        listener.onCancel();
     }
 
     @FXML
@@ -186,7 +197,9 @@ public class RegisterController {
 
     public interface RegisterListener {
 
-        void onFinish();
+        void onCancel();
+
+        void onRegister(Player newPlayer);
     }
 
 }

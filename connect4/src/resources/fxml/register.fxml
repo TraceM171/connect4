@@ -21,7 +21,7 @@
     <children>
         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-def" text="Registrar">
+                <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-def" text="Registrar">
                     <font>
                         <Font name="System Italic" size="24.0" />
                     </font>
@@ -167,7 +167,7 @@
         </GridPane>
         <HBox alignment="CENTER">
             <children>
-                <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="backButton" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image backgroundLoading="true" url="@../img/back.png" />
                     </image>
