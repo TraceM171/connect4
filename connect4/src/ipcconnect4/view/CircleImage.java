@@ -6,12 +6,13 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class CircleImage extends Circle {
+    public static final String DEF_IMG_PATH = "/avatars/default.png";
     
     private Image image;
     
     @FXML
     private void initialize() {
-        image = new Image("/avatars/default.png");
+        image = new Image(DEF_IMG_PATH);
     }
 
     public Image getImage() {

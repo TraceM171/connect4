@@ -236,6 +236,17 @@
     -fx-background-color: -fx-color-accent-dark, -fx-background;
 }
 
+.text-field-valid:error > .text-field {
+    -fx-text-fill: -fx-p1-color;
+}
+.text-field-valid:error > .text-field:hover,
+.text-field-valid:error > .text-field:focused {
+    -fx-background-color: -fx-p1-color, -fx-background;
+}
+.text-field-valid:error > .image-view {
+    -fx-effect: -fx-shadow;
+}
+
 
 /* standard text for titles */
 .text-def {

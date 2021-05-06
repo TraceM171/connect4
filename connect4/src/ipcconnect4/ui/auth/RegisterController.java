@@ -1,16 +1,19 @@
 package ipcconnect4.ui.auth;
 
+import DBAccess.Connect4DAOException;
 import ipcconnect4.view.CircleImage;
+import ipcconnect4.view.PassFieldValid;
+import ipcconnect4.view.TextFieldValid;
 import java.io.File;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -19,28 +22,27 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Connect4;
 import model.Player;
-import sun.font.TextLabel;
 
 public class RegisterController {
 
     private final RegisterListener listener;
-    private boolean firstfocus = true;
+
+    private String avatarPath = "";
 
     @FXML
-    private Node root;
+    private TextFieldValid userText;
     @FXML
-    private TextField userText;
+    private TextFieldValid emailText;
     @FXML
-    private TextField emailText;
+    private PassFieldValid passTextMask;
     @FXML
-    private TextField passTextMask;
+    private PassFieldValid passTextMask1;
     @FXML
-    private TextField passTextMask1;
+    private TextFieldValid passTextUnmask;
     @FXML
-    private TextField passTextUnmask;
-    @FXML
-    private TextField passTextUnmask1;
+    private TextFieldValid passTextUnmask1;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -50,14 +52,6 @@ public class RegisterController {
     @FXML
     private CircleImage avatar;
     @FXML
-    private Text errorUser;
-    @FXML
-    private Text errorEmail;
-    @FXML
-    private Text errorPass;
-    @FXML
-    private Text errorRepe;
-    @FXML
     private Text errorDate;
 
     public RegisterController(RegisterListener listener) {
@@ -66,40 +60,47 @@ public class RegisterController {
 
     @FXML
     private void initialize() {
-        okButton.disableProperty().bind(Bindings.or(
-                userText.textProperty().isEmpty(),
-                passTextMask.textProperty().isEmpty()
-        ));
+        okButton.disableProperty().bind(
+                userText.valid.not()
+                        .or(emailText.valid.not())
+                        .or(passTextMask.valid.not())
+                        .or(passTextUnmask.valid.not())
+                        .or(errorDate.visibleProperty())
+                        .or(userText.tf().textProperty().isEmpty())
+                        .or(emailText.tf().textProperty().isEmpty())
+                        .or(passTextMask.tf().textProperty().isEmpty())
+                        .or(passTextUnmask.tf().textProperty().isEmpty())
+                        .or(datePicker.valueProperty().isNull())
+        );
 
-        passTextMask.textProperty().bindBidirectional(passTextUnmask.textProperty());
+        passTextMask.tf().textProperty().bindBidirectional(passTextUnmask.tf().textProperty());
         passTextUnmask.visibleProperty().bind(passTextMask.visibleProperty().not());
         passTextMask.managedProperty().bind(passTextMask.visibleProperty());
         passTextUnmask.managedProperty().bind(passTextUnmask.visibleProperty());
-        passTextMask1.textProperty().bindBidirectional(passTextUnmask1.textProperty());
+
+        passTextMask1.tf().textProperty().bindBidirectional(passTextUnmask1.tf().textProperty());
         passTextMask1.visibleProperty().bind(passTextMask.visibleProperty());
         passTextMask1.managedProperty().bind(passTextMask1.visibleProperty());
         passTextUnmask1.visibleProperty().bind(passTextUnmask.visibleProperty());
         passTextUnmask1.managedProperty().bind(passTextUnmask1.visibleProperty());
 
-        errorUser.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> !Player.checkNickName(userText.getText()) && !userText.getText().isEmpty(),
-                userText.textProperty()
-        ));
-        errorEmail.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> !Player.checkEmail(emailText.getText()) && !emailText.getText().isEmpty(),
-                emailText.textProperty()
-        ));
-        errorPass.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> !Player.checkPassword(passTextMask.getText()) && !passTextMask.getText().isEmpty(),
-                passTextMask.textProperty()
-        ));
-        errorRepe.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> !passTextMask.getText().equals(passTextMask1.getText())
-                && !passTextMask.getText().isEmpty()
-                && !passTextMask1.getText().isEmpty(),
-                passTextMask.textProperty(),
-                passTextMask1.textProperty()
-        ));
+        userText.setValidator(Player::checkNickName);
+        emailText.setValidator(Player::checkEmail);
+        passTextMask.setValidator(Player::checkPassword);
+        passTextUnmask.setValidator(Player::checkPassword);
+        passTextMask.tf().textProperty().addListener((observable) -> {
+            passTextMask1.validate();
+            passTextUnmask1.validate();
+        });
+        passTextMask1.setValidator((t) -> {
+            String well = passTextMask.tf().getText();
+            return well.equals(t);
+        });
+        passTextUnmask1.setValidator((t) -> {
+            String well = passTextMask.tf().getText();
+            return well.equals(t);
+        });
+
         errorDate.visibleProperty().bind(Bindings.createBooleanBinding(
                 () -> {
                     LocalDate localDate = datePicker.getValue();
@@ -117,8 +118,38 @@ public class RegisterController {
     }
 
     @FXML
-    private void okAction(ActionEvent event) {
+    private void okAction(InputEvent event) {
+        try {
+            Connect4 db = Connect4.getSingletonConnect4();
+            if (db.exitsNickName(userText.tf().getText())) {
+                userText.valid.set(false);
+                userText.setErrorMsg("Usuario ja existente");
+                return;
+            }
+            if (avatarPath.equals(CircleImage.DEF_IMG_PATH)) {
+                db.registerPlayer(
+                        userText.tf().getText(),
+                        emailText.tf().getText(),
+                        passTextMask.tf().getText(),
+                        datePicker.getValue(),
+                        0
+                );
+            } else {
+                db.registerPlayer(
+                        userText.tf().getText(),
+                        emailText.tf().getText(),
+                        passTextMask.tf().getText(),
+                        avatar.getImage(),
+                        datePicker.getValue(),
+                        0
+                );
+            }
 
+            listener.onFinish();
+
+        } catch (Connect4DAOException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -149,6 +180,7 @@ public class RegisterController {
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
             avatar.setImage(new Image(file.toURI().toString()));
+            avatarPath = file.toURI().toString();
         }
     }
 
