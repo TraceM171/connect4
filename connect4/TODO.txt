@@ -1,2 +1,0 @@
-- Strings Register fragment
-- Light/Dark Register fragment

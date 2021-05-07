@@ -122,7 +122,7 @@ public class RegisterController {
         ));
         
         if (editPlayer != null) {
-            title.setText("Editar Perfil");
+            title.setText(Main.rb.getString("edit_profile"));
             backButton.setImage(new Image("/resources/img/cancel.png"));
             userText.setDisable(true);
             avatar.setImage(editPlayer.getAvatar());
@@ -141,7 +141,7 @@ public class RegisterController {
 
             if (db.exitsNickName(userText.tf().getText()) && editPlayer == null) {
                 userText.valid.set(false);
-                userText.setErrorMsg("Usuario ja existente");
+                userText.setErrorMsg(Main.rb.getString("exixting_user"));
                 return;
             }
 
@@ -185,7 +185,7 @@ public class RegisterController {
     @FXML
     private void chooseImage(InputEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select a new profile picture");
+        fileChooser.setTitle(Main.rb.getString("select_avatar"));
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.png");
         fileChooser.getExtensionFilters().addAll(extFilter);
         File file = fileChooser.showOpenDialog(new Stage());

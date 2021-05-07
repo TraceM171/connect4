@@ -4,14 +4,13 @@ import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
 import static ipcconnect4.Main.rb;
 import static ipcconnect4.Main.stage;
+import static ipcconnect4.Main.styleSheet;
 import ipcconnect4.model.GameWithAI.Difficulty;
-import ipcconnect4.ui.auth.AuthenticateController;
 import ipcconnect4.ui.auth.RegisterController;
 import ipcconnect4.util.LocalPreferences;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.SelectorIcon;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -27,12 +26,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Connect4;
 import model.Player;
 
 public class HomeController {
@@ -73,8 +72,20 @@ public class HomeController {
     private void initTopBar() {
         if (Main.player1 != null) {
             ContextMenu contextMenu = new ContextMenu();
-            MenuItem menuItem1 = new MenuItem("Editar perfil");
-            MenuItem menuItem2 = new MenuItem("Cerrar sesión");
+            MenuItem menuItem1 = new MenuItem(Main.rb.getString("edit_profile"));
+            MenuItem menuItem2 = new MenuItem(Main.rb.getString("logout"));
+            
+            Image openIcon = new Image("/resources/img/edit.png");
+            ImageView openView = new ImageView(openIcon);
+            openView.setFitWidth(20);
+            openView.setFitHeight(20);
+            menuItem1.setGraphic(openView);
+            
+            Image openIcon2 = new Image("/resources/img/exit.png");
+            ImageView openView2 = new ImageView(openIcon2);
+            openView2.setFitWidth(20);
+            openView2.setFitHeight(20);
+            menuItem2.setGraphic(openView2);
 
             menuItem1.setOnAction((event) -> {
                 showProfileEditor(Main.player1);
@@ -113,8 +124,20 @@ public class HomeController {
 
         if (Main.player2 != null) {
             ContextMenu contextMenu = new ContextMenu();
-            MenuItem menuItem1 = new MenuItem("Editar perfil");
-            MenuItem menuItem2 = new MenuItem("Cerrar sesión");
+            MenuItem menuItem1 = new MenuItem(Main.rb.getString("edit_profile"));
+            MenuItem menuItem2 = new MenuItem(Main.rb.getString("logout"));
+
+            Image openIcon = new Image("/resources/img/edit.png");
+            ImageView openView = new ImageView(openIcon);
+            openView.setFitWidth(20);
+            openView.setFitHeight(20);
+            menuItem1.setGraphic(openView);
+            
+            Image openIcon2 = new Image("/resources/img/exit.png");
+            ImageView openView2 = new ImageView(openIcon2);
+            openView2.setFitWidth(20);
+            openView2.setFitHeight(20);
+            menuItem2.setGraphic(openView2);
 
             menuItem1.setOnAction((event) -> {
                 showProfileEditor(Main.player2);
@@ -143,7 +166,13 @@ public class HomeController {
             pointsT2.setText(Main.formatWLang("points", Main.player2.getPoints()));
         } else {
             ContextMenu contextMenu = new ContextMenu();
-            MenuItem menuItem1 = new MenuItem("Iniciar sesión");
+            MenuItem menuItem1 = new MenuItem(Main.rb.getString("login"));
+            
+            Image openIcon = new Image("/resources/img/login.png");
+            ImageView openView = new ImageView(openIcon);
+            openView.setFitWidth(20);
+            openView.setFitHeight(20);
+            menuItem1.setGraphic(openView);
 
             menuItem1.setOnAction((event) -> {
                 Stage auth2 = new Stage();
@@ -231,6 +260,8 @@ public class HomeController {
         Parent root;
         try {
             root = loader.load();
+            root.getStylesheets().clear();
+            root.getStylesheets().add(styleSheet);
             auth2.setScene(new Scene(root));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -238,8 +269,8 @@ public class HomeController {
 
         auth2.initModality(Modality.WINDOW_MODAL);
         auth2.initOwner(stage);
-        auth2.setTitle(rb.getString("app_name"));
-        auth2.getIcons().add(new Image(Main.class.getResourceAsStream("/resources/img/icon.png")));
+        auth2.setTitle(rb.getString("edit_profile"));
+        auth2.getIcons().add(new Image(Main.class.getResourceAsStream("/resources/img/edit.png")));
         auth2.setHeight(500);
         auth2.setWidth(450);
         auth2.setResizable(false);

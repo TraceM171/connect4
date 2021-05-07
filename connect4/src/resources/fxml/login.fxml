@@ -18,7 +18,7 @@
     <children>
         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-def" text="%login_title">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-def" text="%login">
                     <font>
                         <Font name="System Italic" size="24.0" />
                     </font>

@@ -58,6 +58,8 @@ public class PassFieldValid extends StackPane {
         Tooltip.install(errorIV, tt);
         hackTooltipStartTiming(tt);
         tt.setFont(Font.font("14px"));
+        tt.setWrapText(true);
+        tt.setMaxWidth(300);
 
         valid.addListener((observable, oldValue, newValue) -> {
             errorIV.setVisible(!newValue);

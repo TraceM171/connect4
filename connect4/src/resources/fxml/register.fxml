@@ -21,7 +21,7 @@
     <children>
         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
             <children>
-                <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-def" text="Registrar">
+                <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-def" text="%register">
                     <font>
                         <Font name="System Italic" size="24.0" />
                     </font>
@@ -65,7 +65,7 @@
                                 <Image url="@../img/user.png" />
                             </image>
                         </ImageView>
-                        <TextFieldValid fx:id="userText" autoValidate="true" errorMsg="Usuario no valido" maxWidth="1.7976931348623157E308" promptText="%user_input" HBox.hgrow="ALWAYS">
+                        <TextFieldValid fx:id="userText" autoValidate="true" errorMsg="%user_no_valid" maxWidth="1.7976931348623157E308" promptText="%user_input" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets left="10.0" />
                             </HBox.margin>
@@ -82,7 +82,7 @@
                                 <Image backgroundLoading="true" url="@../img/mail.png" />
                             </image>
                         </ImageView>
-                        <TextFieldValid fx:id="emailText" autoValidate="true" errorMsg="Correo no valido" maxWidth="1.7976931348623157E308" promptText="%email_input" HBox.hgrow="ALWAYS">
+                        <TextFieldValid fx:id="emailText" autoValidate="true" errorMsg="%email_no_valid" maxWidth="1.7976931348623157E308" promptText="%email_input" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets left="10.0" />
                             </HBox.margin>
@@ -108,10 +108,10 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <PassFieldValid fx:id="passTextMask" autoValidate="true" errorMsg="Contrasenya no valida" maxWidth="1.7976931348623157E308" promptText="%pass_input" />
-                                <TextFieldValid fx:id="passTextUnmask" autoValidate="true" errorMsg="Contrasenya no valida" maxWidth="1.7976931348623157E308" promptText="%pass_input" />
-                                <PassFieldValid fx:id="passTextMask1" autoValidate="true" errorMsg="Contrasenya no igual" maxWidth="1.7976931348623157E308" promptText="%pass_input" GridPane.columnIndex="1" />
-                                <TextFieldValid fx:id="passTextUnmask1" autoValidate="true" errorMsg="Contrasenya no igual" maxWidth="1.7976931348623157E308" promptText="%pass_input" GridPane.columnIndex="1" />
+                                <PassFieldValid fx:id="passTextMask" autoValidate="true" errorMsg="%pass_no_valid" maxWidth="1.7976931348623157E308" promptText="%pass_input" />
+                                <TextFieldValid fx:id="passTextUnmask" autoValidate="true" errorMsg="%pass_no_valid" maxWidth="1.7976931348623157E308" promptText="%pass_input" />
+                                <PassFieldValid fx:id="passTextMask1" autoValidate="true" errorMsg="%repe_no_valid" maxWidth="1.7976931348623157E308" promptText="%repe_input" GridPane.columnIndex="1" />
+                                <TextFieldValid fx:id="passTextUnmask1" autoValidate="true" errorMsg="%repe_no_valid" maxWidth="1.7976931348623157E308" promptText="%repe_input" GridPane.columnIndex="1" />
                             </children>
                      <HBox.margin>
                         <Insets left="10.0" right="5.0" />
@@ -150,7 +150,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                           </padding>
                       </HBox>
-                      <Text fx:id="errorDate" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-error" text="Fecha no valida" visible="false">
+                      <Text fx:id="errorDate" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-error" text="%date_no_valid" visible="false">
                           <font>
                               <Font size="13.0" />
                           </font>
