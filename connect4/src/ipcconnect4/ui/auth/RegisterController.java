@@ -69,12 +69,12 @@ public class RegisterController {
                 userText.valid.not()
                         .or(emailText.valid.not())
                         .or(passTextMask.valid.not())
-                        .or(passTextUnmask.valid.not())
+                        .or(passTextMask1.valid.not())
                         .or(errorDate.visibleProperty())
                         .or(userText.tf().textProperty().isEmpty())
                         .or(emailText.tf().textProperty().isEmpty())
                         .or(passTextMask.tf().textProperty().isEmpty())
-                        .or(passTextUnmask.tf().textProperty().isEmpty())
+                        .or(passTextMask1.tf().textProperty().isEmpty())
                         .or(datePicker.valueProperty().isNull())
         );
 
