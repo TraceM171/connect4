@@ -11,6 +11,8 @@ import ipcconnect4.util.LocalPreferences;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.SelectorIcon;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -20,6 +22,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
@@ -34,7 +37,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Player;
 
-public class HomeController {
+public class HomeController implements Initializable {
 
     @FXML
     private Label nickNameT1;
@@ -62,8 +65,8 @@ public class HomeController {
     private final ObjectProperty<Difficulty> difficulty
             = new SimpleObjectProperty<>(Main.lastAIdifficulty);
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         initTopBar();
         bindDifficulties();
         bindPvP();

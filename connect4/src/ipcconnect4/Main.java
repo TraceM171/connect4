@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -36,6 +37,7 @@ public class Main extends Application {
     public static String styleSheet;
     public static Stage stage;
     public static Pane root;
+    private static Node lastContent;
 
     public static void main(String[] args) {
         launch(args);
@@ -123,12 +125,31 @@ public class Main extends Application {
                     Main.class.getResource("/resources/fxml/home.fxml"),
                     rb
             );
-            changeContent(loader.load());
+            changeContent(loader.load(), false, "fadeIn");
             stage.setMinHeight(650);
             stage.setMinWidth(900);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void goToRanks() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    Main.class.getResource("/resources/fxml/ranks.fxml"),
+                    rb
+            );
+
+            changeContent(loader.load(), true, "slideFromTop");
+            stage.setMinHeight(650);
+            stage.setMinWidth(900);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void returnFromRanks() {
+        changeToBack("slideToTop");
     }
 
     public static void startGame(Player P1, Player P2) {
@@ -146,14 +167,14 @@ public class Main extends Application {
                     rb
             );
             loader.setController(controller);
-            changeContent(loader.load());
+            changeContent(loader.load(), false, "fadeIn");
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public static void goToAuthenticate(int player) {
-        changeContent(getAuthenticateScene(player));
+        changeContent(getAuthenticateScene(player), false, "fadeIn");
         stage.setMinHeight(650);
         stage.setMinWidth(700);
     }
@@ -173,14 +194,33 @@ public class Main extends Application {
         return null;
     }
 
-    private static void changeContent(Parent newRoot) {
+    private static void changeContent(Parent newRoot, boolean logBack, String animation) {
         Node oldRoot = null;
         if (root.getChildren().size() > 0) {
             oldRoot = root.getChildren().get(0);
         }
+        if (logBack) {
+            lastContent = oldRoot;
+        }
         newRoot.getStylesheets().clear();
         newRoot.getStylesheets().add(styleSheet);
-        Animations.fadeIn(root, oldRoot, newRoot);
+        switch (animation) {
+            case "slideFromTop":
+                Animations.slideFromTop(root, oldRoot, newRoot);
+                break;
+            case "slideToTop":
+                Animations.slideToTop(root, oldRoot, newRoot);
+                break;
+            default:
+                Animations.fadeIn(root, oldRoot, newRoot);
+        }
+    }
+    
+    private static void changeToBack(String animation) {
+        if (lastContent != null) {
+            changeContent((Parent) lastContent, false, animation);
+            lastContent = null;
+        }
     }
 
     @Override
@@ -189,7 +229,7 @@ public class Main extends Application {
             Connect4.getSingletonConnect4();
             // TEST CODE BEGINS
             if (Connect4.getSingletonConnect4().getPlayer("nickName1") == null) {
-                Connect4.getSingletonConnect4().createDemoData(3, 3, 3);
+                Connect4.getSingletonConnect4().createDemoData(20, 3, 3);
             }
             // TEST CODE ENDS
         } catch (Connect4DAOException e) {

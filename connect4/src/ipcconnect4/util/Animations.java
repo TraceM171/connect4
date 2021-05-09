@@ -1,7 +1,9 @@
 package ipcconnect4.util;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.beans.property.IntegerProperty;
@@ -19,6 +21,34 @@ public class Animations {
      * Duration of all animations. Value = 300
      */
     public static final Duration DURATION = Duration.millis(300);
+
+    public static void slideFromTop(Pane container, Node oldNode, Node newNode) {
+        newNode.translateYProperty().set(-1 * container.getHeight());
+
+        container.getChildren().add(newNode);
+
+        KeyValue keyValue = new KeyValue(newNode.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(DURATION, keyValue);
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.setOnFinished(evt -> {
+            container.getChildren().remove(oldNode);
+        });
+        timeline.play();
+    }
+    
+    public static void slideToTop(Pane container, Node oldNode, Node newNode) {
+        container.getChildren().add(newNode);
+        container.getChildren().remove(oldNode);
+        container.getChildren().add(oldNode);
+
+        KeyValue keyValue = new KeyValue(oldNode.translateYProperty(), -1 * container.getHeight(), Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(DURATION, keyValue);
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.setOnFinished(evt -> {
+            container.getChildren().remove(oldNode);
+        });
+        timeline.play();
+    }
 
     /**
      * Transition between two nodes using fade animation
@@ -95,7 +125,7 @@ public class Animations {
     public static IntegerProperty count(int from, int to) {
         int amount = Math.abs(to - from);
         Duration kfDuration = DURATION.multiply(3).divide(amount);
-        
+
         IntegerProperty ip = new SimpleIntegerProperty(from);
         Timeline timeline = new Timeline();
         timeline.setCycleCount(amount);
@@ -104,7 +134,7 @@ public class Animations {
                     ip.set(ip.get() + 1);
                 }));
         timeline.playFromStart();
-        
+
         return ip;
     }
 }
