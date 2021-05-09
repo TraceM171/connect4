@@ -4,7 +4,6 @@ import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  *
  * @author Caleb Brinkman
  */
-public class AutoCompleteTextField extends TextField {
+public class AutoCompleteTextField extends TextFieldValid {
 
     /**
      * The existing autocomplete entries.
@@ -35,13 +34,13 @@ public class AutoCompleteTextField extends TextField {
         super();
         entries = new TreeSet<>();
         entriesPopup = new ContextMenu();
-        textProperty().addListener((observableValue, s, s2) -> {
-            if (getText().length() == 0) {
+        tf().textProperty().addListener((observableValue, s, s2) -> {
+            if (tf().getText().length() == 0) {
                 entriesPopup.hide();
             } else {
                 LinkedList<String> searchResult = new LinkedList<>();
                 searchResult.addAll(entries.stream()
-                        .filter(e -> e.toLowerCase().contains(getText().toLowerCase()))
+                        .filter(e -> e.toLowerCase().contains(tf().getText().toLowerCase()))
                         .collect(Collectors.toList()));
                 if (entries.size() > 0) {
                     populatePopup(searchResult);
@@ -85,7 +84,7 @@ public class AutoCompleteTextField extends TextField {
             Label entryLabel = new Label(result);
             CustomMenuItem item = new CustomMenuItem(entryLabel, true);
             item.setOnAction(actionEvent -> {
-                setText(result);
+                tf().setText(result);
                 entriesPopup.hide();
             });
             menuItems.add(item);

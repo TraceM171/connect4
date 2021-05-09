@@ -106,7 +106,7 @@ public class TextFieldValid extends StackPane {
                 || tf().getText().isEmpty());
     }
 
-    public TextField tf() {
+    public final  TextField tf() {
         return textField;
     }
 

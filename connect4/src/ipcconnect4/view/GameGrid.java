@@ -4,7 +4,7 @@ import static ipcconnect4.model.Game.COLUMNS;
 import static ipcconnect4.model.Game.ROWS;
 import ipcconnect4.model.Game.Piece;
 import ipcconnect4.model.Game.Pos;
-import ipcconnect4.util.Animations;
+import ipcconnect4.util.Animation;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -75,7 +75,7 @@ public class GameGrid extends GridPane {
     public void previewPiece(Piece piece, Pos pos, boolean animate) {
         Circle pieceC = createPiece(piece);
         if (animate) {
-            Animations.fade(pieceC, 0, PREVIEW_OPACITY).play();
+            new Animation(Animation.NORMAL).fade(pieceC, 0, PREVIEW_OPACITY).play();
         } else {
             pieceC.setOpacity(PREVIEW_OPACITY);
         }
@@ -137,7 +137,7 @@ public class GameGrid extends GridPane {
                     && GridPane.getColumnIndex(piece) == pos.column) {
                 Circle pieceC = (Circle) piece;
                 if (animate) {
-                    Transition t = Animations.fade(pieceC, piece.getOpacity(), 0);
+                    Transition t = new Animation(Animation.NORMAL).fade(pieceC, piece.getOpacity(), 0);
                     t.setOnFinished((event) -> childrens.remove(piece));
                     t.play();
                 } else {

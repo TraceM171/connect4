@@ -4,7 +4,7 @@ import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
 import static ipcconnect4.Main.styleSheet;
 import ipcconnect4.ui.auth.RegisterController.RegisterListener;
-import ipcconnect4.util.Animations;
+import ipcconnect4.util.Animation;
 import ipcconnect4.util.LocalPreferences;
 import java.io.IOException;
 import java.net.URL;
@@ -180,9 +180,9 @@ public class AuthenticateController implements Initializable {
         subscene.getStylesheets().clear();
         subscene.getStylesheets().add(styleSheet);
         if (isBack) {
-            Animations.fadeIn(subscene, lastContent, content);
+            new Animation(Animation.NORMAL).fadeIn(subscene, lastContent, content);
         } else {
-            Animations.fadeIn(subscene, lastContent, content);
+            new Animation(Animation.NORMAL).fadeIn(subscene, lastContent, content);
         }
         HBox.setHgrow(children.get(0), Priority.ALWAYS);
 

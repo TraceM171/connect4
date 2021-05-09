@@ -9,20 +9,35 @@ import javafx.animation.Transition;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 /**
  * Utility class used to make different animations.
  */
-public class Animations {
+public class Animation {
 
     /**
-     * Duration of all animations. Value = 300
+     * Value = 300
      */
-    public static final Duration DURATION = Duration.millis(300);
+    public static final int NORMAL = 300;
+    /**
+     * Value = {@link #NORMAL} * 3. 3 times slower
+     */
+    public static final int SLOW = NORMAL * 3;
+    /**
+     * Value = {@link #NORMAL} / 3. 3 times faster
+     */
+    public static final int FAST = NORMAL / 3;
 
-    public static void slideFromTop(Pane container, Node oldNode, Node newNode) {
+    private final Duration DURATION;
+
+    public Animation(int millis) {
+        this.DURATION = Duration.millis(millis);
+    }
+
+    public void slideFromTop(Pane container, Node oldNode, Node newNode) {
         newNode.translateYProperty().set(-1 * container.getHeight());
 
         container.getChildren().add(newNode);
@@ -35,8 +50,8 @@ public class Animations {
         });
         timeline.play();
     }
-    
-    public static void slideToTop(Pane container, Node oldNode, Node newNode) {
+
+    public void slideToTop(Pane container, Node oldNode, Node newNode) {
         container.getChildren().add(newNode);
         container.getChildren().remove(oldNode);
         container.getChildren().add(oldNode);
@@ -58,7 +73,7 @@ public class Animations {
      * @param oldNode Node, old node that will disappear
      * @param newNode Node, new node that will take the position of oldNode
      */
-    public static void fadeIn(Pane container, Node oldNode, Node newNode) {
+    public void fadeIn(Pane container, Node oldNode, Node newNode) {
         container.getChildren().add(newNode);
 
         FadeTransition ft = new FadeTransition(DURATION);
@@ -77,7 +92,7 @@ public class Animations {
      *
      * @param node Node to be animated
      */
-    public static void fadeIn(Node node) {
+    public void fadeIn(Node node) {
         fade(node, 0, 1).play();
     }
 
@@ -86,7 +101,7 @@ public class Animations {
      *
      * @param node Node to be animated
      */
-    public static void fadeOut(Node node) {
+    public void fadeOut(Node node) {
         Transition ft = fade(node, 1, 0);
         ft.setOnFinished(evt -> {
             node.setVisible(false);
@@ -103,7 +118,7 @@ public class Animations {
      * @param to double, final value
      * @return Transition, represents the fade animation
      */
-    public static Transition fade(Node node, double from, double to) {
+    public Transition fade(Node node, double from, double to) {
         node.setOpacity(from);
         node.setVisible(true);
         FadeTransition ft = new FadeTransition(DURATION);
@@ -116,25 +131,34 @@ public class Animations {
     /**
      * Create an IntegerProperty that will go from a value to another one, going
      * up or down one at a time. Will always end the animation in the same
-     * amount of time, {@link #DURATION} * 3.
+     * amount of time, {@link #DURATION}.
      *
      * @param from int, from value
      * @param to int, to value
      * @return IntegerProperty, used to listen to changes in the value
      */
-    public static IntegerProperty count(int from, int to) {
+    public IntegerProperty count(int from, int to) {
         int amount = Math.abs(to - from);
-        Duration kfDuration = DURATION.multiply(3).divide(amount);
+        Duration kfDuration = DURATION.divide(amount);
 
         IntegerProperty ip = new SimpleIntegerProperty(from);
         Timeline timeline = new Timeline();
         timeline.setCycleCount(amount);
         timeline.getKeyFrames().add(
                 new KeyFrame(kfDuration, (event) -> {
-                    ip.set(ip.get() + 1);
+                    ip.set(ip.get() + (to > from ? 1 : -1));
                 }));
         timeline.playFromStart();
 
         return ip;
+    }
+
+    public void listScrollTo(ScrollBar scrollBar, int items, int index) {
+        double actualPos = (scrollBar.getValue() * 100);
+        double finalPos = (scrollBar.getMax() - scrollBar.getMin()) / (items - 1) * index * 100;
+        count((int) actualPos, (int) finalPos)
+                .addListener((observable, oldValue, newValue) -> {
+                    scrollBar.setValue(newValue.doubleValue() / 100);
+                });
     }
 }

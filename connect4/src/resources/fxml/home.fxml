@@ -138,7 +138,7 @@
             <children>
                 <VBox fx:id="pvpVB" alignment="CENTER" onMouseClicked="#startVSPlayerAction" GridPane.rowSpan="2147483647">
                     <children>
-                        <Label text="%pvp">
+                        <Label styleClass="big-button-labels" text="%pvp">
                             <VBox.margin>
                                 <Insets bottom="15.0" />
                             </VBox.margin>
@@ -156,7 +156,7 @@
                 </VBox>
                 <VBox alignment="CENTER" onMouseClicked="#startVSAIAction" GridPane.columnIndex="1">
                     <children>
-                        <Label text="%pve">
+                        <Label styleClass="big-button-labels" text="%pve">
                             <VBox.margin>
                                 <Insets bottom="15.0" />
                             </VBox.margin>

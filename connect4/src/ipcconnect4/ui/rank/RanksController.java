@@ -3,10 +3,10 @@ package ipcconnect4.ui.rank;
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
 import ipcconnect4.view.AutoCompleteTextField;
+import ipcconnect4.view.AutoResizeTableView;
 import ipcconnect4.view.CircleImage;
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,10 +21,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TableRow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
+import javafx.scene.shape.Rectangle;
 import model.Connect4;
 import model.Player;
 
@@ -37,7 +39,7 @@ public class RanksController implements Initializable {
     @FXML
     private Label pointsFirst;
     @FXML
-    private TableView<Player> ranksTable;
+    private AutoResizeTableView<Player> ranksTable;
     @FXML
     private TableColumn<Player, Integer> tcPos;
     @FXML
@@ -52,7 +54,6 @@ public class RanksController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Init TableView
-        //ranksTable.setMouseTransparent(true);
         tcPos.setCellValueFactory(cell -> new SimpleObjectProperty<>(getRanksData().indexOf(cell.getValue()) + 1));
         tcPos.setCellFactory(cell -> {
             return new TableCell<Player, Integer>() {
@@ -90,6 +91,11 @@ public class RanksController implements Initializable {
                 }
             };
         });
+        ranksTable.setRowFactory(tv -> {
+            TableRow<Player> row = new TableRow<>();
+            row.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> e.consume());
+            return row;
+        });
         tcAvatar.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getAvatar()));
         tcAvatar.setCellFactory(cell -> {
             return new TableCell<Player, Image>() {
@@ -118,18 +124,17 @@ public class RanksController implements Initializable {
                         .map(player -> player.getNickName())
                         .collect(Collectors.toList())
         );
-        searchUserAC.textProperty().addListener((observable) -> {
+        searchUserAC.setValidator(t -> {
             OptionalInt indexOpt = IntStream.range(0, getRanksData().size())
-                    .filter(i -> searchUserAC.getText().equals(ranksTable.getItems().get(i).getNickName()))
+                    .filter(i -> searchUserAC.tf().getText().equals(ranksTable.getItems().get(i).getNickName()))
                     .findFirst();
             if (indexOpt.isPresent()) {
                 ranksTable.getSelectionModel().select(indexOpt.getAsInt());
-                ranksTable.getFocusModel().focus(indexOpt.getAsInt());
-                ranksTable.scrollTo(indexOpt.getAsInt());
+                ranksTable.animateScrollTo(indexOpt.getAsInt());
             } else {
                 ranksTable.getSelectionModel().select(null);
-                ranksTable.getFocusModel().focus(null);
             }
+            return indexOpt.isPresent();
         });
 
         if (getRanksData().size() > 0) {

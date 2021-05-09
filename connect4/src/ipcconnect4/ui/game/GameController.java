@@ -12,7 +12,7 @@ import ipcconnect4.model.GameWithAI;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.model.Movement;
 import ipcconnect4.model.MovementAI;
-import ipcconnect4.util.Animations;
+import ipcconnect4.util.Animation;
 import ipcconnect4.view.CircleImage;
 import ipcconnect4.view.GameGrid;
 import java.awt.MouseInfo;
@@ -291,7 +291,7 @@ public class GameController {
                 if (winner != null) {
                     pointsLWi.setText("+" + Main.formatWLang("points", points));
                     IntegerProperty animationIP
-                            = Animations.count(
+                            = new Animation(Animation.NORMAL).count(
                                     winner.getPoints() - points_,
                                     winner.getPoints()
                             );
@@ -307,10 +307,10 @@ public class GameController {
                 Runnable showPU = () -> {
                     winPopUp.visibleProperty().addListener((observable, oldValue, newValue) -> {
                         if (newValue) {
-                            Animations.fadeOut(showWinPopUpIB);
+                            new Animation(Animation.NORMAL).fadeOut(showWinPopUpIB);
                             if (winner != null) {
                                 IntegerProperty animationIP
-                                        = Animations.count(
+                                        = new Animation(Animation.SLOW).count(
                                                 winner.getPoints() - points_,
                                                 winner.getPoints()
                                         );
@@ -319,11 +319,11 @@ public class GameController {
                                         animationIP));
                             }
                         } else {
-                            Animations.fadeIn(showWinPopUpIB);
+                            new Animation(Animation.NORMAL).fadeIn(showWinPopUpIB);
                         }
                     });
 
-                    Animations.fadeIn(winPopUp);
+                    new Animation(Animation.NORMAL).fadeIn(winPopUp);
                 };
                 gameGrid.afterAnimations(showPU);
             }
@@ -355,34 +355,34 @@ public class GameController {
     private void setTurn(Piece piece) {
         switch (piece) {
             case P1:
-                Animations.fade(avatarI1, avatarI1.getOpacity(), 1).play();
-                Animations.fade(nickNameBack1, nickNameBack1.getOpacity(), 1).play();
-                Animations.fade(avatarI2, avatarI2.getOpacity(), 0.5).play();
-                Animations.fade(nickNameBack2, nickNameBack2.getOpacity(), 0.5).play();
+                new Animation(Animation.NORMAL).fade(avatarI1, avatarI1.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(nickNameBack1, nickNameBack1.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(avatarI2, avatarI2.getOpacity(), 0.5).play();
+                new Animation(Animation.NORMAL).fade(nickNameBack2, nickNameBack2.getOpacity(), 0.5).play();
                 break;
             case P2:
-                Animations.fade(avatarI1, avatarI1.getOpacity(), 0.5).play();
-                Animations.fade(nickNameBack1, nickNameBack1.getOpacity(), 0.5).play();
-                Animations.fade(avatarI2, avatarI2.getOpacity(), 1).play();
-                Animations.fade(nickNameBack2, nickNameBack2.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(avatarI1, avatarI1.getOpacity(), 0.5).play();
+                new Animation(Animation.NORMAL).fade(nickNameBack1, nickNameBack1.getOpacity(), 0.5).play();
+                new Animation(Animation.NORMAL).fade(avatarI2, avatarI2.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(nickNameBack2, nickNameBack2.getOpacity(), 1).play();
                 break;
             case NONE:
-                Animations.fade(avatarI1, avatarI1.getOpacity(), 1).play();
-                Animations.fade(nickNameBack1, nickNameBack1.getOpacity(), 1).play();
-                Animations.fade(avatarI2, avatarI2.getOpacity(), 1).play();
-                Animations.fade(nickNameBack2, nickNameBack2.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(avatarI1, avatarI1.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(nickNameBack1, nickNameBack1.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(avatarI2, avatarI2.getOpacity(), 1).play();
+                new Animation(Animation.NORMAL).fade(nickNameBack2, nickNameBack2.getOpacity(), 1).play();
                 break;
         }
     }
 
     @FXML
     private void closeWinPopup(MouseEvent event) {
-        Animations.fadeOut(winPopUp);
+        new Animation(Animation.NORMAL).fadeOut(winPopUp);
     }
 
     @FXML
     private void showWinPopUp(MouseEvent event) {
-        Animations.fadeIn(winPopUp);
+        new Animation(Animation.NORMAL).fadeIn(winPopUp);
     }
 
     @FXML

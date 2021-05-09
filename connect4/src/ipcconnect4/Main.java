@@ -4,7 +4,7 @@ import DBAccess.Connect4DAOException;
 import ipcconnect4.model.GameWithAI.Difficulty;
 import ipcconnect4.ui.auth.AuthenticateController;
 import ipcconnect4.ui.game.GameController;
-import ipcconnect4.util.Animations;
+import ipcconnect4.util.Animation;
 import ipcconnect4.util.LocalPreferences;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -206,13 +206,13 @@ public class Main extends Application {
         newRoot.getStylesheets().add(styleSheet);
         switch (animation) {
             case "slideFromTop":
-                Animations.slideFromTop(root, oldRoot, newRoot);
+                new Animation(Animation.NORMAL).slideFromTop(root, oldRoot, newRoot);
                 break;
             case "slideToTop":
-                Animations.slideToTop(root, oldRoot, newRoot);
+                new Animation(Animation.NORMAL).slideToTop(root, oldRoot, newRoot);
                 break;
             default:
-                Animations.fadeIn(root, oldRoot, newRoot);
+                new Animation(Animation.NORMAL).fadeIn(root, oldRoot, newRoot);
         }
     }
     
