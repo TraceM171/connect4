@@ -13,11 +13,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -25,8 +28,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
-import javafx.scene.shape.Rectangle;
 import model.Connect4;
 import model.Player;
 
@@ -137,11 +138,14 @@ public class RanksController implements Initializable {
             return indexOpt.isPresent();
         });
 
+        // Init winner section
         if (getRanksData().size() > 0) {
             avatarFirst.setImage(getRanksData().get(0).getAvatar());
             nicknameFirst.setText(getRanksData().get(0).getNickName());
             pointsFirst.setText(getRanksData().get(0).getPoints() + "");
         }
+        
+        Platform.runLater(() -> avatarFirst.requestFocus());
     }
 
     @FXML

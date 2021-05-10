@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.rank.RanksController">
@@ -59,23 +60,45 @@
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="5.0" />
                             </VBox.margin>
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="40.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" percentWidth="60.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label styleClass="big-button-labels" text="Ranking" />
-                                <AutoCompleteTextField fx:id="searchUserAC" autoValidate="true" errorMsg="No user found" promptText="Search a user" GridPane.columnIndex="1" />
+                                <Label styleClass="big-button-labels" text="%ranking" />
+                                <HBox alignment="CENTER" styleClass="section" GridPane.columnIndex="1">
+                                    <children>
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/search.png" />
+                                            </image>
+                                            <HBox.margin>
+                                                <Insets right="5.0" />
+                                            </HBox.margin>
+                                        </ImageView>
+                                        <AutoCompleteTextField fx:id="searchUserAC" autoValidate="true" errorMsg="%no_user_found" promptText="%search_input" HBox.hgrow="ALWAYS">
+                                            <opaqueInsets>
+                                                <Insets />
+                                            </opaqueInsets>
+                                            <HBox.margin>
+                                                <Insets bottom="-2.0" />
+                                            </HBox.margin>
+                                        </AutoCompleteTextField>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                </HBox>
                             </children>
                         </GridPane>
                         <AutoResizeTableView fx:id="ranksTable" prefHeight="200.0" prefWidth="200.0" sizes="10, 20, 50, 20" styleClass="ranks-table" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="tcPos" editable="false" maxWidth="1.7976931348623157E308" prefWidth="50.0" style="-fx-alignment: CENTER;" text="#" />
-                                <TableColumn fx:id="tcAvatar" editable="false" maxWidth="1.7976931348623157E308" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Avatar" />
-                                <TableColumn fx:id="tcNickName" editable="false" maxWidth="1.7976931348623157E308" prefWidth="160.0" style="-fx-alignment: CENTER-LEFT;" text="NickName" />
-                                <TableColumn fx:id="tcPoints" editable="false" maxWidth="1.7976931348623157E308" prefWidth="74.0" sortable="false" style="-fx-alignment: CENTER;" text="Points" />
+                                <TableColumn fx:id="tcPos" editable="false" maxWidth="1.7976931348623157E308" prefWidth="50.0" style="-fx-alignment: center; -fx-row-valignment: center;" text="#" />
+                                <TableColumn fx:id="tcAvatar" editable="false" maxWidth="1.7976931348623157E308" prefWidth="75.0" sortable="false" style="-fx-alignment: center-left; -fx-row-valignment: center;" text="%avatar" />
+                                <TableColumn fx:id="tcNickName" editable="false" maxWidth="1.7976931348623157E308" prefWidth="160.0" style="-fx-alignment: center-left; -fx-row-valignment: center;" text="%nickname" />
+                                <TableColumn fx:id="tcPoints" editable="false" maxWidth="1.7976931348623157E308" prefWidth="74.0" sortable="false" style="-fx-alignment: center; -fx-row-valignment: center;" text="%points_title" />
                             </columns>
                             <VBox.margin>
                                 <Insets left="13.0" />
@@ -127,15 +150,16 @@
                                                 </Label>
                                             </children>
                                         </VBox>
-                                        <CircleImage fx:id="avatarFirst" radius="60.0">
-                                            <image>
-                                                <Image url="@../../avatars/default.png" />
-                                            </image>
-                                            <styleClass>
-                                                <String fx:value="circle-image" />
-                                                <String fx:value="circle" />
-                                            </styleClass>
-                                        </CircleImage>
+                              <StackPane alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity">
+                                 <children>
+                                    <CircleImage fx:id="avatarFirst" radius="60.0" styleClass="circle-image" />
+                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/first.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
                                     </children>
                                 </HBox>
                                 <Label fx:id="nicknameFirst" styleClass="big-button-labels" text="nickName">

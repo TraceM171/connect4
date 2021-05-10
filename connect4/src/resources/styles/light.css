@@ -179,9 +179,12 @@
 }
 
 
-/* Ranks TableView Style*/
+/* Ranks TableView style */
 .ranks-table {
     -fx-background-color: transparent;
+}
+.ranks-table:focused .text {
+    -fx-fill: black;
 }
 .ranks-table .column-header-background .filler {
     -fx-background-color: transparent;
@@ -203,18 +206,18 @@
     -fx-background-color: transparent;
     -fx-padding: 0 0 0 0;
 }
-.ranks-table .table-cell{
+.ranks-table .table-cell {
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
 }
 .ranks-table .table-row-cell:hover {
 }
-.ranks-table .table-row-cell:odd{
+.ranks-table .table-row-cell:odd {
     -fx-background-color: -fx-color-accent2-lighter;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }
-.ranks-table .table-row-cell:even{
+.ranks-table .table-row-cell:even {
     -fx-background-color: -fx-color-accent2-light;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
@@ -232,7 +235,7 @@
     -fx-opacity: 0;
     -fx-padding: 2;
 }
-.ranks-table .virtual-flow .scroll-bar:vertical .thumb{
+.ranks-table .virtual-flow .scroll-bar:vertical .thumb {
     -fx-background-color:  -fx-color-accent2-dark;
 }
 .ranks-table *.scroll-bar:horizontal *.increment-button,
@@ -242,7 +245,6 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
-
 .ranks-table *.scroll-bar:horizontal *.increment-arrow, 
 .ranks-table *.scroll-bar:horizontal *.decrement-arrow {
     -fx-background-color: null;
@@ -253,6 +255,10 @@
 }
 .ranks-table .table-row-cell:selected {
     -fx-background-color: -fx-color-accent-light;
+}
+.ranks-table .table-row-cell .text {
+    -fx-fill: black;
+    -fx-font-size: 18px;
 }
 .ranks-table .table-column {
     -fx-background-radius: 0px 0px 25px 25px;

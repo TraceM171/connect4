@@ -4,10 +4,8 @@ import ipcconnect4.util.Animation;
 import java.util.Arrays;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Pane;
 
 public class AutoResizeTableView<S> extends TableView<S> {
 
