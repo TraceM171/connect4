@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -133,14 +132,29 @@ public class Main extends Application {
         }
     }
 
-    public static void goToRanks() {
+    public static void goToRanks(boolean logBack) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     Main.class.getResource("/resources/fxml/ranks.fxml"),
                     rb
             );
 
-            changeContent(loader.load(), true, "slideFromTop");
+            changeContent(loader.load(), logBack, (logBack ? "slideFromTop" : "fadeIn"));
+            stage.setMinHeight(650);
+            stage.setMinWidth(900);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void goToStats(boolean logBack) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    Main.class.getResource("/resources/fxml/stats.fxml"),
+                    rb
+            );
+
+            changeContent(loader.load(), logBack, (logBack ? "slideFromTop" : "fadeIn"));
             stage.setMinHeight(650);
             stage.setMinWidth(900);
         } catch (IOException ex) {

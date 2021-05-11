@@ -29,7 +29,7 @@
     <bottom>
         <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#backAction" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_CENTER">
             <image>
-                <Image url="@../img/back.png" />
+                <Image url="@../img/down.png" />
             </image>
             <styleClass>
                 <String fx:value="icon-button" />
@@ -150,16 +150,16 @@
                                                 </Label>
                                             </children>
                                         </VBox>
-                              <StackPane alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity">
-                                 <children>
-                                    <CircleImage fx:id="avatarFirst" radius="60.0" styleClass="circle-image" />
-                                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/first.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </StackPane>
+                                        <StackPane alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity">
+                                            <children>
+                                                <CircleImage fx:id="avatarFirst" radius="60.0" styleClass="circle-image" />
+                                                <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../img/first.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </StackPane>
                                     </children>
                                 </HBox>
                                 <Label fx:id="nicknameFirst" styleClass="big-button-labels" text="nickName">

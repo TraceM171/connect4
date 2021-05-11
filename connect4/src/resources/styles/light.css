@@ -7,6 +7,10 @@
     -fx-shadow-no: dropshadow(three-pass-box, transparent, 0, 0, 0, 0);
     -fx-shadow-big: dropshadow(three-pass-box, black, 13, 0, 3, 3);
     -fx-shadow-bigger: dropshadow(three-pass-box, black, 25, 0, 7, 7);
+    -fx-color-green: #7ED670;
+    -fx-color-green-light: derive(-fx-color-green, 25%);
+    -fx-color-red: #F57979;
+    -fx-color-red-light: derive(-fx-color-red, 25%);
     -fx-color-accent: #99d8ea;
     -fx-color-accent-light: derive(-fx-color-accent, 50%);
     -fx-color-accent-dark: #7090be;
@@ -45,6 +49,9 @@
 .section {
     -fx-background-color: -fx-color-accent;
     -fx-background-radius: 10;
+}
+.section:error {
+    -fx-background-color: -fx-color-red;
 }
 
 
@@ -324,11 +331,11 @@
 }
 
 .text-field-valid:error > .text-field {
-    -fx-text-fill: -fx-p1-color;
+    -fx-text-fill: -fx-color-red;
 }
 .text-field-valid:error > .text-field:hover,
 .text-field-valid:error > .text-field:focused {
-    -fx-background-color: -fx-p1-color, -fx-background;
+    -fx-background-color: -fx-color-red, -fx-background;
 }
 .text-field-valid:error > .image-view {
     -fx-effect: -fx-shadow;

@@ -65,6 +65,28 @@ public class Animation {
         timeline.play();
     }
 
+    public void drawerHide(Pane container, Pane big, Pane small) {
+        fadeOut(big);
+        KeyValue keyValue = new KeyValue(big.prefWidthProperty(), small.getPrefWidth(), Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(DURATION, keyValue);
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.setOnFinished(evt -> {
+            big.setVisible(false);
+            big.setManaged(false);
+        });
+        timeline.play();
+    }
+
+    public void drawerShow(Pane container, Pane big, double bigSize) {
+        big.setVisible(true);
+        big.setManaged(true);
+        fadeIn(big);
+        KeyValue keyValue = new KeyValue(big.prefWidthProperty(), bigSize, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(DURATION, keyValue);
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.play();
+    }
+
     /**
      * Transition between two nodes using fade animation
      *

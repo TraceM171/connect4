@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import ipcconnect4.view.AutoCompleteTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.rank.StatsController">
+    <children>
+        <StackPane fx:id="filterRoot" maxHeight="1.7976931348623157E308" style="-fx-effect: -fx-shadow;">
+            <children>
+                <VBox fx:id="smallRoot" alignment="CENTER" prefWidth="50.0" styleClass="root">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#showFilterAction" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
+                            <image>
+                                <Image url="@../img/right.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets left="5.0" right="5.0" top="15.0" />
+                            </VBox.margin>
+                        </ImageView>
+                        <GridPane maxWidth="1.7976931348623157E308" vgap="15.0" VBox.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" percentHeight="33.33" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="33.33" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                        <HBox fx:id="smallDateBase" alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <children>
+                                      <ImageView fx:id="smallDatesI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/search.png" />
+                                 </image>
+                                      </ImageView>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <children>
+                                      <ImageView fx:id="smallResultsI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/search.png" />
+                                 </image>
+                                      </ImageView>
+                           </children>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox fx:id="smallPlayersBase" alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                           <children>
+                                      <ImageView fx:id="smallPlayersI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/search.png" />
+                                 </image>
+                                      </ImageView>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                            </children>
+                        </GridPane>
+                        <Line endX="15.0" opacity="0.5" startX="-15.0" stroke="GREY">
+                            <VBox.margin>
+                                <Insets bottom="15.0" top="15.0" />
+                            </VBox.margin>
+                        </Line>
+                        <VBox alignment="CENTER">
+                            <children>
+                                <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#rankAction" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
+                                    <image>
+                                        <Image url="@../img/ranks.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#backAction" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../img/down.png" />
+                                    </image>
+                                    <styleClass>
+                                        <String fx:value="icon-button" />
+                                        <String fx:value="clickable" />
+                                    </styleClass>
+                                    <VBox.margin>
+                                        <Insets top="15.0" />
+                                    </VBox.margin>
+                                </ImageView>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                    </padding>
+                </VBox>
+                <VBox fx:id="bigRoot" alignment="CENTER" minWidth="0.0" prefWidth="250.0" styleClass="root">
+                    <children>
+                        <StackPane>
+                            <VBox.margin>
+                                <Insets bottom="15.0" />
+                            </VBox.margin>
+                            <children>
+                                <Label styleClass="text-def" text="Filter" StackPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="System Italic" size="24.0" />
+                           </font></Label>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#hideFilterAction" pickOnBounds="true" preserveRatio="true" styleClass="clickable" StackPane.alignment="CENTER_RIGHT">
+                                    <image>
+                                        <Image url="@../img/left.png" />
+                                    </image>
+                                </ImageView>
+                        <ImageView fx:id="filterRefresh" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../img/refresh.png" />
+                           </image>
+                           <styleClass>
+                              <String fx:value="icon-button" />
+                              <String fx:value="clickable" />
+                           </styleClass>
+                        </ImageView>
+                            </children>
+                        </StackPane>
+                        <GridPane prefWidth="175.0" vgap="15.0" VBox.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" percentHeight="33.33" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="33.33" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <VBox fx:id="dateBase" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="section" GridPane.rowIndex="2">
+                                    <children>
+                                        <ImageView fx:id="bigDatesI" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/calendar.png" />
+                                            </image>
+                                        </ImageView>
+                                        <VBox prefHeight="200.0" prefWidth="100.0">
+                                            <children>
+                                                <Pane VBox.vgrow="ALWAYS" />
+                                                <DatePicker fx:id="dateIni" maxWidth="1.7976931348623157E308" promptText="Desde" VBox.vgrow="ALWAYS" />
+                                                <Pane VBox.vgrow="ALWAYS" />
+                                                <DatePicker fx:id="dateFin" maxWidth="1.7976931348623157E308" promptText="Hasta" />
+                                                <Pane VBox.vgrow="ALWAYS" />
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets top="5.0" />
+                                            </VBox.margin>
+                                        </VBox>
+                                    </children>
+                                    <GridPane.margin>
+                                        <Insets />
+                                    </GridPane.margin>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                </VBox>
+                                <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="section" GridPane.rowIndex="1">
+                                    <GridPane.margin>
+                                        <Insets />
+                                    </GridPane.margin>
+                                    <children>
+                                        <ImageView fx:id="bigResultsI" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/search.png" />
+                                            </image>
+                                        </ImageView>
+                                        <VBox prefHeight="200.0" prefWidth="100.0">
+                                            <children>
+                                                <CheckBox fx:id="resultsWin" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Ganadas" VBox.vgrow="ALWAYS">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></CheckBox>
+                                                <CheckBox fx:id="resultsLose" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Perdidas" VBox.vgrow="ALWAYS">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></CheckBox>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                </VBox>
+                                <VBox fx:id="playersBase" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="section">
+                                    <children>
+                                        <ImageView fx:id="bigPlayersI" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/search.png" />
+                                 </image>
+                                        </ImageView>
+                                        <VBox prefHeight="200.0" prefWidth="100.0">
+                                            <children>
+                                                <CheckBox fx:id="playersCB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Todos los usuarios" VBox.vgrow="ALWAYS">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font></CheckBox>
+                                                <AutoCompleteTextField fx:id="playersATF" autoValidate="true" errorMsg="%no_user_found" maxHeight="1.7976931348623157E308" promptText="%search_input" textSize="14.0" VBox.vgrow="ALWAYS" />
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets top="15.0" />
+                                            </VBox.margin>
+                                        </VBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </GridPane>
+                        <Line endX="75.0" opacity="0.5" startX="-75.0" stroke="GREY">
+                            <VBox.margin>
+                                <Insets bottom="15.0" top="15.0" />
+                            </VBox.margin>
+                        </Line>
+                        <StackPane>
+                            <children>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#backAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                                    <image>
+                                        <Image url="@../img/down.png" />
+                                    </image>
+                                    <styleClass>
+                                        <String fx:value="icon-button" />
+                                        <String fx:value="clickable" />
+                                    </styleClass>
+                                </ImageView>
+                                <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#rankAction" pickOnBounds="true" preserveRatio="true" styleClass="clickable" StackPane.alignment="CENTER_RIGHT">
+                                    <image>
+                                        <Image url="@../img/ranks.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </StackPane>
+                    </children>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </StackPane>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </HBox.margin>
+         <children>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <items>
+                  <HBox prefHeight="100.0" prefWidth="200.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" />
+               </items>
+            </SplitPane>
+         </children>
+        </HBox>
+    </children>
+</HBox>

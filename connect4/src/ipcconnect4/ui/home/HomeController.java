@@ -313,7 +313,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void ranksAction(MouseEvent event) {
-        Main.goToRanks();
+        Main.goToRanks(true);
     }
 
 }

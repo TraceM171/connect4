@@ -105,6 +105,14 @@ public class TextFieldValid extends StackPane {
         valid.setValue((validator != null  && validator.apply(tf().getText()))
                 || tf().getText().isEmpty());
     }
+    
+    public double getTextSize() {
+        return tf().getFont().getSize();
+    }
+    
+    public void setTextSize(double size) {
+        tf().setFont(new Font(size));
+    }
 
     public final  TextField tf() {
         return textField;

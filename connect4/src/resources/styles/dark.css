@@ -11,6 +11,10 @@
     -fx-shadow-no: dropshadow(three-pass-box, transparent, 0, 0, 0, 0);
     -fx-shadow-big: dropshadow(three-pass-box, grey, 15, 0, 3, 3);
     -fx-shadow-bigger: dropshadow(three-pass-box, -fx-black0, 27, 0, 7, 7);
+    -fx-color-green: #62c054;
+    -fx-color-green-light: derive(-fx-color-green, 25%);
+    -fx-color-red: #d54d4d;
+    -fx-color-red-light: derive(-fx-color-red, 25%);
     -fx-color-accent: #2f8eaa;
     -fx-color-accent-light: derive(-fx-color-accent, 50%);
     -fx-color-accent-dark: #43608a;
@@ -49,6 +53,9 @@
 .section {
     -fx-background-color: -fx-color-accent;
     -fx-background-radius: 10;
+}
+.section:error {
+    -fx-background-color: -fx-color-red;
 }
 
 

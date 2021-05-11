@@ -137,7 +137,7 @@
                           <children>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                   <image>
-                                      <Image url="@../img/user.png" />
+                                      <Image url="@../img/calendar.png" />
                                   </image>
                               </ImageView>
                               <DatePicker fx:id="datePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="1000.0">

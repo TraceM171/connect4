@@ -107,7 +107,7 @@ public class AuthenticateController implements Initializable {
 
     @FXML
     private void ranksAction(MouseEvent event) {
-        Main.goToRanks();
+        Main.goToRanks(true);
     }
 
     @FXML
