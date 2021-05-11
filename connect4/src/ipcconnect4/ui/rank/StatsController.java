@@ -111,6 +111,8 @@ public class StatsController implements Initializable {
                 playersBase.pseudoClassStateChanged(PseudoClass.getPseudoClass("error"), false);
                 playerValid.set(true);
                 playersATF.valid.set(true);
+                resultsWin.setSelected(true);
+                resultsLose.setSelected(true);
             } else {
                 playersATF.validate();
             }
@@ -123,8 +125,8 @@ public class StatsController implements Initializable {
         playersCB.selectedProperty().addListener(changed);
         playersATF.tf().textProperty().addListener(changed);
         // Result section
-        resultsWin.disableProperty().bind(resultsLose.selectedProperty().not());
-        resultsLose.disableProperty().bind(resultsWin.selectedProperty().not());
+        resultsWin.disableProperty().bind(resultsLose.selectedProperty().not().or(playersCB.selectedProperty()));
+        resultsLose.disableProperty().bind(resultsWin.selectedProperty().not().or(playersCB.selectedProperty()));
         bigResultsI.imageProperty().bind(Bindings
                 .when(resultsWin.selectedProperty())
                 .then(Bindings
