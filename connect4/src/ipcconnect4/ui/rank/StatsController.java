@@ -4,36 +4,60 @@ import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
 import ipcconnect4.util.Animation;
 import ipcconnect4.view.AutoCompleteTextField;
+import ipcconnect4.view.AutoResizeTableView;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.Chart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.Connect4;
+import model.DayRank;
 import model.Player;
+import model.Round;
 
 public class StatsController implements Initializable {
 
     private double bigSize;
+    private final BooleanProperty needRefresh = new SimpleBooleanProperty(false);
     private final BooleanProperty filterChanged = new SimpleBooleanProperty(false);
     private final BooleanProperty playerValid = new SimpleBooleanProperty(true);
     private final BooleanProperty dateValid = new SimpleBooleanProperty(true);
+    private final ObservableList<Round> filteredRounds = FXCollections.observableArrayList();
 
     @FXML
     private Pane smallRoot;
@@ -74,11 +98,27 @@ public class StatsController implements Initializable {
     @FXML
     private DatePicker dateFin;
     @FXML
-    private ImageView filterRefresh;
+    private ImageView refreshIcon;
+    @FXML
+    private AutoResizeTableView<Round> statsTable;
+    @FXML
+    private TableColumn<Round, String> dateCol;
+    @FXML
+    private TableColumn<Round, String> timeCol;
+    @FXML
+    private TableColumn<Round, String> winnerCol;
+    @FXML
+    private TableColumn<Round, String> loserCol;
+    @FXML
+    private VBox graphicsRoot;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        needRefresh.bind(filterChanged.and(playerValid).and(dateValid));
         initDrawer();
+        initStatsTable();
+        refreshData();
+        Platform.runLater(() -> statsTable.requestFocus());
     }
 
     private void initDrawer() {
@@ -99,7 +139,7 @@ public class StatsController implements Initializable {
                         .collect(Collectors.toList())
         );
         playersATF.setValidator(t -> IntStream.range(0, getDB().getConnect4Ranking().size())
-                .filter(i -> playersATF.tf().getText().equals(getDB().getConnect4Ranking().get(i).getNickName()))
+                .filter(i -> t.equals(getDB().getConnect4Ranking().get(i).getNickName()))
                 .findFirst().isPresent());
         playersATF.valid.addListener((observable, oldValue, newValue) -> {
             playersBase.pseudoClassStateChanged(PseudoClass.getPseudoClass("error"), !newValue);
@@ -174,9 +214,169 @@ public class StatsController implements Initializable {
         dateIni.valueProperty().addListener(changed);
         dateFin.valueProperty().addListener(changed);
         // Refresh button
-        filterRefresh.visibleProperty().bind(
-                filterChanged.and(playerValid).and(dateValid)
+        needRefresh.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                new Animation(Animation.SLOW).appearingSpin(refreshIcon);
+                refreshData();
+            }
+        });
+    }
+
+    private void initStatsTable() {
+        dateCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getLocalDate().toString()));
+        timeCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getTimeStamp().toString()));
+        winnerCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getWinner().getNickName()));
+        loserCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getLoser().getNickName()));
+        statsTable.setItems(filteredRounds);
+    }
+
+    private void refreshData() {
+        refreshTable();
+        refreshGraphics();
+        filterChanged.setValue(false);
+    }
+
+    private void refreshTable() {
+        // No filters
+        TreeMap<LocalDate, List<Round>> roundsMap = getDB().getRoundsPerDay();
+        // DATE filter
+        SortedMap<LocalDate, List<Round>> fRoundsMap = roundsMap.subMap(
+                dateIni.getValue(),
+                true,
+                dateFin.getValue(),
+                true
         );
+        // Map to list of Rounds
+        List<Round> fRounds = concatenate((List<Round>[]) fRoundsMap.values().toArray(new List[1]));
+        // PLAYER && RESULT filter
+        if (!playersCB.isSelected()) {
+            fRounds = fRounds.stream().filter((Round round)
+                    -> (round.getWinner().getNickName().equals(playersATF.tf().getText()) && resultsWin.isSelected())
+                    || (round.getLoser().getNickName().equals(playersATF.tf().getText()) && resultsLose.isSelected())
+            ).collect(Collectors.toList());
+        }
+        // Update table
+        Collections.reverse(fRounds);
+        filteredRounds.setAll(fRounds);
+    }
+
+    private void refreshGraphics() {
+        clearGraphics();
+        if (playersCB.isSelected()) {
+            addGraphic(totalGames());
+        } else if (resultsWin.isSelected() && resultsLose.isSelected()) {
+            addGraphic(playerWinLose(), playerSocial());
+        }
+    }
+
+    private LineChart<String, Number> totalGames() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Days");
+        yAxis.setLabel("Rounds");
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setTickUnit(1);
+        yAxis.setMinorTickVisible(false);
+
+        final int[] biggest = {0};
+        ObservableList<XYChart.Data<String, Integer>> cVals = FXCollections.observableArrayList();
+        getDB().getRoundCountsPerDay().subMap(
+                dateIni.getValue(),
+                true,
+                dateFin.getValue(),
+                true
+        ).forEach((LocalDate day, Integer rounds) -> {
+            cVals.add(new XYChart.Data(day.toString(), rounds));
+            biggest[0] = Math.max(rounds, biggest[0]);
+        });
+        yAxis.setUpperBound(biggest[0] + 2);
+
+        XYChart.Series serie1 = new XYChart.Series(cVals);
+        LineChart<String, Number> chart = new LineChart(xAxis, yAxis);
+        chart.setTitle("Rounds per day");
+        chart.setLegendVisible(false);
+        chart.getData().add(serie1);
+        return chart;
+    }
+
+    private StackedBarChart<String, Number> playerWinLose() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Days");
+        yAxis.setLabel("Rounds");
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setTickUnit(1);
+        yAxis.setMinorTickVisible(false);
+
+        final int[] biggest = {0};
+        ObservableList<XYChart.Data<String, Integer>> cValsWin = FXCollections.observableArrayList();
+        ObservableList<XYChart.Data<String, Integer>> cValsLose = FXCollections.observableArrayList();
+        getDB().getDayRanksPlayer(getDB().getPlayer(playersATF.tf().getText())).subMap(
+                dateIni.getValue(),
+                true,
+                dateFin.getValue(),
+                true
+        ).forEach((LocalDate day, DayRank dr) -> {
+            cValsWin.add(new XYChart.Data(day.toString(), dr.getWinnedGames()));
+            cValsLose.add(new XYChart.Data(day.toString(), dr.getLostGames()));
+            int total = dr.getWinnedGames() + dr.getLostGames();
+            biggest[0] = Math.max(total, biggest[0]);
+        });
+        yAxis.setUpperBound(biggest[0] + 2);
+
+        XYChart.Series serieW = new XYChart.Series(cValsWin);
+        serieW.setName("Wins");
+        XYChart.Series serieL = new XYChart.Series(cValsLose);
+        serieL.setName("Losses");
+        StackedBarChart<String, Number> chart = new StackedBarChart(xAxis, yAxis);
+        chart.setTitle("Player Wins/Losses per day");
+        chart.getData().addAll(serieW, serieL);
+        return chart;
+    }
+
+    private BarChart<String, Number> playerSocial() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Days");
+        yAxis.setLabel("Opponents");
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setTickUnit(1);
+        yAxis.setMinorTickVisible(false);
+
+        final int[] biggest = {0};
+        ObservableList<XYChart.Data<String, Integer>> cVals = FXCollections.observableArrayList();
+        getDB().getDayRanksPlayer(getDB().getPlayer(playersATF.tf().getText())).subMap(
+                dateIni.getValue(),
+                true,
+                dateFin.getValue(),
+                true
+        ).forEach((LocalDate day, DayRank dr) -> {
+            cVals.add(new XYChart.Data(day.toString(), dr.getOponents()));
+            biggest[0] = Math.max(dr.getOponents(), biggest[0]);
+        });
+        yAxis.setUpperBound(biggest[0] + 2);
+
+        XYChart.Series serie1 = new XYChart.Series(cVals);
+        serie1.setName("Opponents");
+        BarChart<String, Number> chart = new BarChart(xAxis, yAxis);
+        chart.setTitle("Player Opponents per day");
+        chart.setLegendVisible(false);
+        chart.getData().add(serie1);
+        return chart;
+    }
+
+    private void addGraphic(Chart... graphics) {
+        graphicsRoot.getChildren().addAll(graphics);
+        for (Chart g : graphics) {
+            VBox.setVgrow(g, Priority.ALWAYS);
+        }
+    }
+
+    private void clearGraphics() {
+        graphicsRoot.getChildren().clear();
     }
 
     private Connect4 getDB() {
@@ -187,8 +387,10 @@ public class StatsController implements Initializable {
         }
     }
 
-    private void refresh() {
-
+    private static <T> List<T> concatenate(List<T>... lists) {
+        return Stream.of(lists)
+                .flatMap(x -> x.stream())
+                .collect(Collectors.toList());
     }
 
     @FXML

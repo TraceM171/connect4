@@ -243,7 +243,7 @@ public class Main extends Application {
             Connect4.getSingletonConnect4();
             // TEST CODE BEGINS
             if (Connect4.getSingletonConnect4().getPlayer("nickName1") == null) {
-                Connect4.getSingletonConnect4().createDemoData(20, 3, 3);
+                Connect4.getSingletonConnect4().createDemoData(20, 3, 20);
             }
             // TEST CODE ENDS
         } catch (Connect4DAOException e) {

@@ -86,6 +86,22 @@ public class Animation {
         Timeline timeline = new Timeline(keyFrame);
         timeline.play();
     }
+    
+    public void appearingSpin(Node node) {
+        fadeIn(node);
+        spin(node);
+        fadeOut(node);
+    }
+    
+    public void spin(Node node) {
+        KeyValue keyValue = new KeyValue(node.rotateProperty(), 360, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(DURATION, keyValue);
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.setOnFinished(evt -> {
+            node.setRotate(0);
+        });
+        timeline.play();
+    }
 
     /**
      * Transition between two nodes using fade animation

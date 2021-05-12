@@ -126,21 +126,17 @@
                             <children>
                                 <Label styleClass="text-def" text="Filter" StackPane.alignment="CENTER_LEFT">
                            <font>
-                              <Font name="System Italic" size="24.0" />
+                              <Font name="System Italic" size="28.0" />
                            </font></Label>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#hideFilterAction" pickOnBounds="true" preserveRatio="true" styleClass="clickable" StackPane.alignment="CENTER_RIGHT">
                                     <image>
                                         <Image url="@../img/left.png" />
                                     </image>
                                 </ImageView>
-                        <ImageView fx:id="filterRefresh" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                        <ImageView fx:id="refreshIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER">
                            <image>
                               <Image url="@../img/refresh.png" />
                            </image>
-                           <styleClass>
-                              <String fx:value="icon-button" />
-                              <String fx:value="clickable" />
-                           </styleClass>
                         </ImageView>
                             </children>
                         </StackPane>
@@ -269,9 +265,9 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </HBox.margin>
          <children>
-            <SplitPane dividerPositions="0.7427184466019418" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <items>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox minHeight="0.0" minWidth="0.0">
                      <children>
                         <AutoResizeTableView fx:id="statsTable" sizes="20,20,20,20" HBox.hgrow="ALWAYS">
                            <HBox.margin>
@@ -290,7 +286,7 @@
                         </AutoResizeTableView>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" />
+                  <VBox fx:id="graphicsRoot" alignment="CENTER" minHeight="0.0" minWidth="0.0" spacing="15.0" />
                </items>
             </SplitPane>
          </children>
