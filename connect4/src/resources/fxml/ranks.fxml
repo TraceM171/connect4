@@ -7,6 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,6 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.rank.RanksController">
     <top>
@@ -94,15 +96,25 @@
                             </children>
                         </GridPane>
                         <AutoResizeTableView fx:id="ranksTable" prefHeight="200.0" prefWidth="200.0" sizes="10, 20, 50, 20" styleClass="ranks-table" VBox.vgrow="ALWAYS">
+                            <placeholder>
+                                <Label text="%empty_table">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                            </placeholder>
                             <columns>
-                                <TableColumn fx:id="tcPos" editable="false" maxWidth="1.7976931348623157E308" prefWidth="50.0" style="-fx-alignment: center; -fx-row-valignment: center;" text="#" />
-                                <TableColumn fx:id="tcAvatar" editable="false" maxWidth="1.7976931348623157E308" prefWidth="75.0" sortable="false" style="-fx-alignment: center-left; -fx-row-valignment: center;" text="%avatar" />
-                                <TableColumn fx:id="tcNickName" editable="false" maxWidth="1.7976931348623157E308" prefWidth="160.0" style="-fx-alignment: center-left; -fx-row-valignment: center;" text="%nickname" />
-                                <TableColumn fx:id="tcPoints" editable="false" maxWidth="1.7976931348623157E308" prefWidth="74.0" sortable="false" style="-fx-alignment: center; -fx-row-valignment: center;" text="%points_title" />
+                                <TableColumn fx:id="tcPos" editable="false" style="-fx-alignment: center; -fx-row-valignment: center;" text="#" />
+                                <TableColumn fx:id="tcAvatar" editable="false" sortable="false" style="-fx-alignment: center; -fx-row-valignment: center;" text="%avatar" />
+                                <TableColumn fx:id="tcNickName" editable="false" style="-fx-alignment: center-left; -fx-row-valignment: center;" text="%nickname" />
+                                <TableColumn fx:id="tcPoints" editable="false" sortable="false" style="-fx-alignment: center; -fx-row-valignment: center;" text="%points_title" />
                             </columns>
                             <VBox.margin>
-                                <Insets left="13.0" />
+                                <Insets left="10.0" right="10.0" />
                             </VBox.margin>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                         </AutoResizeTableView>
                     </children>
                     <padding>

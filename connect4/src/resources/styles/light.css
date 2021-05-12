@@ -200,18 +200,18 @@
     -fx-background-color: transparent;
 }
 .ranks-table .column-header-background {
-    -fx-background-color: -fx-color-accent2-dark;
-    -fx-background-radius: 25px 25px 0px 0px;
-    -fx-background-insets: 0 11px 0 0;
-    -fx-padding: 5px 0 5px 0;
+    -fx-background-color: transparent;
 }
-.ranks-table .column-header-background .text {
+.ranks-table .column-header .arrow {
+    -fx-background-color: whitesmoke;
+}
+.ranks-table .column-header .text {
     -fx-fill: whitesmoke;
-    -fx-font-size: 16px
+    -fx-font-size: 20px;
 }
 .ranks-table .column-header {
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
+    -fx-background-color: -fx-color-accent2-dark;
+    -fx-padding: 10 0 10 0;
 }
 .ranks-table .table-cell {
     -fx-border-color: transparent;
@@ -237,8 +237,8 @@
 .ranks-table .virtual-flow .scroll-bar:horizontal .track-background {
     -fx-background-color: transparent;
 }
-.table-view .virtual-flow .scroll-bar .increment-button,
-.table-view .virtual-flow .scroll-bar .decrement-button {
+.ranks-table .virtual-flow .scroll-bar .increment-button,
+.ranks-table .virtual-flow .scroll-bar .decrement-button {
     -fx-opacity: 0;
     -fx-padding: 2;
 }
@@ -267,8 +267,11 @@
     -fx-fill: black;
     -fx-font-size: 18px;
 }
-.ranks-table .table-column {
-    -fx-background-radius: 0px 0px 25px 25px;
+
+
+/* Stats TableView style */
+.stats-table .placeholder {
+    -fx-background-color: -fx-color-accent2;
 }
 
 

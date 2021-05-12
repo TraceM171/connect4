@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import ipcconnect4.view.AutoCompleteTextField?>
+<?import ipcconnect4.view.AutoResizeTableView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -267,9 +269,27 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </HBox.margin>
          <children>
-            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <SplitPane dividerPositions="0.7427184466019418" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <items>
-                  <HBox prefHeight="100.0" prefWidth="200.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <AutoResizeTableView sizes="20,20,20,20" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="date" />
+                              <TableColumn prefWidth="75.0" text="time" />
+                              <TableColumn prefWidth="75.0" text="winner" />
+                              <TableColumn prefWidth="75.0" text="looser" />
+                           </columns>
+                           <styleClass>
+                              <String fx:value="ranks-table" />
+                              <String fx:value="stats-table" />
+                           </styleClass>
+                        </AutoResizeTableView>
+                     </children>
+                  </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" />
                </items>
             </SplitPane>

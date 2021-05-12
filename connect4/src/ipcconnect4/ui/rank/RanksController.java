@@ -115,7 +115,7 @@ public class RanksController implements Initializable {
         });
         tcNickName.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getNickName()));
         tcPoints.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getPoints()));
-        ranksTable.setItems(getRanksData());
+        ranksTable.getItems().addAll(getRanksData());
 
         // Init seacrch funtion
         searchUserAC.getEntries().addAll(
@@ -143,7 +143,7 @@ public class RanksController implements Initializable {
             pointsFirst.setText(getRanksData().get(0).getPoints() + "");
         }
         
-        Platform.runLater(() -> avatarFirst.requestFocus());
+        Platform.runLater(() -> ranksTable.requestFocus());
     }
 
     @FXML
