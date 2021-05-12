@@ -140,7 +140,7 @@
                                       <Image url="@../img/calendar.png" />
                                   </image>
                               </ImageView>
-                              <DatePicker fx:id="datePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="1000.0">
+                              <DatePicker fx:id="datePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="1000.0" promptText="%birthday_input">
                                   <HBox.margin>
                                       <Insets left="10.0" />
                                   </HBox.margin>

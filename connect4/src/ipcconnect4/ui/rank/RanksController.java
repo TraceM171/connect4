@@ -125,7 +125,7 @@ public class RanksController implements Initializable {
         );
         searchUserAC.setValidator(t -> {
             OptionalInt indexOpt = IntStream.range(0, getRanksData().size())
-                    .filter(i -> searchUserAC.tf().getText().equals(ranksTable.getItems().get(i).getNickName()))
+                    .filter(i -> t.equals(ranksTable.getItems().get(i).getNickName()))
                     .findFirst();
             if (indexOpt.isPresent()) {
                 ranksTable.getSelectionModel().select(indexOpt.getAsInt());

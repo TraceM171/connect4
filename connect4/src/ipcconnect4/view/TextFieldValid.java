@@ -23,6 +23,7 @@ public class TextFieldValid extends StackPane {
     public final BooleanProperty valid = new SimpleBooleanProperty(false);
     private Function<String, Boolean> validator;
     private boolean autoValidate = false;
+    private boolean emptyIsValid = true;
     private Tooltip tt = new Tooltip();
 
     @FXML
@@ -70,6 +71,7 @@ public class TextFieldValid extends StackPane {
             pseudoClassStateChanged(PseudoClass.getPseudoClass("error"), !newValue);
         });
 
+        valid.setValue(!valid.get());
         validate();
     }
 
@@ -102,19 +104,30 @@ public class TextFieldValid extends StackPane {
     }
 
     public void validate() {
-        valid.setValue((validator != null  && validator.apply(tf().getText()))
-                || tf().getText().isEmpty());
+        if (tf().getText().isEmpty()) {
+            valid.setValue(emptyIsValid);
+        } else {
+            valid.setValue(validator == null || validator.apply(tf().getText()));
+        }
     }
-    
+
+    public boolean getEmptyIsValid() {
+        return emptyIsValid;
+    }
+
+    public void setEmptyIsValid(boolean valid) {
+        emptyIsValid = valid;
+    }
+
     public double getTextSize() {
         return tf().getFont().getSize();
     }
-    
+
     public void setTextSize(double size) {
         tf().setFont(new Font(size));
     }
 
-    public final  TextField tf() {
+    public final TextField tf() {
         return textField;
     }
 
