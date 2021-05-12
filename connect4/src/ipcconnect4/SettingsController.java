@@ -11,9 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 public class SettingsController implements Initializable {
 
     @FXML
-    private Spinner<String> langSpinner;
+    private ChoiceBox<String> langSpinner;
     @FXML
     private Label saveText;
     @FXML
@@ -48,7 +48,7 @@ public class SettingsController implements Initializable {
         saveIV.disableProperty().bind(
                 Bindings.equal(
                         Bindings.<Locale>createObjectBinding(()
-                                -> langs.getFirstKey(langSpinner.getValue()),
+                                -> langs.getFirstKey(langSpinner.getSelectionModel().getSelectedItem()),
                                 langSpinner.valueProperty()
                         ), Locale.getDefault()
                 ).and(
@@ -93,12 +93,8 @@ public class SettingsController implements Initializable {
     }
 
     private void initLangsSpinner() {
-        SpinnerValueFactory<String> valueFactory
-                = new SpinnerValueFactory.ListSpinnerValueFactory<>(
-                        FXCollections.observableArrayList(langs.values())
-                );
-        valueFactory.setValue(langs.get(Locale.getDefault()));
-        langSpinner.setValueFactory(valueFactory);
+        langSpinner.getItems().setAll(langs.values());
+        langSpinner.getSelectionModel().select(langs.get(Locale.getDefault()));
     }
 
     private void initDarkMode() {

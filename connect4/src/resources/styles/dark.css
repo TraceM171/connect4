@@ -126,6 +126,23 @@
 }
 
 
+/* ChoiceBox style */
+.choice-box {
+    -fx-background-color: transparent, -fx-black2;
+    -fx-background-radius: 5 5 5 5;
+    -fx-background-insets: 0, 1.5 1.5 1.5 1.5;
+    -fx-padding: 2;
+}
+.choice-box:hover, .choice-box:focused {
+    -fx-background-color: -fx-color-accent-dark, -fx-black2;
+}
+.choice-box .arrow {
+    -fx-color: -fx-black2;
+    -fx-background-radius: 0 5 0 0;
+}
+
+
+
 /* labels used for players nicknames */
 .label-nickname {
     -fx-background-radius: 15;
