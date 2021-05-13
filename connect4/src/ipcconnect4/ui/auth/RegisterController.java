@@ -155,7 +155,7 @@ public class RegisterController {
                     passTextMask.tf().getText(),
                     profPic,
                     datePicker.getValue(),
-                    0
+                    editPlayer == null ? 0 : editPlayer.getPoints()
             ));
 
         } catch (Connect4DAOException ex) {

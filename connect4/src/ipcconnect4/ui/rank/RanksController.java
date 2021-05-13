@@ -54,41 +54,40 @@ public class RanksController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Init TableView
         tcPos.setCellValueFactory(cell -> new SimpleObjectProperty<>(getRanksData().indexOf(cell.getValue()) + 1));
-        tcPos.setCellFactory(cell -> {
-            return new TableCell<Player, Integer>() {
-                private final ImageView posIcon = new ImageView();
+        tcPos.setCellFactory(cell
+                -> new TableCell<Player, Integer>() {
+            private final ImageView posIcon = new ImageView();
 
-                @Override
-                protected void updateItem(Integer item, boolean empty) {
-                    super.updateItem(item, empty);
-                    posIcon.setFitHeight(30);
-                    posIcon.setFitWidth(30);
-                    if (item == null || empty) {
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        Image icon = null;
-                        String pos = null;
-                        switch (item) {
-                            case 1:
-                                icon = new Image("/resources/img/first.png");
-                                break;
-                            case 2:
-                                icon = new Image("/resources/img/seccond.png");
-                                break;
-                            case 3:
-                                icon = new Image("/resources/img/third.png");
-                                break;
-                            default:
-                                pos = item.toString();
-                                break;
-                        }
-                        setText(pos);
-                        posIcon.setImage(icon);
-                        setGraphic(icon == null ? null : posIcon);
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                posIcon.setFitHeight(30);
+                posIcon.setFitWidth(30);
+                if (item == null || empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Image icon = null;
+                    String pos = null;
+                    switch (item) {
+                        case 1:
+                            icon = new Image("/resources/img/first.png");
+                            break;
+                        case 2:
+                            icon = new Image("/resources/img/seccond.png");
+                            break;
+                        case 3:
+                            icon = new Image("/resources/img/third.png");
+                            break;
+                        default:
+                            pos = item.toString();
+                            break;
                     }
+                    setText(pos);
+                    posIcon.setImage(icon);
+                    setGraphic(icon == null ? null : posIcon);
                 }
-            };
+            }
         });
         ranksTable.setRowFactory(tv -> {
             TableRow<Player> row = new TableRow<>();
@@ -142,7 +141,7 @@ public class RanksController implements Initializable {
             nicknameFirst.setText(getRanksData().get(0).getNickName());
             pointsFirst.setText(getRanksData().get(0).getPoints() + "");
         }
-        
+
         Platform.runLater(() -> ranksTable.requestFocus());
     }
 

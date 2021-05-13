@@ -128,6 +128,7 @@
     -fx-background-radius: 5 5 5 5;
     -fx-background-insets: 0, 1.5 1.5 1.5 1.5;
     -fx-padding: 2;
+    -fx-font-size: 14;
 }
 .choice-box:hover, .choice-box:focused {
     -fx-background-color: -fx-color-accent-dark, -fx-background;
@@ -135,6 +136,59 @@
 .choice-box .arrow {
     -fx-color: -fx-base;
     -fx-background-radius: 0 5 0 0;
+}
+
+
+/* DatePicker style */
+.date-picker {
+    -fx-background-color: transparent, -fx-base;
+    -fx-background-radius: 5 5 5 5;
+    -fx-background-insets: 0, 1.5 1.5 1.5 1.5;
+    -fx-padding: 2;
+    -fx-font-size: 14;
+}
+.date-picker:hover, .date-picker:focused {
+    -fx-background-color: -fx-color-accent-dark, -fx-background;
+}
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+.date-picker > .text-field {
+    -fx-background-color: -fx-color-accent-dark, -fx-base;
+    -fx-background-radius: 5 0 0 5;
+    -fx-background-insets: 0, 0 1 0 0;
+}
+.date-picker > .text-field:hover, .text-field:focused {
+    -fx-background-color: -fx-color-accent-dark, -fx-base;
+}
+
+
+/* Slider style */
+.slider .track {
+    -fx-background-color: -fx-base;
+}
+.slider .thumb {
+    -fx-background-color: -fx-color-accent, -fx-base, -fx-base;
+}
+.slider:hover .thumb, .slider:focused .thumb {
+    -fx-background-color: -fx-color-accent-dark, -fx-base, -fx-base;
+}
+
+
+/* CheckBox Style */
+.check-box .box {
+-fx-background-color: white;
+-fx-background-radius: 3px;
+-fx-background-insets: 1 1 2 1;
+-fx-border-color: -fx-color-accent;
+-fx-border-radius: 3px;
+-fx-border-width: 2px;
+}
+.check-box:selected .mark {
+-fx-background-color: -fx-color-accent-darker;
+}
+.check-box:hover .box, .check-box:focused .box {
+-fx-border-color: -fx-color-accent-dark;
 }
 
 
@@ -247,34 +301,22 @@
 }
 .ranks-table .virtual-flow .scroll-bar:vertical,
 .ranks-table .virtual-flow .scroll-bar:vertical .track,
-.ranks-table .virtual-flow .scroll-bar:vertical .track-background,
-.ranks-table .virtual-flow .scroll-bar:horizontal,
-.ranks-table .virtual-flow .scroll-bar:horizontal .track,
-.ranks-table .virtual-flow .scroll-bar:horizontal .track-background {
+.ranks-table .virtual-flow .scroll-bar:vertical .track-background {
     -fx-background-color: transparent;
 }
-.ranks-table .virtual-flow .scroll-bar .increment-button,
-.ranks-table .virtual-flow .scroll-bar .decrement-button {
+.ranks-table .virtual-flow .scroll-bar:vertical .increment-button,
+.ranks-table .virtual-flow .scroll-bar:vertical .decrement-button {
     -fx-opacity: 0;
     -fx-padding: 2;
 }
 .ranks-table .virtual-flow .scroll-bar:vertical .thumb {
     -fx-background-color:  -fx-color-accent2-dark;
 }
-.ranks-table *.scroll-bar:horizontal *.increment-button,
-.ranks-table *.scroll-bar:horizontal *.decrement-button {
-    -fx-background-color: null;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
+.ranks-table .scroll-bar:horizontal .increment-arrow,
+.ranks-table .scroll-bar:horizontal .decrement-arrow,
+.ranks-table .scroll-bar:horizontal .increment-button,
+.ranks-table .scroll-bar:horizontal .decrement-button {
     -fx-padding: 0;
-}
-.ranks-table *.scroll-bar:horizontal *.increment-arrow, 
-.ranks-table *.scroll-bar:horizontal *.decrement-arrow {
-    -fx-background-color: null;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-shape: null;
 }
 .ranks-table .table-row-cell:selected {
     -fx-background-color: -fx-color-accent-light;
@@ -288,6 +330,21 @@
 /* Stats TableView style */
 .stats-table .placeholder {
     -fx-background-color: -fx-color-accent2;
+}
+.stats-table .column-header .text {
+    -fx-font-size: 18px;
+}
+.stats-table .table-row-cell .text {
+    -fx-font-size: 16px;
+}
+
+
+/* Drawer style */
+.drawer {
+    -fx-background-color: -fx-base;
+}
+.drawer-base {
+    -fx-effect: -fx-shadow;
 }
 
 

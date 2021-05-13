@@ -23,9 +23,9 @@
 
 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="900.0" styleClass="root" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipcconnect4.ui.rank.StatsController">
     <children>
-        <StackPane fx:id="filterRoot" maxHeight="1.7976931348623157E308" style="-fx-effect: -fx-shadow;">
+        <StackPane fx:id="filterRoot" maxHeight="1.7976931348623157E308" styleClass="drawer-base">
             <children>
-                <VBox fx:id="smallRoot" alignment="CENTER" prefWidth="50.0" styleClass="root">
+                <VBox fx:id="smallRoot" alignment="CENTER" prefWidth="50.0" styleClass="drawer">
                     <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#showFilterAction" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
                             <image>
@@ -45,45 +45,45 @@
                                 <RowConstraints percentHeight="33.33" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                        <HBox fx:id="smallDateBase" alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                           <children>
-                                      <ImageView fx:id="smallDatesI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/search.png" />
-                                 </image>
-                                      </ImageView>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" top="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <children>
-                                      <ImageView fx:id="smallResultsI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/search.png" />
-                                 </image>
-                                      </ImageView>
-                           </children>
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                           <padding>
-                              <Insets bottom="10.0" top="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox fx:id="smallPlayersBase" alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
-                           <children>
-                                      <ImageView fx:id="smallPlayersI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/search.png" />
-                                 </image>
-                                      </ImageView>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" top="10.0" />
-                           </padding>
-                        </HBox>
+                                <HBox fx:id="smallDateBase" alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                    <children>
+                                        <ImageView fx:id="smallDatesI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/search.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" top="10.0" />
+                                    </padding>
+                                </HBox>
+                                <HBox alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <children>
+                                        <ImageView fx:id="smallResultsI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/search.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                    <GridPane.margin>
+                                        <Insets />
+                                    </GridPane.margin>
+                                    <padding>
+                                        <Insets bottom="10.0" top="10.0" />
+                                    </padding>
+                                </HBox>
+                                <HBox fx:id="smallPlayersBase" alignment="CENTER" maxHeight="-Infinity" styleClass="section" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                    <children>
+                                        <ImageView fx:id="smallPlayersI" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../img/search.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" top="10.0" />
+                                    </padding>
+                                </HBox>
                             </children>
                         </GridPane>
                         <Line endX="15.0" opacity="0.5" startX="-15.0" stroke="GREY">
@@ -117,7 +117,7 @@
                         <Insets bottom="5.0" top="5.0" />
                     </padding>
                 </VBox>
-                <VBox fx:id="bigRoot" alignment="CENTER" minWidth="0.0" prefWidth="250.0" styleClass="root">
+                <VBox fx:id="bigRoot" alignment="CENTER" minWidth="0.0" prefWidth="250.0" styleClass="drawer">
                     <children>
                         <StackPane>
                             <VBox.margin>
@@ -125,19 +125,20 @@
                             </VBox.margin>
                             <children>
                                 <Label styleClass="text-def" text="Filter" StackPane.alignment="CENTER_LEFT">
-                           <font>
-                              <Font name="System Italic" size="28.0" />
-                           </font></Label>
+                                    <font>
+                                        <Font name="System Italic" size="28.0" />
+                                    </font>
+                                </Label>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#hideFilterAction" pickOnBounds="true" preserveRatio="true" styleClass="clickable" StackPane.alignment="CENTER_RIGHT">
                                     <image>
                                         <Image url="@../img/left.png" />
                                     </image>
                                 </ImageView>
-                        <ImageView fx:id="refreshIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER">
-                           <image>
-                              <Image url="@../img/refresh.png" />
-                           </image>
-                        </ImageView>
+                                <ImageView fx:id="refreshIcon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER">
+                                    <image>
+                                        <Image url="@../img/refresh.png" />
+                                    </image>
+                                </ImageView>
                             </children>
                         </StackPane>
                         <GridPane prefWidth="175.0" vgap="15.0" VBox.vgrow="ALWAYS">
@@ -160,9 +161,9 @@
                                         <VBox prefHeight="200.0" prefWidth="100.0">
                                             <children>
                                                 <Pane VBox.vgrow="ALWAYS" />
-                                                <DatePicker fx:id="dateIni" maxWidth="1.7976931348623157E308" promptText="Desde" VBox.vgrow="ALWAYS" />
+                                                <DatePicker fx:id="dateIni" maxWidth="1.7976931348623157E308" promptText="%from_date" VBox.vgrow="ALWAYS" />
                                                 <Pane VBox.vgrow="ALWAYS" />
-                                                <DatePicker fx:id="dateFin" maxWidth="1.7976931348623157E308" promptText="Hasta" />
+                                                <DatePicker fx:id="dateFin" maxWidth="1.7976931348623157E308" promptText="%to_date" />
                                                 <Pane VBox.vgrow="ALWAYS" />
                                             </children>
                                             <VBox.margin>
@@ -189,14 +190,16 @@
                                         </ImageView>
                                         <VBox prefHeight="200.0" prefWidth="100.0">
                                             <children>
-                                                <CheckBox fx:id="resultsWin" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Ganadas" VBox.vgrow="ALWAYS">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font></CheckBox>
-                                                <CheckBox fx:id="resultsLose" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Perdidas" VBox.vgrow="ALWAYS">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font></CheckBox>
+                                                <CheckBox fx:id="resultsWin" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="%wins" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </CheckBox>
+                                                <CheckBox fx:id="resultsLose" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="%losses" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </CheckBox>
                                             </children>
                                         </VBox>
                                     </children>
@@ -207,17 +210,22 @@
                                 <VBox fx:id="playersBase" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="section">
                                     <children>
                                         <ImageView fx:id="bigPlayersI" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/search.png" />
-                                 </image>
+                                            <image>
+                                                <Image url="@../img/search.png" />
+                                            </image>
                                         </ImageView>
-                                        <VBox prefHeight="200.0" prefWidth="100.0">
+                                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                                             <children>
-                                                <CheckBox fx:id="playersCB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Todos los usuarios" VBox.vgrow="ALWAYS">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font></CheckBox>
-                                                <AutoCompleteTextField fx:id="playersATF" autoValidate="true" emptyIsValid="false" errorMsg="%no_user_found" maxHeight="1.7976931348623157E308" promptText="%search_input" textSize="14.0" VBox.vgrow="ALWAYS" />
+                                                <CheckBox fx:id="playersCB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="%all_users" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </CheckBox>
+                                                <AutoCompleteTextField fx:id="playersATF" autoValidate="true" emptyIsValid="false" errorMsg="%no_user_found" maxHeight="-Infinity" prefHeight="60.0" promptText="%search_input" textSize="14.0" VBox.vgrow="ALWAYS">
+                                                    <padding>
+                                                        <Insets bottom="5.0" top="5.0" />
+                                                    </padding>
+                                                </AutoCompleteTextField>
                                             </children>
                                             <VBox.margin>
                                                 <Insets top="15.0" />
@@ -261,35 +269,41 @@
             </children>
         </StackPane>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-         <HBox.margin>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </HBox.margin>
-         <children>
-            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <items>
-                  <HBox minHeight="0.0" minWidth="0.0">
-                     <children>
-                        <AutoResizeTableView fx:id="statsTable" sizes="20,20,20,20" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                           <columns>
-                              <TableColumn fx:id="dateCol" prefWidth="75.0" text="date" />
-                              <TableColumn fx:id="timeCol" prefWidth="75.0" text="time" />
-                              <TableColumn fx:id="winnerCol" prefWidth="75.0" text="winner" />
-                              <TableColumn fx:id="loserCol" prefWidth="75.0" text="loser" />
-                           </columns>
-                           <styleClass>
-                              <String fx:value="ranks-table" />
-                              <String fx:value="stats-table" />
-                           </styleClass>
-                        </AutoResizeTableView>
-                     </children>
-                  </HBox>
-                  <VBox fx:id="graphicsRoot" alignment="CENTER" minHeight="0.0" minWidth="0.0" spacing="15.0" />
-               </items>
-            </SplitPane>
-         </children>
+            <HBox.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </HBox.margin>
+            <children>
+                <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                    <items>
+                        <HBox minHeight="0.0" minWidth="0.0">
+                            <children>
+                                <AutoResizeTableView fx:id="statsTable" sizes="20, 30, 30" HBox.hgrow="ALWAYS">
+                                    <placeholder>
+                                        <Label text="%empty_table">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                        </Label>
+                                    </placeholder>
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                    <columns>
+                                        <TableColumn fx:id="dateCol" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: center; -fx-row-valignment: center;" text="%date" />
+                                        <TableColumn fx:id="winnerCol" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: center; -fx-row-valignment: center;" text="%winner" />
+                                        <TableColumn fx:id="loserCol" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: center; -fx-row-valignment: center;" text="%loser" />
+                                    </columns>
+                                    <styleClass>
+                                        <String fx:value="ranks-table" />
+                                        <String fx:value="stats-table" />
+                                    </styleClass>
+                                </AutoResizeTableView>
+                            </children>
+                        </HBox>
+                        <VBox fx:id="graphicsRoot" alignment="CENTER" minHeight="0.0" minWidth="0.0" spacing="15.0" />
+                    </items>
+                </SplitPane>
+            </children>
         </HBox>
     </children>
 </HBox>

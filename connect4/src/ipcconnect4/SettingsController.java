@@ -7,14 +7,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
@@ -89,7 +87,7 @@ public class SettingsController implements Initializable {
         langs = new BiHashMap<>();
         langs.put(new Locale("ca", "ES"), "Català");
         langs.put(new Locale("es", "ES"), "Español");
-        langs.put(new Locale("en", "GB"), "English");
+        langs.put(new Locale("en", "US"), "English");
     }
 
     private void initLangsSpinner() {

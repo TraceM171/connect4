@@ -132,6 +132,7 @@
     -fx-background-radius: 5 5 5 5;
     -fx-background-insets: 0, 1.5 1.5 1.5 1.5;
     -fx-padding: 2;
+    -fx-font-size: 14;
 }
 .choice-box:hover, .choice-box:focused {
     -fx-background-color: -fx-color-accent-dark, -fx-black2;
@@ -141,6 +142,64 @@
     -fx-background-radius: 0 5 0 0;
 }
 
+
+/* DatePicker style */
+.date-picker {
+    -fx-background-color: transparent, -fx-black2;
+    -fx-background-radius: 5 5 5 5;
+    -fx-background-insets: 0, 1.5 1.5 1.5 1.5;
+    -fx-padding: 2;
+    -fx-font-size: 14;
+}
+.date-picker:hover, .date-picker:focused {
+    -fx-background-color: -fx-color-accent-dark, -fx-black2;
+}
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+.date-picker > .text-field {
+    -fx-background-color: -fx-color-accent-dark, -fx-black2;
+    -fx-background-radius: 5 0 0 5;
+    -fx-background-insets: 0, 0 1 0 0;
+}
+.date-picker > .text-field:hover, .text-field:focused {
+    -fx-background-color: -fx-color-accent-dark, -fx-black2;
+}
+
+
+/* Slider style */
+.slider .track {
+    -fx-background-color: -fx-black2;
+}
+.slider .thumb {
+    -fx-background-color: -fx-color-accent, -fx-black2, -fx-black2;
+}
+.slider:hover .thumb, .slider:focused .thumb {
+    -fx-background-color: -fx-color-accent-dark, -fx-black2, -fx-black2;
+}
+
+
+/* CheckBox Style */
+.check-box .box {
+    -fx-background-color: -fx-black2;
+    -fx-background-radius: 3px;
+    -fx-background-insets: 1 1 2 1;
+    -fx-border-color: -fx-color-accent;
+    -fx-border-radius: 3px;
+    -fx-border-width: 2px;
+}
+.check-box:selected .mark {
+    -fx-background-color: whitesmoke;
+}
+.check-box:hover .box, .check-box:focused .box {
+    -fx-border-color: -fx-color-accent-dark;
+}
+
+
+/* SplitPane style */
+.split-pane {
+    -fx-background-color: -fx-black1;
+}
 
 
 /* labels used for players nicknames */
@@ -252,39 +311,22 @@
 }
 .ranks-table .virtual-flow .scroll-bar:vertical,
 .ranks-table .virtual-flow .scroll-bar:vertical .track,
-.ranks-table .virtual-flow .scroll-bar:vertical .track-background,
-.ranks-table .virtual-flow .scroll-bar:horizontal,
-.ranks-table .virtual-flow .scroll-bar:horizontal .track,
-.ranks-table .virtual-flow .scroll-bar:horizontal .track-background {
+.ranks-table .virtual-flow .scroll-bar:vertical .track-background {
     -fx-background-color: transparent;
 }
-.ranks-table .virtual-flow .scroll-bar .increment-button,
-.ranks-table .virtual-flow .scroll-bar .decrement-button {
-    -fx-opacity: 0;
-    -fx-padding: 2;
-}
-.table-view .virtual-flow .scroll-bar .increment-button,
-.table-view .virtual-flow .scroll-bar .decrement-button {
+.ranks-table .virtual-flow .scroll-bar:vertical .increment-button,
+.ranks-table .virtual-flow .scroll-bar:vertical .decrement-button {
     -fx-opacity: 0;
     -fx-padding: 2;
 }
 .ranks-table .virtual-flow .scroll-bar:vertical .thumb {
     -fx-background-color:  -fx-color-accent2-dark;
 }
-.ranks-table *.scroll-bar:horizontal *.increment-button,
-.ranks-table *.scroll-bar:horizontal *.decrement-button {
-    -fx-background-color: null;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
+.ranks-table .scroll-bar:horizontal .increment-arrow,
+.ranks-table .scroll-bar:horizontal .decrement-arrow,
+.ranks-table .scroll-bar:horizontal .increment-button,
+.ranks-table .scroll-bar:horizontal .decrement-button {
     -fx-padding: 0;
-}
-.ranks-table *.scroll-bar:horizontal *.increment-arrow, 
-.ranks-table *.scroll-bar:horizontal *.decrement-arrow {
-    -fx-background-color: null;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-shape: null;
 }
 .ranks-table .table-row-cell:selected {
     -fx-background-color: -fx-color-accent-light;
@@ -293,16 +335,33 @@
     -fx-fill: whitesmoke;
     -fx-font-size: 18px;
 }
-.ranks-table .table-column {
-    -fx-background-radius: 0px 0px 25px 25px;
-}
 
 
 /* Stats TableView style */
 .stats-table .placeholder {
     -fx-background-color: -fx-color-accent2;
 }
+.stats-table .column-header .text {
+    -fx-font-size: 18px;
+}
+.stats-table .table-row-cell .text {
+    -fx-font-size: 16px;
+}
+.stats-table .column-header {
+    -fx-background-color: derive(-fx-color-accent2-dark, 25%);
+}
+.stats-table .virtual-flow .scroll-bar:vertical .thumb {
+    -fx-background-color:  derive(-fx-color-accent2-dark, 25%);
+}
 
+
+/* Drawer style */
+.drawer {
+    -fx-background-color: -fx-black2;
+}
+.drawer-base {
+    -fx-effect: -fx-shadow-no;
+}
 
 /* game board style */
 .game-board {

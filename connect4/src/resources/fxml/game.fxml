@@ -131,6 +131,7 @@
                                 </Label>
                             </children>
                         </HBox>
+                  <Pane VBox.vgrow="ALWAYS" />
                         <StackPane alignment="BOTTOM_CENTER">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup" StackPane.alignment="CENTER_RIGHT">

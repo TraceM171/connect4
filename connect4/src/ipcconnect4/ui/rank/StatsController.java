@@ -5,10 +5,16 @@ import ipcconnect4.Main;
 import ipcconnect4.util.Animation;
 import ipcconnect4.view.AutoCompleteTextField;
 import ipcconnect4.view.AutoResizeTableView;
+import ipcconnect4.view.CircleImage;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -35,8 +41,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,6 +54,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import model.Connect4;
 import model.DayRank;
 import model.Player;
@@ -102,13 +112,11 @@ public class StatsController implements Initializable {
     @FXML
     private AutoResizeTableView<Round> statsTable;
     @FXML
-    private TableColumn<Round, String> dateCol;
+    private TableColumn<Round, LocalDateTime> dateCol;
     @FXML
-    private TableColumn<Round, String> timeCol;
+    private TableColumn<Round, Player> winnerCol;
     @FXML
-    private TableColumn<Round, String> winnerCol;
-    @FXML
-    private TableColumn<Round, String> loserCol;
+    private TableColumn<Round, Player> loserCol;
     @FXML
     private VBox graphicsRoot;
 
@@ -223,10 +231,50 @@ public class StatsController implements Initializable {
     }
 
     private void initStatsTable() {
-        dateCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getLocalDate().toString()));
-        timeCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getTimeStamp().toString()));
-        winnerCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getWinner().getNickName()));
-        loserCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getLoser().getNickName()));
+        dateCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getTimeStamp()));
+        dateCol.setCellFactory(cell -> new TableCell<Round, LocalDateTime>() {
+            private final Label dateLabel = new Label();
+
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                setContentDisplay(ContentDisplay.TOP);
+                if (item == null || empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item.format(DateTimeFormatter.ofPattern("HH:mm")));
+                    dateLabel.setText(item.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(Locale.getDefault())));
+                    setGraphic(dateLabel);
+                }
+            }
+        });
+        Callback playerCellFactory = cell -> new TableCell<Round, Player>() {
+            private final CircleImage avatar = new CircleImage();
+
+            @Override
+            protected void updateItem(Player item, boolean empty) {
+                super.updateItem(item, empty);
+                avatar.setRadius(20);
+                setContentDisplay(ContentDisplay.TOP);
+                if (item == null || empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item.getNickName());
+                    avatar.setImage(item.getAvatar());
+                    setGraphic(avatar);
+                }
+            }
+        };
+        Comparator<Player> playerComparator = (p1, p2)
+                -> p1.getNickName().toLowerCase().compareTo(p2.getNickName().toLowerCase());
+        winnerCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getWinner()));
+        winnerCol.setCellFactory(playerCellFactory);
+        winnerCol.setComparator(playerComparator);
+        loserCol.setCellValueFactory(cell -> new SimpleObjectProperty(cell.getValue().getLoser()));
+        loserCol.setCellFactory(playerCellFactory);
+        loserCol.setComparator(playerComparator);
         statsTable.setItems(filteredRounds);
     }
 
@@ -247,7 +295,7 @@ public class StatsController implements Initializable {
                 true
         );
         // Map to list of Rounds
-        List<Round> fRounds = concatenate((List<Round>[]) fRoundsMap.values().toArray(new List[1]));
+        List<Round> fRounds = concatenate(fRoundsMap.values().toArray(new List[1]));
         // PLAYER && RESULT filter
         if (!playersCB.isSelected()) {
             fRounds = fRounds.stream().filter((Round round)
