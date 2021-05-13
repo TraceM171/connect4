@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 // ***************************************
 // * REFERENCES USED TO CREATE THIS CODE *
@@ -23,9 +25,13 @@ public class Game {
      */
     public static final int ROWS = 6, COLUMNS = 7;
 
+    /**
+     * Property that represents the number of rounds played in this game
+     */
+    public IntegerProperty rounds = new SimpleIntegerProperty(0);
+    
     protected final Piece[][] board = new Piece[ROWS][COLUMNS];
     private Movement lastMove = new Movement();
-    protected int rounds = 0;
     protected GameListener listener;
 
     /**
@@ -48,7 +54,7 @@ public class Game {
             System.arraycopy(game.board[i], 0, board[i], 0, game.board[0].length);
         }
         lastMove = new Movement(game.lastMove);
-        rounds = game.rounds;
+        rounds = new SimpleIntegerProperty(game.rounds.getValue());
         listener = null;
     }
 
@@ -104,7 +110,7 @@ public class Game {
             Pos nPos = new Pos(nrow, column);
             board[nrow][column] = piece;
             updateLastMovement(nPos, piece);
-            rounds++;
+            rounds.setValue(rounds.getValue() + 1);
             if (listener != null) {
                 listener.onChange(getLastMovement());
                 WinInfo wi = getWinner();
@@ -201,7 +207,7 @@ public class Game {
      * @return winInfo
      */
     public WinInfo getWinner() {
-        if (rounds < 7) {
+        if (rounds .getValue()< 7) {
             return null;
         }
 
@@ -219,10 +225,10 @@ public class Game {
             int pieces = -1;
             switch (getPiece(pos[0])) {
                 case P1:
-                    pieces = (rounds + 1) / 2;
+                    pieces = (rounds.getValue() + 1) / 2;
                     break;
                 case P2:
-                    pieces = rounds / 2;
+                    pieces = rounds.getValue() / 2;
                     break;
             }
             List<Pos> poses = getWinPositions(pos[0], winType[0]);

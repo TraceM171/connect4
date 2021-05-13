@@ -91,6 +91,10 @@ public class GameController {
     private Label pointsLWi;
     @FXML
     private Label totalPointsLWi;
+    @FXML
+    private Label roundsTotal;
+    @FXML
+    private Label roundsWi;
 
     private final Property<Pos> previewPos = new SimpleObjectProperty<>(null);
 
@@ -160,6 +164,10 @@ public class GameController {
             }
         }
         setTurn((vsAI ? gameAI : game).getNextPiece());
+        roundsTotal.textProperty().bind(Bindings.createStringBinding( () ->
+                Main.formatWLang("round_x", (vsAI ? gameAI : game).rounds.getValue()),
+                (vsAI ? gameAI : game).rounds
+        ));
     }
 
     @FXML
@@ -270,6 +278,7 @@ public class GameController {
                 nickNameTWi.getStyleClass().add(nickNameSC + winnerStyleName);
                 avatarIWi.getStyleClass().add(avatarSC + winnerStyleName);
                 winnerTitleL.getStyleClass().add(titleSC + winnerStyleName);
+                roundsWi.setText(Main.formatWLang("in_x_runs", winInfo.pieces));
 
                 int points = 0;
                 try {
