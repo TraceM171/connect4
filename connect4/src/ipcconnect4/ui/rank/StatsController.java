@@ -119,6 +119,8 @@ public class StatsController implements Initializable {
     private TableColumn<Round, Player> loserCol;
     @FXML
     private VBox graphicsRoot;
+    @FXML
+    private HBox dataRoot;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -279,8 +281,10 @@ public class StatsController implements Initializable {
     }
 
     private void refreshData() {
+        Animation anim = new Animation(Animation.NORMAL);
         refreshTable();
         refreshGraphics();
+        anim.fadeIn(dataRoot);
         filterChanged.setValue(false);
     }
 
@@ -310,113 +314,15 @@ public class StatsController implements Initializable {
 
     private void refreshGraphics() {
         clearGraphics();
+        Charts charts = new Charts();
         if (playersCB.isSelected()) {
-            addGraphic(totalGames());
+            addCharts(charts.totalGames());
         } else if (resultsWin.isSelected() && resultsLose.isSelected()) {
-            addGraphic(playerWinLose(), playerSocial());
+            addCharts(charts.playerWinLose(), charts.playerSocial());
         }
     }
 
-    private LineChart<String, Number> totalGames() {
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Days");
-        yAxis.setLabel("Rounds");
-        yAxis.setAutoRanging(false);
-        yAxis.setLowerBound(0);
-        yAxis.setTickUnit(1);
-        yAxis.setMinorTickVisible(false);
-
-        final int[] biggest = {0};
-        ObservableList<XYChart.Data<String, Integer>> cVals = FXCollections.observableArrayList();
-        getDB().getRoundCountsPerDay().subMap(
-                dateIni.getValue(),
-                true,
-                dateFin.getValue(),
-                true
-        ).forEach((LocalDate day, Integer rounds) -> {
-            cVals.add(new XYChart.Data(day.toString(), rounds));
-            biggest[0] = Math.max(rounds, biggest[0]);
-        });
-        yAxis.setUpperBound(biggest[0] + 2);
-
-        XYChart.Series serie1 = new XYChart.Series(cVals);
-        LineChart<String, Number> chart = new LineChart(xAxis, yAxis);
-        chart.setTitle("Rounds per day");
-        chart.setLegendVisible(false);
-        chart.getData().add(serie1);
-        return chart;
-    }
-
-    private StackedBarChart<String, Number> playerWinLose() {
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Days");
-        yAxis.setLabel("Rounds");
-        yAxis.setAutoRanging(false);
-        yAxis.setLowerBound(0);
-        yAxis.setTickUnit(1);
-        yAxis.setMinorTickVisible(false);
-
-        final int[] biggest = {0};
-        ObservableList<XYChart.Data<String, Integer>> cValsWin = FXCollections.observableArrayList();
-        ObservableList<XYChart.Data<String, Integer>> cValsLose = FXCollections.observableArrayList();
-        getDB().getDayRanksPlayer(getDB().getPlayer(playersATF.tf().getText())).subMap(
-                dateIni.getValue(),
-                true,
-                dateFin.getValue(),
-                true
-        ).forEach((LocalDate day, DayRank dr) -> {
-            cValsWin.add(new XYChart.Data(day.toString(), dr.getWinnedGames()));
-            cValsLose.add(new XYChart.Data(day.toString(), dr.getLostGames()));
-            int total = dr.getWinnedGames() + dr.getLostGames();
-            biggest[0] = Math.max(total, biggest[0]);
-        });
-        yAxis.setUpperBound(biggest[0] + 2);
-
-        XYChart.Series serieW = new XYChart.Series(cValsWin);
-        serieW.setName("Wins");
-        XYChart.Series serieL = new XYChart.Series(cValsLose);
-        serieL.setName("Losses");
-        StackedBarChart<String, Number> chart = new StackedBarChart(xAxis, yAxis);
-        chart.setTitle("Player Wins/Losses per day");
-        chart.getData().addAll(serieW, serieL);
-        return chart;
-    }
-
-    private BarChart<String, Number> playerSocial() {
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Days");
-        yAxis.setLabel("Opponents");
-        yAxis.setAutoRanging(false);
-        yAxis.setLowerBound(0);
-        yAxis.setTickUnit(1);
-        yAxis.setMinorTickVisible(false);
-
-        final int[] biggest = {0};
-        ObservableList<XYChart.Data<String, Integer>> cVals = FXCollections.observableArrayList();
-        getDB().getDayRanksPlayer(getDB().getPlayer(playersATF.tf().getText())).subMap(
-                dateIni.getValue(),
-                true,
-                dateFin.getValue(),
-                true
-        ).forEach((LocalDate day, DayRank dr) -> {
-            cVals.add(new XYChart.Data(day.toString(), dr.getOponents()));
-            biggest[0] = Math.max(dr.getOponents(), biggest[0]);
-        });
-        yAxis.setUpperBound(biggest[0] + 2);
-
-        XYChart.Series serie1 = new XYChart.Series(cVals);
-        serie1.setName("Opponents");
-        BarChart<String, Number> chart = new BarChart(xAxis, yAxis);
-        chart.setTitle("Player Opponents per day");
-        chart.setLegendVisible(false);
-        chart.getData().add(serie1);
-        return chart;
-    }
-
-    private void addGraphic(Chart... graphics) {
+    private void addCharts(Chart... graphics) {
         graphicsRoot.getChildren().addAll(graphics);
         for (Chart g : graphics) {
             VBox.setVgrow(g, Priority.ALWAYS);
@@ -459,5 +365,111 @@ public class StatsController implements Initializable {
     @FXML
     private void hideFilterAction(MouseEvent event) {
         new Animation(Animation.NORMAL).drawerHide(filterRoot, bigRoot, smallRoot);
+    }
+
+    private class Charts {
+
+        private LineChart<String, Number> totalGames() {
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            xAxis.setLabel(Main.rb.getString("days"));
+            yAxis.setLabel(Main.rb.getString("rounds"));
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(0);
+            yAxis.setTickUnit(1);
+            yAxis.setMinorTickVisible(false);
+
+            final int[] biggest = {0};
+            ObservableList<XYChart.Data<String, Integer>> cVals = FXCollections.observableArrayList();
+            getDB().getRoundCountsPerDay().subMap(
+                    dateIni.getValue(),
+                    true,
+                    dateFin.getValue(),
+                    true
+            ).forEach((LocalDate day, Integer rounds) -> {
+                cVals.add(new XYChart.Data(day.toString(), rounds));
+                biggest[0] = Math.max(rounds, biggest[0]);
+            });
+            yAxis.setUpperBound(biggest[0] + 2);
+
+            XYChart.Series serie1 = new XYChart.Series(cVals);
+            LineChart<String, Number> chart = new LineChart(xAxis, yAxis);
+            chart.setTitle(Main.rb.getString("rounds_day"));
+            chart.setLegendVisible(false);
+            chart.getData().add(serie1);
+            chart.getStyleClass().add("chart-base");
+            return chart;
+        }
+
+        private StackedBarChart<String, Number> playerWinLose() {
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            xAxis.setLabel(Main.rb.getString("days"));
+            yAxis.setLabel(Main.rb.getString("rounds"));
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(0);
+            yAxis.setTickUnit(1);
+            yAxis.setMinorTickVisible(false);
+
+            final int[] biggest = {0};
+            ObservableList<XYChart.Data<String, Integer>> cValsWin = FXCollections.observableArrayList();
+            ObservableList<XYChart.Data<String, Integer>> cValsLose = FXCollections.observableArrayList();
+            getDB().getDayRanksPlayer(getDB().getPlayer(playersATF.tf().getText())).subMap(
+                    dateIni.getValue(),
+                    true,
+                    dateFin.getValue(),
+                    true
+            ).forEach((LocalDate day, DayRank dr) -> {
+                cValsWin.add(new XYChart.Data(day.toString(), dr.getWinnedGames()));
+                cValsLose.add(new XYChart.Data(day.toString(), dr.getLostGames()));
+                int total = dr.getWinnedGames() + dr.getLostGames();
+                biggest[0] = Math.max(total, biggest[0]);
+            });
+            yAxis.setUpperBound(biggest[0] + 2);
+
+            XYChart.Series serieW = new XYChart.Series(cValsWin);
+            serieW.setName(Main.rb.getString("wins"));
+            XYChart.Series serieL = new XYChart.Series(cValsLose);
+            serieL.setName(Main.rb.getString("losses"));
+            StackedBarChart<String, Number> chart = new StackedBarChart(xAxis, yAxis);
+            chart.setTitle(Main.formatWLang("results_day", playersATF.tf().getText()));
+            chart.getData().addAll(serieW, serieL);
+            chart.getStyleClass().add("chart-wins-losses");
+            chart.getStyleClass().add("chart-base");
+            return chart;
+        }
+
+        private BarChart<String, Number> playerSocial() {
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            xAxis.setLabel(Main.rb.getString("days"));
+            yAxis.setLabel(Main.rb.getString("opponents"));
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(0);
+            yAxis.setTickUnit(1);
+            yAxis.setMinorTickVisible(false);
+
+            final int[] biggest = {0};
+            ObservableList<XYChart.Data<String, Integer>> cVals = FXCollections.observableArrayList();
+            getDB().getDayRanksPlayer(getDB().getPlayer(playersATF.tf().getText())).subMap(
+                    dateIni.getValue(),
+                    true,
+                    dateFin.getValue(),
+                    true
+            ).forEach((LocalDate day, DayRank dr) -> {
+                cVals.add(new XYChart.Data(day.toString(), dr.getOponents()));
+                biggest[0] = Math.max(dr.getOponents(), biggest[0]);
+            });
+            yAxis.setUpperBound(biggest[0] + 2);
+
+            XYChart.Series serie1 = new XYChart.Series(cVals);
+            serie1.setName(Main.rb.getString("opponents"));
+            BarChart<String, Number> chart = new BarChart(xAxis, yAxis);
+            chart.setTitle(Main.formatWLang("opponents_day", playersATF.tf().getText()));
+            chart.setLegendVisible(false);
+            chart.getData().add(serie1);
+            chart.getStyleClass().add("chart-base");
+            return chart;
+        }
     }
 }

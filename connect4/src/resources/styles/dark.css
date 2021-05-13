@@ -22,7 +22,8 @@
     -fx-color-accent2: #7c6bb9;
     -fx-color-accent2-lighter: derive(-fx-color-accent2, 35%);
     -fx-color-accent2-light: derive(-fx-color-accent2, 25%);
-    -fx-color-accent2-dark: derive(-fx-color-accent2, -50%);
+    -fx-color-accent2-dark: derive(-fx-color-accent2, -25%);
+    -fx-color-accent2-darker: derive(-fx-color-accent2, -50%);
     -fx-p1-color: #d94e4e;
     -fx-p1-color-dark: derive(-fx-p1-color, -25%);
     -fx-p2-color: #d9b945;
@@ -227,12 +228,12 @@
     -fx-alignment: CENTER;
     -fx-background-radius: 25;
     -fx-background-color: -fx-color-accent2;
-    -fx-border-color: -fx-color-accent2-dark;
+    -fx-border-color: -fx-color-accent2-darker;
     -fx-border-radius: 25;
     -fx-border-width: 2;
 }
 .big-button-labels {
-    -fx-text-fill: -fx-color-accent2-dark;
+    -fx-text-fill: -fx-color-accent2-darker;
     -fx-font-style: italic;
     -fx-font-size: 24px;
 }
@@ -290,7 +291,7 @@
     -fx-font-size: 20px;
 }
 .ranks-table .column-header {
-    -fx-background-color: -fx-color-accent2-dark;
+    -fx-background-color: -fx-color-accent2-darker;
     -fx-padding: 10 0 10 0;
 }
 .ranks-table .table-cell {
@@ -320,7 +321,7 @@
     -fx-padding: 2;
 }
 .ranks-table .virtual-flow .scroll-bar:vertical .thumb {
-    -fx-background-color:  -fx-color-accent2-dark;
+    -fx-background-color:  -fx-color-accent2-darker;
 }
 .ranks-table .scroll-bar:horizontal .increment-arrow,
 .ranks-table .scroll-bar:horizontal .decrement-arrow,
@@ -348,10 +349,10 @@
     -fx-font-size: 16px;
 }
 .stats-table .column-header {
-    -fx-background-color: derive(-fx-color-accent2-dark, 25%);
+    -fx-background-color: -fx-color-accent2-darker;
 }
 .stats-table .virtual-flow .scroll-bar:vertical .thumb {
-    -fx-background-color:  derive(-fx-color-accent2-dark, 25%);
+    -fx-background-color:  -fx-color-accent2-darker;
 }
 
 
@@ -462,4 +463,33 @@
 .dialog > *.label {
     -fx-fill: whitesmoke;
     -fx-font-size: 14px;
+}
+
+
+/* Charts styles */
+.chart-base {
+    CHART_COLOR_1: -fx-color-accent2;
+}
+.axis:left {
+    -fx-tick-label-font-size: 14px;
+}
+.axis:left > .axis-label {
+    -fx-font-size: 14px;
+}
+.axis:bottom {
+    -fx-tick-label-font-size: 11px;
+}
+.axis:bottom > .axis-label {
+    -fx-font-size: 14px;
+}
+.chart-line-symbol {
+    -fx-background-radius: 6px;
+    -fx-padding: 6px;
+}
+.chart-series-line {
+    -fx-stroke-width: 5px;
+}
+.chart-wins-losses {
+    CHART_COLOR_1: -fx-color-green;
+    CHART_COLOR_2: -fx-color-red;
 }
