@@ -6,10 +6,11 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class CircleImage extends Circle {
+
     public static final String DEF_IMG_PATH = "/avatars/default.png";
-    
+
     private Image image;
-    
+
     @FXML
     private void initialize() {
         image = new Image(DEF_IMG_PATH);
@@ -18,17 +19,17 @@ public class CircleImage extends Circle {
     public Image getImage() {
         return image;
     }
-    
+
     public void setImage(Image image) {
         this.image = image;
         updateImage();
     }
-    
+
     private void updateImage() {
         double h = image.getHeight();
         double w = image.getWidth();
-        double hP = h <= w ? 1 : h / w ;
-        double wP = w <= h ? 1 : w / h ;
+        double hP = h <= w ? 1 : h / w;
+        double wP = w <= h ? 1 : w / h;
         double y = hP == 1 ? 0 : (1 - hP) / 2;
         double x = wP == 1 ? 0 : (1 - wP) / 2;
         setFill(new ImagePattern(image, x, y, wP, hP, true));

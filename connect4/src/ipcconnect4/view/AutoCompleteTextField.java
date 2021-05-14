@@ -10,26 +10,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-/**
- * This class is a TextField which implements an "autocomplete" functionality,
- * based on a supplied list of entries.
- *
- * @author Caleb Brinkman
- */
 public class AutoCompleteTextField extends TextFieldValid {
 
-    /**
-     * The existing autocomplete entries.
-     */
     private final SortedSet<String> entries;
-    /**
-     * The Pos used to select an entry.
-     */
     private ContextMenu entriesPopup;
 
-    /**
-     * Construct a new AutoCompleteTextField.
-     */
     public AutoCompleteTextField() {
         super();
         entries = new TreeSet<>();
@@ -59,21 +44,10 @@ public class AutoCompleteTextField extends TextFieldValid {
 
     }
 
-    /**
-     * Get the existing set of autocomplete entries.
-     *
-     * @return The existing autocomplete entries.
-     */
     public SortedSet<String> getEntries() {
         return entries;
     }
 
-    /**
-     * Populate the entry set with the given search results. Display is limited
-     * to 10 entries, for performance.
-     *
-     * @param searchResult The set of matching strings.
-     */
     private void populatePopup(List<String> searchResult) {
         List<CustomMenuItem> menuItems = new LinkedList<>();
         // If you'd like more entries, modify this line.
