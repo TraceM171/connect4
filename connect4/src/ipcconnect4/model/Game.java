@@ -23,13 +23,13 @@ public class Game {
     /**
      * Constants that define the game grid
      */
-    public static final int ROWS = 6, COLUMNS = 7;
+    public static final int ROWS = 7, COLUMNS = 8;
 
     /**
      * Property that represents the number of rounds played in this game
      */
     public IntegerProperty rounds = new SimpleIntegerProperty(0);
-    
+
     protected final Piece[][] board = new Piece[ROWS][COLUMNS];
     private Movement lastMove = new Movement();
     protected GameListener listener;
@@ -192,9 +192,9 @@ public class Game {
      */
     public void emptyBottomHalf() {
         for (int row = ROWS / 2 - 1; row >= 0; row--) {
-            board[ROWS / 2 + row] = board[row];
+            board[(int) (ROWS / 2.0 + 0.5 + row)] = board[row];
         }
-        for (int row = ROWS / 2 - 1; row >= 0; row--) {
+        for (int row = (int) (ROWS / 2.0 + 0.5 - 1); row >= 0; row--) {
             board[row] = new Piece[COLUMNS];
             Arrays.fill(board[row], Piece.NONE);
         }
@@ -207,7 +207,7 @@ public class Game {
      * @return winInfo
      */
     public WinInfo getWinner() {
-        if (rounds .getValue()< 7) {
+        if (rounds.getValue() < 7) {
             return null;
         }
 

@@ -55,7 +55,12 @@ public class GameGrid extends GridPane {
     }
 
     public int getColumn(double xPosition) {
+        return getColumn(xPosition, true);
+    }
+    
+    public int getColumn(double xPosition, boolean calculateOffset) {
         double xOffset = localToScene(getBoundsInLocal()).getMinX() + 0.5;
+        xOffset = calculateOffset ? xOffset : 0;
         int column = (int) ((xPosition - xOffset) * COLUMNS / getWidth());
         column = column >= COLUMNS ? COLUMNS - 1 : column;
         return column;
@@ -156,7 +161,7 @@ public class GameGrid extends GridPane {
         ended.set(true);
         afterAnimations(() -> {
             List<Node> childrens = getChildren();
-            
+
             for (int i = 0; i < ROWS; i++) {
                 for (int j = 0; j < COLUMNS; j++) {
                     Pos aPo = new Pos(i, j);
@@ -209,7 +214,7 @@ public class GameGrid extends GridPane {
         } else {
             Pos finPos;
             if (pos.row < ROWS / 2) {
-                finPos = new Pos(ROWS / 2 + pos.row, pos.column);
+                finPos = new Pos((int) (ROWS / 2.0 + 0.5 + pos.row), pos.column);
                 resetExecutor.schedule(
                         () -> {
                             Platform.runLater(() -> {

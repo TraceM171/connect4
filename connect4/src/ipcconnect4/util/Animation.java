@@ -33,10 +33,24 @@ public class Animation {
 
     private final Duration DURATION;
 
+    /**
+     * Create an object whose animations use the provided duration
+     *
+     * @param millis int, time in millis as base for all animations
+     */
     public Animation(int millis) {
         this.DURATION = Duration.millis(millis);
     }
 
+    /**
+     * Transition between two nodes using slide from top animation animation
+     *
+     * @param container Pane, parent of oldNode and will also be parent of
+     * newNode
+     * @param oldNode Node, old node that will stay still and then disappear
+     * @param newNode Node, new node that will come from top to take the
+     * position of oldNode
+     */
     public void slideFromTop(Pane container, Node oldNode, Node newNode) {
         newNode.translateYProperty().set(-1 * container.getHeight());
 
@@ -51,6 +65,16 @@ public class Animation {
         timeline.play();
     }
 
+    /**
+     * Transition between two nodes using slide from top animation animation
+     *
+     * @param container Pane, parent of oldNode and will also be parent of
+     * newNode
+     * @param oldNode Node, old node that will slide to the top of container and
+     * then disappear
+     * @param newNode Node, new node that will appear on the original position
+     * of oldNode
+     */
     public void slideToTop(Pane container, Node oldNode, Node newNode) {
         container.getChildren().add(newNode);
         container.getChildren().remove(oldNode);
@@ -65,6 +89,15 @@ public class Animation {
         timeline.play();
     }
 
+    /**
+     * Hides the big drawer and shows the small one. Fade out and slide to left
+     * the big drawer until it is visible no more. Making visible the small one
+     * that is always on the background
+     *
+     * @param container Pane, parent of big and small drawers
+     * @param big Pane, big drawer
+     * @param small Pane, small drawer
+     */
     public void drawerHide(Pane container, Pane big, Pane small) {
         fadeOut(big);
         KeyValue keyValue = new KeyValue(big.prefWidthProperty(), small.getPrefWidth(), Interpolator.EASE_IN);
@@ -77,6 +110,15 @@ public class Animation {
         timeline.play();
     }
 
+    /**
+     * Shows the big drawer and hides the small one. Fade in and slide from left
+     * the big drawer until its width is the same as given bigSize. Hiding the
+     * small behind the big one.
+     *
+     * @param container Pane, parent of big and small drawers
+     * @param big Pane, big drawer
+     * @param bigSize double, size that the big drawer should have
+     */
     public void drawerShow(Pane container, Pane big, double bigSize) {
         big.setVisible(true);
         big.setManaged(true);
@@ -86,13 +128,24 @@ public class Animation {
         Timeline timeline = new Timeline(keyFrame);
         timeline.play();
     }
-    
+
+    /**
+     * Make a node spin while fading in and out
+     *
+     * @param node Node, to animate
+     */
     public void appearingSpin(Node node) {
         fadeIn(node);
         spin(node);
         fadeOut(node);
     }
-    
+
+    /**
+     * Make the node go one full turn clockwise, returning to its starting
+     * position
+     *
+     * @param node Node, to animate
+     */
     public void spin(Node node) {
         KeyValue keyValue = new KeyValue(node.rotateProperty(), 360, Interpolator.EASE_IN);
         KeyFrame keyFrame = new KeyFrame(DURATION, keyValue);
@@ -191,6 +244,13 @@ public class Animation {
         return ip;
     }
 
+    /**
+     * Smooth scroll to a given index in a list, and the number of items it has
+     *
+     * @param scrollBar ScrollBar, target of the smooth scroll
+     * @param items int, size of the list
+     * @param index int, index of the item in the list to scroll to
+     */
     public void listScrollTo(ScrollBar scrollBar, int items, int index) {
         double actualPos = (scrollBar.getValue() * 100);
         double finalPos = (scrollBar.getMax() - scrollBar.getMin()) / (items - 1) * index * 100;

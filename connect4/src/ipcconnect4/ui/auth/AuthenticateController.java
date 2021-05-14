@@ -185,7 +185,6 @@ public class AuthenticateController implements Initializable {
         } else {
             new Animation(Animation.NORMAL).fadeIn(subscene, lastContent, content);
         }
-        HBox.setHgrow(children.get(0), Priority.ALWAYS);
 
         subscene.requestFocus();
     }

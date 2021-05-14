@@ -51,24 +51,26 @@
             <children>
                 <GameGrid fx:id="gameGrid" onMouseClicked="#putPieceAction" onMouseExited="#unpreviewAction" onMouseMoved="#previewAction" HBox.hgrow="ALWAYS">
                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GameGrid>
-                <VBox fx:id="winPopUp" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" styleClass="root">
+                <VBox fx:id="winPopUp" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" visible="false">
                     <children>
                         <HBox alignment="CENTER">
                             <children>
@@ -87,11 +89,11 @@
                                 <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                             </children>
                         </HBox>
-                  <Label fx:id="roundsWi" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="En 7 tiradas" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font name="System Italic" size="18.0" />
-                     </font>
-                  </Label>
+                        <Label fx:id="roundsWi" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="En 7 tiradas" VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
                         <StackPane alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity">
                             <children>
                                 <CircleImage fx:id="avatarIWi" radius="50.0" styleClass="circle-image" />
@@ -135,7 +137,7 @@
                                 </Label>
                             </children>
                         </HBox>
-                  <Pane VBox.vgrow="ALWAYS" />
+                        <Pane VBox.vgrow="ALWAYS" />
                         <StackPane alignment="BOTTOM_CENTER">
                             <children>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#closeWinPopup" StackPane.alignment="CENTER_RIGHT">
@@ -254,20 +256,20 @@
                         <String fx:value="circle-image-p2" />
                     </styleClass>
                 </CircleImage>
-            <VBox alignment="CENTER" GridPane.columnIndex="2">
-               <children>
-                      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                              <Image url="@../img/vs.png" />
-                          </image>
-                      </ImageView>
-                  <Label fx:id="roundsTotal" text="Ronda 15">
-                     <font>
-                        <Font name="System Italic" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
+                <VBox alignment="CENTER" GridPane.columnIndex="2">
+                    <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../img/vs.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="roundsTotal" text="Ronda 15">
+                            <font>
+                                <Font name="System Italic" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
             </children>
         </GridPane>
     </top>

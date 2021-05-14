@@ -343,7 +343,7 @@ public class StatsController implements Initializable {
 
     private static <T> List<T> concatenate(List<T>... lists) {
         return Stream.of(lists)
-                .flatMap(x -> x.stream())
+                .flatMap(x -> x == null ? null : x.stream())
                 .collect(Collectors.toList());
     }
 

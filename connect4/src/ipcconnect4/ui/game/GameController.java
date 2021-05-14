@@ -240,7 +240,7 @@ public class GameController {
                 setTurn(game_.getNextPiece());
                 gameGrid.afterAnimations(() -> {
                     Point mouse = MouseInfo.getPointerInfo().getLocation();
-                    setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX()));
+                    setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX(), false));
                 });
             }
 

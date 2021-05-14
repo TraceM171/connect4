@@ -27,6 +27,7 @@
             <word>autocomplete</word>
             <word>Game's</word>
             <word>int</word>
+            <word>millis</word>
             <word>Pos</word>
         </spellchecker-wordlist>
     </configuration>
