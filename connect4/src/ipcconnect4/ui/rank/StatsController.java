@@ -32,7 +32,6 @@ import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.Chart;
@@ -341,6 +340,12 @@ public class StatsController implements Initializable {
         }
     }
 
+    // ***************************************
+    // * REFERENCES USED TO CREATE THIS CODE *
+    // ***************************************
+    // https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
+    // Used java documentation and its examples to create this method
+    //
     private static <T> List<T> concatenate(List<T>... lists) {
         return Stream.of(lists)
                 .flatMap(x -> x == null ? null : x.stream())
