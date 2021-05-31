@@ -2,9 +2,8 @@ package ipcconnect4.ui.auth;
 
 import DBAccess.Connect4DAOException;
 import ipcconnect4.Main;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,13 +71,13 @@ public class ForgotController {
         errorText1.managedProperty().bind(errorText1.visibleProperty());
         errorText2.managedProperty().bind(errorText2.visibleProperty());
 
-        codeText.textProperty().addListener((observable,oldValue,newValue) -> {
+        codeText.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 codeText.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
     }
-    
+
     @FXML
     private void tfOkAction(ActionEvent event) {
         if (!okButton.isDisable()) {
@@ -108,7 +107,7 @@ public class ForgotController {
             verifyAction(null);
         }
     }
-    
+
     @FXML
     private void verifyAction(InputEvent event) {
         if (Integer.valueOf(codeText.getText()) == code) {
@@ -145,9 +144,9 @@ public class ForgotController {
         copyButton.addEventFilter(
                 ActionEvent.ACTION,
                 event -> {
-                    StringSelection stringSelection = new StringSelection(String.valueOf(code));
-                    Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clip.setContents(stringSelection, null);
+                    final ClipboardContent content = new ClipboardContent();
+                    content.putString(String.valueOf(code));
+                    Clipboard.getSystemClipboard().setContent(content);
                     event.consume();
                 }
         );
@@ -170,9 +169,9 @@ public class ForgotController {
         copyButton.addEventFilter(
                 ActionEvent.ACTION,
                 event -> {
-                    StringSelection stringSelection = new StringSelection(password);
-                    Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    clip.setContents(stringSelection, null);
+                    final ClipboardContent content = new ClipboardContent();
+                    content.putString(password);
+                    Clipboard.getSystemClipboard().setContent(content);
                     event.consume();
                 }
         );
