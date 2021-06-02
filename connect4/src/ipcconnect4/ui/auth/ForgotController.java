@@ -136,7 +136,7 @@ public class ForgotController {
         alert.setContentText(String.valueOf(code));
 
         ButtonType buttonTypeOne = new ButtonType(Main.rb.getString("copy"));
-        ButtonType buttonTypeOk = new ButtonType(Main.rb.getString("accept"), ButtonData.OK_DONE);
+        ButtonType buttonTypeOk = new ButtonType(Main.rb.getString("accept"), ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeOk);
 
@@ -161,7 +161,7 @@ public class ForgotController {
         alert.setContentText(password);
 
         ButtonType buttonTypeOne = new ButtonType(Main.rb.getString("copy"));
-        ButtonType buttonTypeOk = new ButtonType(Main.rb.getString("accept"), ButtonData.OK_DONE);
+        ButtonType buttonTypeOk = new ButtonType(Main.rb.getString("accept"), ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeOk);
 

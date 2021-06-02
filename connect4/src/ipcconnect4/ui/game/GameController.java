@@ -164,8 +164,8 @@ public class GameController {
             }
         }
         setTurn((vsAI ? gameAI : game).getNextPiece());
-        roundsTotal.textProperty().bind(Bindings.createStringBinding( () ->
-                Main.formatWLang("round_x", (vsAI ? gameAI : game).rounds.getValue()),
+        roundsTotal.textProperty().bind(Bindings.createStringBinding(()
+                -> Main.formatWLang("round_x", (vsAI ? gameAI : game).rounds.getValue()),
                 (vsAI ? gameAI : game).rounds
         ));
     }
@@ -240,7 +240,9 @@ public class GameController {
                 setTurn(game_.getNextPiece());
                 gameGrid.afterAnimations(() -> {
                     Point mouse = MouseInfo.getPointerInfo().getLocation();
-                    setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX(), false));
+                    if (gameGrid.isPointInside(mouse)) {
+                        setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX(), false));
+                    }
                 });
             }
 
@@ -345,7 +347,9 @@ public class GameController {
                     game_.emptyBottomHalf();
                     gameGrid.afterAnimations(() -> {
                         Point mouse = MouseInfo.getPointerInfo().getLocation();
-                        setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX()));
+                        if (gameGrid.isPointInside(mouse)) {
+                            setPreview(gameGrid.getColumn(gameGrid.screenToLocal(mouse.x, mouse.y).getX()));
+                        }
                     });
                 }
             }

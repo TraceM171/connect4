@@ -5,6 +5,7 @@ import static ipcconnect4.model.Game.ROWS;
 import ipcconnect4.model.Game.Piece;
 import ipcconnect4.model.Game.Pos;
 import ipcconnect4.util.Animation;
+import java.awt.Point;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -13,12 +14,14 @@ import java.util.function.Function;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
@@ -46,6 +49,10 @@ public class GameGrid extends GridPane {
                         t.setDaemon(true);
                         return t;
                     });
+    private final NumberBinding pieceRadiusBinding = Bindings.min(
+            Bindings.subtract(Bindings.divide(widthProperty(), COLUMNS * 2), 3),
+            Bindings.subtract(Bindings.divide(heightProperty(), ROWS * 2), 3)
+    );
 
     public GameGrid() {
         disableProperty().bind(Bindings.or(
@@ -57,7 +64,7 @@ public class GameGrid extends GridPane {
     public int getColumn(double xPosition) {
         return getColumn(xPosition, true);
     }
-    
+
     public int getColumn(double xPosition, boolean calculateOffset) {
         double xOffset = localToScene(getBoundsInLocal()).getMinX() + 0.5;
         xOffset = calculateOffset ? xOffset : 0;
@@ -125,10 +132,7 @@ public class GameGrid extends GridPane {
                 circle.getStyleClass().add("circle-piece-p2");
                 break;
         }
-        circle.radiusProperty().bind(Bindings.min(
-                Bindings.subtract(Bindings.divide(widthProperty(), COLUMNS * 2), 3),
-                Bindings.subtract(Bindings.divide(heightProperty(), ROWS * 2), 3)
-        ));
+        circle.radiusProperty().bind(pieceRadiusBinding);
         return circle;
     }
 
@@ -241,5 +245,15 @@ public class GameGrid extends GridPane {
                         TimeUnit.MILLISECONDS);
             }
         }
+    }
+
+    public boolean isPointInside(Point point) {
+        Point2D lPoint = screenToLocal(point.x, point.y);
+        double x = lPoint.getX();
+        double y = lPoint.getY();
+        return x >= 0
+                && x < getWidth()
+                && y >= 0
+                && y < getHeight();
     }
 }

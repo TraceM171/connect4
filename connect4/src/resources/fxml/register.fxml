@@ -167,7 +167,7 @@
         </GridPane>
         <HBox alignment="CENTER">
             <children>
-                <ImageView fx:id="backButton" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="backButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image backgroundLoading="true" url="@../img/back.png" />
                     </image>
@@ -177,7 +177,7 @@
                     </styleClass>
                 </ImageView>
                 <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                <ImageView fx:id="okButton" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#okAction" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="okButton" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#okAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image backgroundLoading="true" url="@../img/accept.png" />
                     </image>

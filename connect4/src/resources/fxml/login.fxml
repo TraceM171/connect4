@@ -118,7 +118,7 @@
             <children>
                 <IconLabel icon="@../img/forgot.png" onMouseClicked="#forgotAction" text="%forgot_pass_button" />
                 <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                <ImageView fx:id="okButton" fitHeight="35" fitWidth="35" onMouseClicked="#okAction" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="okButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#okAction" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../img/accept.png" />
                     </image>

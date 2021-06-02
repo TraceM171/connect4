@@ -86,7 +86,7 @@
                 <Insets top="10.0" />
             </VBox.margin>
             <children>
-                <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                <ImageView fitHeight="35.0" fitWidth="35.0" onMouseClicked="#cancelAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                     <image>
                         <Image backgroundLoading="true" url="@../img/cancel.png" />
                     </image>
@@ -95,7 +95,7 @@
                         <String fx:value="clickable" />
                     </styleClass>
                 </ImageView>
-                <ImageView fx:id="saveIV" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#saveAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+                <ImageView fx:id="saveIV" fitHeight="32.0" fitWidth="32.0" onMouseClicked="#saveAction" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
                     <image>
                         <Image backgroundLoading="true" url="@../img/save.png" />
                     </image>
